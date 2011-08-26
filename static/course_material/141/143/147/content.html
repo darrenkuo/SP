@@ -1,0 +1,36 @@
+<P>Unfortunately, it doesn't work.
+ 
+<P><PRE>&gt; (downup 'toe)
+ERROR: Invalid argument to BUTLAST: &quot;"
+</PRE> 
+ 
+<P>What's gone wrong here?  Not quite every numbered <CODE>downup</CODE> looks like
+ 
+<P><PRE>(define (downup<EM>n</EM> wd)
+  (se wd (downup<EM>n</EM>-<EM>1</EM> (bl wd)) wd))
+</PRE> 
+ 
+<P>The only numbered <CODE>downup</CODE> that doesn't follow the pattern is <CODE>downup1</CODE>:
+ 
+<P><PRE>(define (downup1 wd)
+  (se wd))
+</PRE> 
+ 
+<P>So if we collapse all the numbered <CODE>downup</CODE>s into a single procedure, we
+have to treat one-letter words as a special case:
+ 
+<P><PRE>(define (<A NAME="g2"></A>downup wd)
+  (if (= (count wd) 1)
+      (se wd)
+      (se wd (downup (bl wd)) wd)))
+ 
+&gt; (downup 'toe)
+(TOE TO T TO TOE)
+ 
+&gt; (downup 'banana)
+(BANANA BANAN BANA BAN BA B BA BAN BANA BANAN BANANA)
+</PRE> 
+ 
+<P>This version of <CODE>downup</CODE> will work for any length word, from <CODE>a</CODE> to
+<CODE>pneumonoultramicroscopicsilicovolcanoconinosis</CODE> or beyond.
+ 

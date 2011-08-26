@@ -1,0 +1,13 @@
+<P>In the combining method, we build up to a recursive procedure by writing a
+number of special-case nonrecursive procedures, starting with small arguments
+and working toward larger ones.  We find a generalizable way to use a
+smaller version in writing a larger one.  As a result, all our procedures
+end up looking nearly the same, so we combine them into one procedure.  
+ 
+<P>The combining method is a good way to begin thinking about recursion because
+each step of a solution is clearly justified by earlier steps.  The sequence
+of events by which we get from a problem statement to a Scheme procedure is
+clear and straightforward.  The disadvantage of the combining method,
+though, is that it involves a lot of drudgery, not all of which really helps
+toward the ultimate solution.  In this chapter we're going to develop a new
+method called <EM>the leap of faith</EM> that overcomes this difficulty.

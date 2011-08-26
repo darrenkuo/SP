@@ -1,0 +1,60 @@
+<P><PRE>(define (<A NAME="g11"></A>add-numbers sent)
+  (cond ((empty? sent) 0)
+    ((number? (first sent))
+     (+ (first sent) (add-numbers (bf sent))))
+    (else (add-numbers (bf sent)))))
+ 
+&gt; (add-numbers '(if 6 were 9))
+15
+</PRE> 
+ 
+<P>This procedure combines aspects of <CODE>keep</CODE> with aspects of <CODE>accumulate</CODE>.  We want to do two things at once: get rid of the words that
+aren't numbers and compute the <EM>sum</EM> of those that are numbers.  (A
+simple <CODE>keep</CODE> would construct a sentence of them.)  <CODE>Add-numbers</CODE> 
+looks exactly like the <CODE>keep</CODE> pattern, except that there's a funny
+combiner and a funny base case, which look more like <CODE>accumulate</CODE>.
+ 
+<P> 
+Here's an example that combines <CODE>every</CODE> and <CODE>keep</CODE>.  We want a
+procedure that takes a sentence as its argument and translates every word of
+the sentence into Pig Latin, but leaves out words that have no vowels,
+because the Pig Latin translator doesn't work for such words.  The procedure
+<CODE>safe-pigl</CODE> will be like a <CODE>keep</CODE> pattern in that it keeps only
+words that contain vowels, but like an <CODE>every</CODE> in that the result
+contains transformed versions of the selected words, rather than the words
+themselves.
+ 
+<P><PRE>(define (<A NAME="g12"></A>safe-pigl sent)
+  (cond ((empty? sent) '())
+    ((has-vowel? (first sent))
+     (se (pigl (first sent)) (safe-pigl (bf sent))))
+    (else (safe-pigl (bf sent)))))
+ 
+(define (<A NAME="g13"></A>has-vowel? wd)
+  (not (empty? (keep-vowels wd))))
+ 
+&gt; (safe-pigl '(my pet fly is named xyzzy))
+(ETPAY ISAY AMEDNAY)
+</PRE> 
+ 
+<P> 
+Finally, here's an example that combines all three patterns.  In Chapter
+1 we wrote (using higher-order procedures) the <CODE>acronym</CODE> 
+procedure, which selects the &quot;real&quot; words of a sentence (the <CODE>keep</CODE> 
+pattern), takes the first letter of each word (the <CODE>every</CODE> pattern), and
+combines these initial letters into a single word (the <CODE>accumulate</CODE> 
+pattern).  In a recursive procedure we can carry out all three steps at once:
+ 
+<P><PRE>(define (<A NAME="g14"></A>acronym sent)
+  (cond ((empty? sent) &quot;&quot;)
+    ((real-word? (first sent))
+     (word (first (first sent))
+           (acronym (bf sent))))
+    (else (acronym (bf sent)))))
+</PRE> 
+ 
+<P>Don't become obsessed with trying to make every recursive problem fit one of
+the three patterns we've shown here.  As we said at the beginning of the
+chapter, what's most important is that you understand the principles of
+recursion in general, and understand how versatile recursion is.  The
+patterns are just special cases that happen to come up fairly often.

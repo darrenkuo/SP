@@ -1,0 +1,1 @@
+{'index': 140, 'title': u'0.2: Booleans and Variables', 'readable': u'True and checkAccessed(1, user) and (not checkSF(SF_PROGRAMMED, user) or (checkSF(SF_PROGRAMMED, user) and not checkSF(SF_SCHEME, user)))', 'chapters': ['21', '30', '190'], 'type': u'lesson'}

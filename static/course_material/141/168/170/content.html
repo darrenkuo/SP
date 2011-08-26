@@ -1,0 +1,69 @@
+<P>In the <CODE>every</CODE> pattern, we collect the results of transforming each
+element of a word or sentence into something else.  This time we'll consider
+a different kind of problem: choosing some of the elements and forgetting
+about the others.  First, here is a procedure to select the three-letter
+words from a sentence:
+ 
+<P> 
+<PRE>(define (keep-three-letter-words sent)
+  (cond ((empty? sent) '())
+        ((= (count (first sent)) 3)
+         (se (first sent) (keep-three-letter-words (bf sent))))
+        (else (keep-three-letter-words (bf sent)))))
+ 
+&gt; (keep-three-letter-words '(one two three four five six seven))
+(ONE TWO SIX)
+</PRE> 
+ 
+<P> 
+Next, here is a procedure to select the vowels from a word:
+ 
+<P><PRE>(define (keep-vowels wd)
+  (cond ((empty? wd) &quot;&quot;)
+        ((vowel? (first wd))
+         (word (first wd) (keep-vowels (bf wd))))
+        (else (keep-vowels (bf wd)))))
+ 
+&gt; (keep-vowels 'napoleon)
+AOEO
+</PRE> 
+ 
+<P>Let's look at the differences between the <CODE>every</CODE> pattern and the
+<A NAME="g5"></A><A NAME="g6"></A> pattern.  First of all, the <CODE>keep</CODE> procedures have three
+possible outcomes, instead of just two as in most <CODE>every</CODE>-like
+procedures.  In the <CODE>every</CODE> pattern, we only have to distinguish between
+the base case and the recursive case.  In the <CODE>keep</CODE> pattern, there is
+still a base case, but there are <EM>two</EM> recursive cases; we have to
+decide whether or not to keep the first available element in the return
+value.  When we do keep an element, we keep the element itself, not some
+function of the element.
+ 
+<P>As with the <CODE>every</CODE> pattern, there are situations that follow the <CODE>keep</CODE> pattern only approximately.  Suppose we want to look for doubled
+letters within a word:
+ 
+<P> 
+<PRE>&gt; (doubles 'bookkeeper)
+OOKKEE
+ 
+&gt; (doubles 'mississippi)
+SSSSPP
+</PRE> 
+ 
+<P>This isn't a pure <CODE>keep</CODE> pattern example because we can't
+decide whether to keep the first letter by looking at that letter alone; we
+have to examine two at a time.  But we can write a procedure using more or
+less the same pattern:
+ 
+<P><PRE>(define (<A NAME="g7"></A>doubles wd)
+  (cond ((= (count wd) 1) &quot;&quot;)
+        ((equal? (first wd) (first (bf wd)))
+         (word (first wd) (first (bf wd)) (doubles (bf (bf wd)))))
+        (else (doubles (bf wd)))))
+</PRE> 
+ 
+<P>As in the <CODE>evens</CODE> example of Chapter 12, the base case of
+<CODE>doubles</CODE> is unusual, and one of the recursive calls chops off two
+letters at once in forming the smaller subproblem.  But the structure of the
+<CODE>cond</CODE> with a base case clause, a clause for keeping letters, and a
+clause for rejecting letters is maintained.
+ 

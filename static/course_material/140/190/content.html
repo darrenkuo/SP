@@ -1,0 +1,70 @@
+<P><B>6.5</B>&nbsp;&nbsp;Write a procedure <A NAME="g114"></A><CODE>european-time</CODE> to convert a time from American
+AM/PM notation into European 24-hour notation.  Also
+write <A NAME="g115"></A><CODE>american-time</CODE>, which does the opposite:
+ 
+<P><PRE>&gt; (european-time '(8 am))
+8
+ 
+&gt; (european-time '(4 pm))
+16
+ 
+&gt; (american-time 21)
+(9 PM)
+ 
+&gt; (american-time 12)
+(12 PM)
+ 
+&gt; (european-time '(12 am))
+24
+</PRE> 
+ 
+<P> 
+<B>6.6</B>&nbsp;&nbsp;Write a predicate <A NAME="g116"></A><CODE>teen?</CODE> that returns true if its argument is between
+13 and 19.
+
+<P> 
+<B>6.8</B>&nbsp;&nbsp;Write a procedure <A NAME="g118"></A><CODE>indef-article</CODE> that works like this:
+<PRE>&gt; (indef-article 'beatle)
+(A BEATLE)
+ 
+&gt; (indef-article 'album)
+(AN ALBUM)
+</PRE> 
+ 
+<P>Don't worry about silent initial consonants like the <CODE>h</CODE> in <CODE>hour</CODE>.
+ 
+<P> 
+<B>6.14</B>&nbsp;&nbsp;Write a procedure <A NAME="g124"></A><CODE>describe-time</CODE> that takes a number of seconds as its
+argument and returns a more useful description of that amount of time:
+<A NAME="desctime"></A> 
+ 
+<P><PRE>&gt; (describe-time 45)
+(45 SECONDS)
+ 
+&gt; (describe-time 930)
+(15.5 MINUTES)
+ 
+&gt; (describe-time 30000000000)
+(9.506426344208686 CENTURIES)
+</PRE> 
+ 
+<P><B>7.3</B>&nbsp;&nbsp;The following program doesn't work.  Why not?  Fix it.
+ 
+<P><PRE>(define (<A NAME="g19"></A>superlative adjective word)
+  (se (word adjective 'est) word))
+</PRE> 
+ 
+<P>It's supposed to work like this:
+ 
+<P><PRE>&gt; (superlative 'dumb 'exercise)
+(DUMBEST EXERCISE)
+</PRE> 
+ 
+<P> 
+<B>7.4</B>&nbsp;&nbsp;What does this procedure do?  Explain how it manages to work.
+ 
+<P><PRE>(define (<A NAME="g20"></A>sum-square a b)
+  (let ((+ *)
+        (* +))
+    (* (+ a a) (+ b b))))
+</PRE> 

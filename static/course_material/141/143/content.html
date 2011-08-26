@@ -1,0 +1,109 @@
+<P><A NAME="swallow"></A> 
+ 
+<P><TABLE> 
+<TR><TD>&nbsp;&nbsp;I know an old lady who swallowed a fly.
+<TD>&nbsp;&nbsp;She swallowed the cat to catch the bird.
+<TR><TD>&nbsp;&nbsp;I don't know why she swallowed the fly.
+<TD>&nbsp;&nbsp;She swallowed the bird to catch the spider
+<TR><TD>&nbsp;&nbsp;Perhaps she'll die.
+<TD>&nbsp;&nbsp;that wriggled and jiggled and tickled inside her.&nbsp;&nbsp;&nbsp;
+<TR><TD>&nbsp;&nbsp;
+<TD>&nbsp;&nbsp;She swallowed the spider to catch the fly.
+<TR><TD>&nbsp;&nbsp;I know an old lady who swallowed a spider
+<TD>&nbsp;&nbsp;I don't know why she swallowed the fly.
+<TR><TD>&nbsp;&nbsp;that wriggled and jiggled and tickled inside her.
+<TD>&nbsp;&nbsp;Perhaps she'll die.
+<TR><TD>&nbsp;&nbsp;She swallowed the spider to catch the fly.
+<TD>&nbsp;&nbsp;
+<TR><TD>&nbsp;&nbsp;I don't know why she swallowed the fly.
+<TD>&nbsp;&nbsp;I know an old lady who swallowed a dog.
+<TR><TD>&nbsp;&nbsp;Perhaps she'll die.
+<TD>&nbsp;&nbsp;What a hog, to swallow a dog!
+<TR><TD>&nbsp;&nbsp;
+<TD>&nbsp;&nbsp;She swallowed the dog to catch the cat.
+<TR><TD>&nbsp;&nbsp;I know an old lady who swallowed a bird.
+<TD>&nbsp;&nbsp;She swallowed the cat to catch the bird.
+<TR><TD>&nbsp;&nbsp;How absurd, to swallow a bird!
+<TD>&nbsp;&nbsp;She swallowed the bird to catch the spider
+<TR><TD>&nbsp;&nbsp;She swallowed the bird to catch the spider
+<TD>&nbsp;&nbsp;that wriggled and jiggled and tickled inside her.
+<TR><TD>&nbsp;&nbsp;that wriggled and jiggled and tickled inside her.
+<TD>&nbsp;&nbsp;She swallowed the spider to catch the fly.
+<TR><TD>&nbsp;&nbsp;She swallowed the spider to catch the fly.
+<TD>&nbsp;&nbsp;I don't know why she swallowed the fly.
+<TR><TD>&nbsp;&nbsp;I don't know why she swallowed the fly.
+<TD>&nbsp;&nbsp;Perhaps she'll die.
+<TR><TD>&nbsp;&nbsp;Perhaps she'll die.
+<TD>&nbsp;&nbsp;
+<TR><TD>&nbsp;&nbsp;
+<TD>&nbsp;&nbsp;I know an old lady who swallowed a horse.
+<TR><TD>&nbsp;&nbsp;I know an old lady who swallowed a cat.
+<TD>&nbsp;&nbsp;She's dead of course!
+<TR><TD>&nbsp;&nbsp;Imagine that, to swallow a cat.
+<TD>&nbsp;&nbsp;
+<TR><TD>&nbsp;&nbsp;&nbsp;<TD>&nbsp;&nbsp;<TR><TD>&nbsp;&nbsp;&nbsp;<TD>&nbsp;&nbsp;
+<TR><TD>&nbsp;&nbsp;100 bottles of beer on the wall,
+<TD>&nbsp;&nbsp;98 bottles of beer on the wall,
+<TR><TD>&nbsp;&nbsp;100 bottles of beer.
+<TD>&nbsp;&nbsp;98 bottles of beer.
+<TR><TD>&nbsp;&nbsp;If one of those bottles should happen to fall,
+<TD>&nbsp;&nbsp;If one of those bottles should happen to fall,
+<TR><TD>&nbsp;&nbsp;99 bottles of beer on the wall.
+<TD>&nbsp;&nbsp;97 bottles of beer on the wall.
+<TR><TD>&nbsp;&nbsp;
+<TD>&nbsp;&nbsp;
+<TR><TD>&nbsp;&nbsp;99 bottles of beer on the wall,
+<TD>&nbsp;&nbsp;97 bottles of beer on the wall,
+<TR><TD>&nbsp;&nbsp;99 bottles of beer.
+<TD>&nbsp;&nbsp;97 bottles of beer.
+<TR><TD>&nbsp;&nbsp;If one of those bottles should happen to fall,
+<TD>&nbsp;&nbsp;If one of those bottles should happen to fall,
+<TR><TD>&nbsp;&nbsp;98 bottles of beer on the wall.
+<TD>&nbsp;&nbsp;96 bottles of beer on the wall&hellip;
+</TABLE> 
+<P>&nbsp;<P> 
+ 
+ 
+<P>In the next few chapters we're going to talk about <EM>recursion:</EM> solving a big problem by reducing it to a similar,
+smaller subproblem.  Actually that's a little backward from the old lady in
+the song, who turned her little problem into a similar but <EM>bigger</EM> 
+problem!  As the song warns us, this can be fatal.
+ 
+<P>Here's the first problem we'll solve.  We want a function that
+works like this:
+ 
+<P><PRE>&gt; (<A NAME="g1"></A>downup 'ringo)
+(RINGO RING RIN RI R RI RIN RING RINGO)
+ 
+&gt; (downup 'marsupial)
+(MARSUPIAL
+ MARSUPIA
+ MARSUPI
+ MARSUP
+ MARSU
+ MARS
+ MAR
+ MA
+ M
+ MA
+ MAR
+ MARS
+ MARSU
+ MARSUP
+ MARSUPI
+ MARSUPIA
+ MARSUPIAL)
+</PRE> 
+ 
+<P>None of the tools that we've used so far will handle this problem.  It's not
+a &quot;compute this function for each letter of the word&quot; problem, for which
+we could use <CODE>every</CODE>. Rather, we have to think
+about the entire word in a rather complicated way.
+ 
+<P>We're going to solve this problem using recursion.  It turns out that the
+idea of recursion is both very powerful&mdash;we can solve a <EM>lot</EM> of
+problems using it&mdash;and rather tricky to understand.  That's why we're going
+to explain recursion several different ways in the coming chapters.  Even
+after you understand one of them, you'll probably find that thinking about
+recursion from another point of view enriches your ability to use this idea.
+The explanation in this chapter is based on the <EM>combining method.</EM> 

@@ -1,0 +1,145 @@
+<P>Welcome to Self-Paced CS 61A, <i>Structure and Interpretation of Computer
+Programs</i> (<i>SICP</i>)!
+
+<!-- <P><a href="#menu">Skip to lesson links.</a> -->
+
+<P>There is also a <A HREF="http://inst.eecs.berkeley.edu/~cs61a">lecture
+version</A> of CS 61A with the same name, but making some departures from the
+textbook after which the course is named.  This self-paced version has no
+formal lectures, although videos of old lectures are optional; it provides
+different paths through the course material depending on the prior programming
+background of each student.
+
+<P>The CS 61 series is an introduction to computer science,
+with particular emphasis on software and on machines from a programmer's
+point of view.
+This first course
+concentrates mostly on the idea of <i>abstraction</i>, allowing the
+programmer to think in terms appropriate to the problem rather than
+in low-level operations dictated by the computer hardware.
+The next course, CS 61B, will deal with the more
+advanced engineering aspects of software&mdash;on
+constructing and analyzing large programs and on techniques for
+handling computationally expensive programs.  Finally, CS 61C concentrates
+on machines and how they carry out the programs you write.
+
+<!--
+<hrule>
+
+<P>The <i>SICP</i> textbook, by Harold Abelson and Gerald Jay Sussman
+with Julie Sussman, is available online
+<A HREF="http://www-mitpress.mit.edu/sicp/full-text/book/book.html">here</A>.
+
+<P>Those students whose prior experience does not include programming recursive
+functions, or does not include the Scheme language, or does not include
+computer programming at all, will start with excerpts from
+<i>Simply Scheme</i>, by Brian Harvey and Matthew Wright, a book written
+specifically as a "prequel" to <i>SICP</i>.  The entire book is also
+available online
+<A HREF="http://www.eecs.berkeley.edu/~bh/ss-toc2.html">here</A>.
+
+<P>The instructor of this course is
+<A HREF="http://cs.berkeley.edu/~bh">Brian Harvey</A>,
+<A HREF="mailto:bh@cs.berkeley.edu">bh@cs.berkeley.edu</A>,
+781 Soda Hall, 642-8311.  Send email to make an appointment.
+
+<P>For most administrative and intellectual problems, your first point of
+contact will be the TA, Darren Kuo, <A
+HREF="mailto:cs61as@imail.eecs.berkeley.edu">cs61as@imail.eecs.berkeley.edu</A>, ...
+
+<P>Another resource for intellectual questions is our
+<A HREF="http://www.piazzza.com/class/cs61as">online discussion group</A>,
+where you can get answers from other students and from the course staff.
+Don't post individual administrative questions ("Why did I get 5 points...")
+on the discussion group.
+
+<P>If you have a home computer, you may want to get a Scheme interpreter for
+it.  The Computer Science Division can provide you with free versions of
+Scheme for Linux, Windows, or MacOS.  The distribution also includes the
+Scheme library programs that we use in this course.  You can
+dowload copies of this distribution
+<A HREF="http://inst.EECS.Berkeley.EDU/~scheme">here</A>.
+
+<P>The course is organized into six "units" numbered 0 through 5.
+Unit 0 is the introductory material for students whose prior experience
+does not include programming recursive functions in Scheme.  Units 1
+through 5 correspond to chapters of the <i>SICP</i> textbook.  This is
+a <i>variable credit</i> course; you earn one UCB credit unit for each
+of course units 1 through 5 that you complete successfully.  This means
+that if you work at a slower pace, you can earn, e.g., two units of A
+instead of four units of F, and then finish the course next semester.
+Units 1 through 3 are the minimum requirement to meet the 61A prerequisite
+for later CS courses, but students are very strongly urged to complete
+unit 4 also, to have an experience equivalent to the lecture-based 61A.
+
+<P>The online material is organized in terms of "lessons"; for the most part,
+one lesson is roughly equivalent to a week in the lecture-based version of
+61A.  Lessons are named, e.g., 2.4 for the fourth lesson within unit 2.
+Each lesson contains in-class lab activities and homework, mostly taken
+from the textbook, for you to do on your own.  After you submit each homework
+assignment, you can see our solutions to the week's problems; you should be
+sure to read these and compare our solutions to yours to ensure that you
+understand the concepts of the lesson.
+
+<P>Each lesson ends with a link to the reading for the following lesson.
+<b>Do the reading <i>before</i> you do the next lab!</b>  And then probably
+read it again before doing the homework.
+
+<P>The purpose of the homework and lab exercises is for you to learn the
+course, not to prove that you already know it.  Therefore, the unit homeworks
+are not graded on the correctness of your solutions, but on effort.  <b>You
+will get full credit for an entirely wrong answer that shows reasonable
+effort!</b> (But you should test your work.  If your solution is incorrect,
+the grader will want to see some evidence that you know it's incorrect.)
+
+<P>Each lesson also includes both video and notes from a previous semester
+of the lecture-based 61A.  Don't watch the videos in the lab!  You need not
+watch them at all, but they're available to you to watch at home.  It's
+probably wise at least to read the lecture notes.
+
+<P>Most of the weekly assignments include problems labelled as "Extra for
+Experts."  These problems are entirely optional; do them only if you
+have finished the regular assignment and want to do something more
+challenging.  There is no extra <i>credit</i> for these problems;
+people who need more credit shouldn't even be trying them, and people
+who are doing well in the course should be motivated by the desire to learn.
+
+<P>After completing each lesson, and reading the online solutions, you should
+ask your TA in lab to give you a quiz on the lesson.  The quiz will be
+randomly generated from a bank of questions.  A typical quiz will have one
+<i>analytic</i> question, in which you are given a program and asked to
+describe something about its behavior; one <i>synthetic</i> question, in which
+you are asked to write a short computer program; and one <i>expert</i>
+question, pushing the limits of what we expect the best students to
+accomplish.  You must answer the first two correctly to go on to the next
+lesson; if not, you can review the lesson at your own pace and then retake the
+quiz (with different questions) until you do pass it.  Answering the first two
+questions counts as a B; answering all three correctly is an A.
+
+<P>Different students will progress through the course at different
+speeds, and that's fine.  In order to complete units 1&ndash;4 in one
+semester, though, you should plan to pace yourself at one lesson per
+week.  Students who complete lessons <i>faster</i> than that will be
+offered optional lessons, consisting of <i>SICP</i> sections we have
+traditionally skipped over in 61A for lack of time, one at the end of
+unit 3 and one at the end of unit 4.  Unit 5 (consisting
+of chapter 5 of <i>SICP</i>) is similarly optional.  If you complete
+four of the six optional lessons, your registration is retroactively
+changed to CS 61AH, <i>Honors</i> Structure and Interpretation of
+Computer Programs.
+
+<P>Tutoring services are provided by Eta Kappa Nu (HKN), the EECS honors
+society (345 Soda, hkn@hkn), and Upsilon Pi Epsilon, the Computer
+Science honors society (346 Soda, upe@cory).
+
+<hrule>
+-->
+
+<P>Click on the "Administration" link at the left for more
+information about the textbook, grading, and staff.
+
+<a name="menu>
+
+<P>Your first task is to click on "First Survey" below, and fill out the
+form that appears to let us know about your prior programming experience.
+

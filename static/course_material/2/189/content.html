@@ -1,0 +1,124 @@
+<P><B>3.1</B>&nbsp;&nbsp;Translate the arithmetic expressions (3+4)&times;5 and 3+(4&times;5)
+into Scheme expressions, and into plumbing diagrams.
+ 
+<P><B>3.9</B>&nbsp;&nbsp;The expression <CODE>(+ 8 2)</CODE> has the value <CODE>10</CODE>.  It is a compound
+expression made up of three atoms.  For this problem, write five other
+Scheme expressions whose values are also the number ten:
+ 
+<P><TABLE><TR><TH align="right" valign="top">&bull;<TD>&nbsp;&nbsp;&nbsp;&nbsp;<TD valign="top">An atom
+ 
+</TABLE><TABLE><TR><TH align="right" valign="top">&bull;<TD>&nbsp;&nbsp;&nbsp;&nbsp;<TD valign="top">Another compound expression made up of three atoms
+ 
+</TABLE><TABLE><TR><TH align="right" valign="top">&bull;<TD>&nbsp;&nbsp;&nbsp;&nbsp;<TD valign="top">A compound expression made up of four atoms
+ 
+</TABLE><TABLE><TR><TH align="right" valign="top">&bull;<TD>&nbsp;&nbsp;&nbsp;&nbsp;<TD valign="top">A compound expression made up of an atom and two compound subexpressions
+ 
+</TABLE><TABLE><TR><TH align="right" valign="top">&bull;<TD>&nbsp;&nbsp;&nbsp;&nbsp;<TD valign="top">Any other kind of expression
+ 
+</TABLE><P> 
+
+<br/><br/>
+
+<P><B>4.4</B>&nbsp;&nbsp;Each of the following procedure definitions has an error of some kind.
+Say what's wrong and why, and fix it:
+ 
+<P><PRE>(define (sphere-volume r)
+  (* (/ 4 3) 3.141592654)
+  (* r r r))
+ 
+(define (next x)
+  (x + 1))
+ 
+(define (square)
+  (* x x))
+ 
+(define (triangle-area triangle)
+  (* 0.5 base height))
+ 
+(define (sum-of-squares (square x) (square y))
+  (+ (square x) (square y)))
+</PRE> 
+ 
+<P> 
+<B>4.6</B>&nbsp;&nbsp;Define a procedure <CODE>fourth</CODE> that computes the fourth power of its
+argument.  Do this two ways, first using the multiplication function,
+and then using <CODE>square</CODE> and not (directly) using multiplication.
+ 
+<P> 
+<B>4.8</B>&nbsp;&nbsp;&quot;Scientific notation&quot; is a way to represent very small or very large
+numbers by combining a medium-sized number with a power of 10.  For example,
+5&times;10<SUP><SMALL>7</SMALL></SUP> represents the number 50000000, while 3.26&times;10<SUP><SMALL>-9</SMALL></SUP> 
+represents 0.00000000326 in scientific notation.  Write a procedure
+<CODE>scientific</CODE> that takes two arguments, a number and an exponent of 10,
+and returns the corresponding value:
+ 
+<P><PRE>&gt; (scientific 7 3)
+7000
+ 
+&gt; (scientific 42 -5)
+0.00042
+</PRE> 
+ 
+<P>Some versions of Scheme represent fractions in <EM>a</EM>/<EM>b</EM> form, and
+some use scientific notation, so you might see <CODE>21/50000</CODE> or <CODE>4.2E-4</CODE> 
+as the result of the last example instead of <CODE>0.00042</CODE>, but these are
+the same value.
+ 
+<P>(A harder problem for hotshots:  Can you write procedures that go in the
+other direction?  So you'd have
+ 
+<P><PRE>&gt; (sci-coefficient 7000)
+7
+ 
+&gt; (sci-exponent 7000)
+3
+</PRE> 
+ 
+<P>You might find the primitive procedures <CODE>log</CODE> and <CODE>floor</CODE> helpful.)
+
+<br/><br/>
+
+<P> 
+<B>5.15</B>&nbsp;&nbsp;<A NAME="firsttwo"></A> 
+Write a procedure <CODE><A NAME="g28"></A>first-two</CODE> that takes a word as its argument,
+returning a two-letter word containing the first two letters of the argument.
+ 
+<P><PRE>&gt; (first-two 'ambulatory)
+AM
+</PRE> 
+ 
+<P> 
+ 
+<B>5.16</B>&nbsp;&nbsp;Write a procedure <CODE><A NAME="g29"></A>two-first</CODE> that takes two words as arguments,
+returning a two-letter word containing the first letters of the two
+arguments.
+ 
+<P><PRE>&gt; (two-first 'brian 'epstein)
+BE
+</PRE> 
+ 
+<P>Now write a procedure <CODE><A NAME="g30"></A>two-first-sent</CODE> that takes a two-word
+sentence as argument, returning a two-letter word containing the first
+letters of the two words.
+ 
+<P><PRE>&gt; (two-first-sent '(brian epstein))
+BE
+</PRE> 
+ 
+<P> 
+<B>5.19</B>&nbsp;&nbsp;Write a procedure <CODE><A NAME="g33"></A>insert-and</CODE> that takes a sentence of items and
+returns a new sentence with an &quot;and&quot; in the right place:
+ 
+<P><PRE>&gt; (insert-and '(john bill wayne fred joey))
+(JOHN BILL WAYNE FRED AND JOEY)
+</PRE> 
+ <P> 
+<B>5.21</B>&nbsp;&nbsp;Write a procedure <CODE><A NAME="g35"></A>query</CODE> that turns a statement into a question
+by swapping the first two words and adding a question mark to the last word:
+ 
+<P><PRE>&gt; (query '(you are experienced))
+(ARE YOU EXPERIENCED?)
+ 
+&gt; (query '(i should have known better))
+(SHOULD I HAVE KNOWN BETTER?)
+</PRE> 

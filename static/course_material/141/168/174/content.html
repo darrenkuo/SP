@@ -1,0 +1,85 @@
+<P>One way in which recursive patterns can be useful is if you think of them as
+templates with empty slots to fill in for a particular problem.  Here are
+template versions of the <CODE>every</CODE>, <CODE>keep</CODE>, and <CODE>accumulate</CODE> 
+patterns as applied to sentences:
+ 
+<P><PRE>(define (<B>every-something</B> sent)
+  (if (empty? sent)
+      '()
+      (se (______ (first sent))
+      (<B>every-something</B> (bf sent)))))
+ 
+(define (<B>keep-if-something</B> sent)
+  (cond ((empty? sent) '())
+    ((______<STRONG><BIG>?</BIG></STRONG> (first sent))
+     (se (first sent) (<B>keep-if-something</B> (bf sent))))
+    (else (<B>keep-if-something</B> (bf sent)))))
+</PRE> 
+ 
+<P> 
+<A NAME="keeptemplate"></A> 
+<PRE>(define (<B>accumulate-somehow</B> sent)
+  (if (empty? sent)
+      ______
+      (______ (first sent)
+              (<B>accumulate-somehow</B> (bf sent)))))
+</PRE> 
+ 
+<P>Suppose you're trying to write a procedure <CODE>first-number</CODE> that takes a
+sentence as its argument and returns the first number in that sentence, but
+returns the word <CODE>no-number</CODE> if there are no numbers in the argument.
+The first step is to make a guess about which pattern will be most useful.
+In this case the program should start with an entire sentence and select a
+portion of that sentence, namely one word.  Therefore, we start with the
+<CODE>keep</CODE> pattern.
+ 
+<P><PRE>(define (first-number sent)                  ;; first guess
+  (cond ((empty? sent) '())
+    ((______ (first sent))
+     (se (first sent) (first-number (bf sent))))
+    (else (first-number (bf sent)))))
+</PRE> 
+ 
+<P>The next step is to fill in the blank.  Obviously, since we're looking for a
+number, <CODE>number?</CODE> goes in the blank.
+ 
+<P>The trouble is that this procedure returns <EM>all</EM> the numbers in the
+given sentence.  Now our job is to see how the pattern must be modified to
+do what we want.  The overall structure of the pattern is a <CODE>cond</CODE> with three clauses; we'll consider each clause separately.
+ 
+<P>What should the procedure return if <CODE>sent</CODE> is empty?  In that case,
+there is no first number in the sentence, so it should return <CODE>no-number</CODE>:
+ 
+<P><PRE>((empty? sent) <B>'no-number</B>)
+</PRE> 
+ 
+<P>What if the first word of the sentence is a number?  The program should
+return just that number, ignoring the rest of the sentence:
+ 
+<P><PRE>((number? (first sent)) <B>(first sent)</B>)
+</PRE> 
+ 
+<P>What if the first word of the sentence isn't a number?  The procedure must
+make a recursive call for the <CODE>butfirst</CODE>, and whatever that recursive
+call returns is the answer.  So the <CODE>else</CODE> clause does not have to be
+changed.
+ 
+<P>Here's the whole procedure:
+ 
+<P><PRE>(define (<A NAME="g21"></A>first-number sent)
+  (cond ((empty? sent) 'no-number)
+    ((number? (first sent)) (first sent))
+    (else (first-number (bf sent)))))
+</PRE> 
+ 
+<P>After filling in the blank in the <CODE>keep</CODE> pattern, we solved this problem
+by focusing on the details of the procedure definition.  We examined each
+piece of the definition to decide what changes were necessary.  Instead, we
+could have focused on the <EM>behavior</EM> of the procedure.  We would have
+found two ways in which the program didn't do what it was supposed to do:
+For an argument sentence containing numbers, it would return all of the
+numbers instead of just one of them.  For a sentence without numbers, it
+would return the empty sentence instead of <CODE>no-number</CODE>.  We would then
+have finished the job by <EM>debugging</EM> the procedure to fix each of these
+problems.  The final result would have been the same.
+ 

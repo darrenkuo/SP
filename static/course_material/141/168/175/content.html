@@ -1,0 +1,53 @@
+<P>We want to write the procedure <CODE>sent-before?</CODE>, which takes two sentences
+as arguments and returns <CODE>#t</CODE> if the first comes alphabetically before
+the second.  The general idea is to compare the sentences word by word.  If
+the first words are different, then whichever is alphabetically earlier
+determines which sentence comes before the other.  If the first words are
+equal, we go on to compare the second words.
+ 
+<P><PRE>&gt; (sent-before? '(hold me tight) '(sun king))
+#T
+ 
+&gt; (sent-before? '(lovely rita) '(love you to))
+#F
+ 
+&gt; (sent-before? '(strawberry fields forever)
+    '(strawberry fields usually))
+#T
+</PRE> 
+ 
+<P>Does this problem follow any of the patterns we've seen?  It's not an <CODE>every</CODE>, because the result isn't a sentence in which each word is a
+transformed version of a word in the arguments.  It's not a <CODE>keep</CODE>,
+because the result isn't a subset of the words in the arguments.  And it's
+not exactly an <CODE>accumulate</CODE>.  We do end up with a single true or
+false result, rather than a sentence full of results.  But in a typical <CODE>accumulate</CODE> problem, every word of the argument contributes to the solution.
+In this case only one word from each sentence determines the overall result.
+ 
+<P>On the other hand, this problem does have something in common with the <CODE>keep</CODE> pattern:  We know that on each invocation there will be three
+possibilities.  We might reach a base case (an empty sentence); if not, the
+first words of the argument sentences might or might not be relevant to the
+solution.
+ 
+<P>We'll have a structure similar to the usual <CODE>keep</CODE> pattern, except that
+there's no <CODE>se</CODE> involved; if we find unequal words, the problem is
+solved without further recursion.  Also, we have two arguments, and either
+of them might be empty.
+ 
+<P><PRE>(define (<A NAME="g22"></A>sent-before? sent1 sent2)
+  (cond ((empty? sent1) #t)
+    ((empty? sent2) #f)
+    ((before? (first sent1) (first sent2)) #t)
+    ((before? (first sent2) (first sent1)) #f)
+    (else (sent-before? (bf sent1) (bf sent2)))))
+</PRE> 
+ 
+<P>Although thinking about the <CODE>keep</CODE> pattern helped us to work
+out this solution, the result really doesn't look much like a <CODE>keep</CODE>.
+We had to invent most of the details by thinking about this particular
+problem, not by thinking about the pattern.
+ 
+<P>In the next chapter we'll look at examples of recursive procedures that are
+quite different from any of these patterns.  Remember, the patterns are a
+shortcut for many common problems, but don't learn the shortcut at the
+expense of the general technique.
+ 

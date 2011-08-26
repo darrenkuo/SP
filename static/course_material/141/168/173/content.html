@@ -1,0 +1,55 @@
+<P>Let's say we want a procedure <CODE>every-nth</CODE> that takes a number <EM>n</EM> and a
+sentence as arguments and selects every <EM>n</EM>th word from the sentence.
+ 
+<P><PRE>&gt; (every-nth 3 '(with a little help from my friends))
+(LITTLE MY)
+</PRE> 
+ 
+<P>We get in trouble if we try to write this in the obvious way, as a sort of
+<CODE>keep</CODE> pattern.
+ 
+<P><PRE>(define (every-nth n sent)                   ;; wrong!
+  (cond ((empty? sent) '())
+        ((= n 1)
+         (se (first sent) (every-nth <STRONG><BIG>n</BIG></STRONG> (bf sent))))
+        (else (every-nth (- n 1) (bf sent)))))
+</PRE> 
+ 
+<P>The problem is with the <CODE><B>n</B></CODE> that's in boldface.
+We're thinking that it's going to be the <CODE>n</CODE> of the <EM>original</EM> 
+invocation of <CODE>every-nth</CODE>, that is, 3.  But in fact, we've already counted
+<CODE>n</CODE> down so that in this invocation its value is 1.  (Check out the first
+half of the same <CODE>cond</CODE> clause.)  This procedure will correctly skip the
+first two words but will keep all the words after that point.  That's
+because we're trying to remember two different numbers: the number we
+should always skip between kept words, and the number of words we still need
+to skip this time.
+ 
+<P> 
+If we're trying to remember two numbers, we need two names for them.  The
+way to achieve this is to have our official <CODE>every-nth</CODE> procedure call a
+<A NAME="g15"></A><A NAME="g16"></A>helper procedure that takes an extra argument and does the real work:
+ 
+<P><PRE>(define (<A NAME="g17"></A>every-nth n sent)
+  (every-nth-helper n n sent))
+ 
+(define (<A NAME="g18"></A>every-nth-helper interval remaining sent)
+  (cond ((empty? sent) '())
+        ((= remaining 1)
+         (se (first sent)
+             (every-nth-helper interval interval (bf sent))))
+        (else (every-nth-helper interval (- remaining 1) (bf sent)))))
+</PRE> 
+ 
+<P>This procedure always calls itself recursively with the same value
+of <CODE>interval</CODE>, but with a different value of <CODE>remaining</CODE> each time.
+<CODE>Remaining</CODE> keeps getting smaller by one in each recursive call until it
+equals 1.  On that call, a word is kept for the return value, and we call
+<CODE>every-nth-helper</CODE> recursively with the value of <CODE>interval</CODE>, that is,
+the <EM>original</EM> value of <CODE>n</CODE>, as the new <CODE>remaining</CODE>.
+If you like, you can think of this combination of an <EM>initialization</EM> 
+<A NAME="g19"></A> 
+<A NAME="g20"></A> 
+procedure and a <EM>helper</EM> procedure as another pattern for your
+collection.
+ 

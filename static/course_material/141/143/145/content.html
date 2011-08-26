@@ -1,0 +1,44 @@
+<P>But that's a terrible idea.  We'd get really bored, and start making a lot
+of mistakes, if we tried to work up to <CODE>downup83</CODE> this way.
+ 
+<P>The next trick is to notice that the middle part of what <CODE>(downup3 'foo)</CODE> does is just like <CODE>(downup2 'fo)</CODE>:
+ 
+<P><CENTER><IMG SRC="###content_dir###/uparrow.jpg" ALT="figure: uparrow"></CENTER> 
+ 
+<P> 
+<P>So we can find the parts of <CODE>downup3</CODE> that are responsible for
+those three words:
+ 
+<P><CENTER><IMG SRC="###content_dir###/curvedarrow.jpg" ALT="figure: curvedarrow"></CENTER> 
+ 
+<P> 
+<P>and replace them with an invocation of <CODE>downup2</CODE>:
+ 
+<P><PRE>(define (downup3 wd)
+  (se wd (downup2 (bl wd)) wd))
+</PRE> 
+ 
+<P>How about <CODE>downup4</CODE>?  Once we've had this great idea about using <CODE>downup2</CODE> to help with <CODE>downup3</CODE>, it's not hard to continue the pattern:
+ 
+<P><PRE>(define (downup4 wd)
+  (se wd (downup3 (bl wd)) wd))
+ 
+&gt; (downup4 'paul)
+(PAUL PAU PA P PA PAU PAUL)
+</PRE> 
+ 
+<P>The reason we can fit the body of <CODE>downup4</CODE> on one line is that most of
+its work is done for it by <CODE>downup3</CODE>.  If we continued writing each new
+<CODE>downup</CODE> procedure independently, as we did in our first attempt at <CODE>downup3</CODE>, our procedures would be getting longer and longer.  But this new
+way avoids that.
+ 
+<P><PRE>(define (downup59 wd)
+  (se wd (downup58 (bl wd)) wd))
+</PRE> 
+ 
+<P>Also, although it may be harder to notice, we can even rewrite <CODE>downup2</CODE> 
+along the same lines:
+ 
+<P><PRE>(define (downup2 wd)
+  (se wd (downup1 (bl wd)) wd))
+</PRE> 

@@ -1,0 +1,101 @@
+<P>Let's take another example; we'll write the <A NAME="g7"></A><A NAME="g8"></A>Pig Latin procedure
+that we showed off in Chapter 1.  We're trying to take a word, move
+all the initial consonants to the end, and add &quot;ay.&quot;
+ 
+<P>The simplest case is that there are no initial consonants to move:
+ 
+<P><PRE>(define (pigl0 wd)
+  (word wd 'ay))
+ 
+&gt; (pigl0 'alabaster)
+ALABASTERAY
+</PRE> 
+ 
+<P>(This will turn out to be the base case of our eventual
+recursive procedure.)
+ 
+<P>The next-simplest case is a word that starts with one consonant.  The
+obvious way to write this is
+ 
+<P><PRE>(define (pigl1 wd)                           ;; obvious version
+  (word (bf wd) (first wd) 'ay))
+ 
+&gt; (pigl1 'salami)
+ALAMISAY
+</PRE> 
+ 
+<P>but, as in the <CODE>downup</CODE> example, we'd like to find a way to use
+<CODE>pigl0</CODE> in implementing <CODE>pigl1</CODE>.  This case isn't exactly like <CODE>downup</CODE>, because there isn't a piece of the return value that we can draw a
+box around to indicate that <CODE>pigl0</CODE> returns that piece.  Instead, <CODE>pigl0</CODE> puts the letters <CODE>ay</CODE> at the end of some word, and so does <CODE>pigl1</CODE>.  The difference is that <CODE>pigl1</CODE> puts <CODE>ay</CODE> at the end of
+a <EM>rearrangement</EM> of its argument word.  To make this point clearer,
+we'll rewrite <CODE>pigl1</CODE> in a way that separates the rearrangement from the
+<CODE>ay</CODE> addition:
+ 
+<P><PRE>(define (pigl1 wd)
+  (word (word (bf wd) (first wd))
+    'ay))
+ 
+&gt; (pigl1 'pastrami)
+ASTRAMIPAY
+</PRE> 
+ 
+<P>Now we actually replace the <CODE>pigl0</CODE>-like part with an
+invocation.  We want to replace <CODE>(word <CODE><EM>something</EM></CODE> 'ay)</CODE> with
+<CODE>(pigl0 <CODE><EM>something</EM></CODE>)</CODE>.  If we use <CODE>pigl0</CODE> to attach the
+<CODE>ay</CODE> at the end, our new version of <CODE>pigl1</CODE> looks like this:
+ 
+<P><PRE>(define (pigl1 wd)
+  (pigl0 (word (bf wd) (first wd))))
+</PRE> 
+ 
+<P>How about a word starting with two consonants?  By now we know that we're
+going to try to use <CODE>pigl1</CODE> as a helper procedure, so let's skip writing
+<CODE>pigl2</CODE> the long way.  We can just move the first consonant to the end
+of the word, and handle the result, a word with only one consonant in front,
+with <CODE>pigl1</CODE>:
+ 
+<P><PRE>(define (pigl2 wd)
+  (pigl1 (word (bf wd) (first wd))))
+ 
+&gt; (pigl2 'trample)
+AMPLETRAY
+</PRE> 
+ 
+<P>For a three-initial-consonant word we move one letter to the end and call
+<CODE>pigl2</CODE>:
+ 
+<P><PRE>(define (pigl3 wd)
+  (pigl2 (word (bf wd) (first wd))))
+ 
+&gt; (pigl3 'chrome)
+OMECHRAY
+</PRE> 
+ 
+<P>So how about a version that will work for any word? The recursive case will involve taking the <CODE>pigl</CODE> of <CODE>(word (bf wd) (first wd))</CODE>, to match the pattern we found in
+<CODE>pigl1</CODE>, <CODE>pigl2</CODE>, and <CODE>pigl3</CODE>.  The base case will be a word
+that begins with a vowel, for which we'll just add <CODE>ay</CODE> on the end, as
+<CODE>pigl0</CODE> does:
+ 
+<P><PRE>(define (<A NAME="g9"></A>pigl wd)
+  (if (member? (first wd) 'aeiou)
+      (word wd 'ay)
+      (pigl (word (bf wd) (first wd)))))
+</PRE> 
+ 
+<P>It's an unusual sense in which <CODE>pigl</CODE>'s recursive call poses a
+&quot;smaller&quot; subproblem.  If we're asked for the <CODE>pigl</CODE> of <CODE>scheme</CODE>,
+we construct a new word, <CODE>chemes</CODE>, and ask for <CODE>pigl</CODE> of that.  This
+doesn't seem like much progress.  We were asked to translate <CODE>scheme</CODE>, a
+six-letter word, into Pig Latin, and in order to do this we need to
+translate <CODE>chemes</CODE>, another six-letter word, into Pig Latin.
+ 
+<P>But actually this <EM>is</EM> progress, because for Pig Latin the base case
+isn't a one-letter word, but rather a word that starts with a vowel.
+<CODE>Scheme</CODE> has three consonants before the first vowel; <CODE>chemes</CODE> has
+only two consonants before the first vowel.
+ 
+<P><CODE>Chemes</CODE> doesn't begin with a vowel either, so we construct the word
+<CODE>hemesc</CODE> and try to <CODE>pigl</CODE> that.  In order to find <CODE>(pigl 'hemesc)</CODE> we need to know <CODE>(pigl 'emesch)</CODE>.  Since <CODE>emesch</CODE> 
+<EM>does</EM> begin with a vowel, <CODE>pigl</CODE> returns <CODE>emeschay</CODE>. Once we
+know <CODE>(pigl 'emesch)</CODE>, we've thereby found the answer to our original
+question.

@@ -1,0 +1,41 @@
+<P>We'll use the leap of faith method to solve another problem that
+we haven't already solved with the combining method.
+ 
+<P>The factorial of a number <EM>n</EM> is defined as 1&#x00d7;2&#x00d7;&#x00b7;&#x00b7;&#x00b7;&#x00d7;<EM>n</EM>.  So the factorial of 5 (written &quot;5!&quot;) is 1&#x00d7;2&#x00d7;3&#x00d7;4&#x00d7;5.  Suppose you want Scheme to figure out the factorial of
+some large number, such as 843.  You start from the definition:  843! is 1&#x00d7;2&#x00d7;&#x00b7;&#x00b7;&#x00b7;&#x00d7;842&#x00d7;843.  Now you have to look for
+another factorial problem whose answer will help us find the answer to
+843!.  You might notice that 2!, that is, 1&#x00d7;2, is part of 843!,
+but that doesn't help very much because there's no simple relationship
+between 2! and 843!.  A more fruitful observation would be that 842!
+is 1&#x00d7;&#x00b7;&#x00b7;&#x00b7;&#x00d7;842&mdash;that is, all but the last number in the
+product we're trying to compute.  So 843! = 843&#x00d7;842!.  In general,
+<EM>n</EM>! is <EM>n</EM>&#x00d7;(<EM>n</EM>-1)!.  We can embody this idea in a Scheme procedure:
+ 
+<P><PRE>(define (factorial n)                        ;; first version
+  (* n (factorial (- n 1))))
+</PRE> 
+ 
+<P>Asking for (<EM>n</EM>-1)! is the leap of faith.  We're expressing an
+answer we don't know, 843!, in terms of another answer we don't know,
+842!.  But since 842! is a smaller, similar subproblem, we are confident
+that the same algorithm will find it.
+ 
+<P>Remember that in the <CODE>reverse</CODE> problem we mentioned that we could have
+chosen either the <CODE>butfirst</CODE> or the <CODE>butlast</CODE> of the argument as the
+smaller subproblem?  In the case of the <CODE>factorial</CODE> problem we don't
+have a similar choice.  If we tried to subdivide the problem as
+ 
+<P><P ALIGN="center">6! = 1&#x00d7;(2&#x00d7;3&#x00d7;4&#x00d7;5&#x00d7;6)</P> 
+<P> 
+ 
+then the part in
+parentheses would <EM>not</EM> be the factorial of a smaller
+number.
+ 
+<P>As the base case for <CODE>factorial</CODE>, we'll use 1! = 1.
+ 
+<P><PRE>(define (<A NAME="g1"></A>factorial n)
+  (if (= n 1)
+      1
+      (* n (factorial (- n 1)))))
+</PRE> 

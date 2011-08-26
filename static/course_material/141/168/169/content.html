@@ -1,0 +1,63 @@
+ 
+<P>Here's a procedure to square every number in a sentence of numbers:
+ 
+<P><PRE>(define (square-sent sent)
+  (if (empty? sent)
+      '()
+      (se (square (first sent))
+          (square-sent (bf sent)))))
+</PRE> 
+ 
+<P>Here's a procedure to translate every word of a sentence into Pig Latin:
+ 
+<P><PRE>(define (pigl-sent sent)
+  (if (empty? sent)
+      '()
+      (se (pigl (first sent))
+          (pigl-sent (bf sent)))))
+</PRE> 
+ 
+<P>The pattern here is pretty clear.  Our recursive case will do something
+straightforward to the <CODE>first</CODE> of the sentence, such as <CODE>square</CODE>ing it
+or <CODE>pigl</CODE>ing it, and we'll combine that with the result of a recursive
+call on the <CODE>butfirst</CODE> of the sentence.
+ 
+<P>The <CODE>letter-pairs</CODE> procedure that we wrote in Chapter 11 is
+an example of a procedure that follows the <CODE>every</CODE> pattern pretty
+closely, but not exactly.  The difference is that <CODE>letter-pairs</CODE> looks
+at its argument sentence two words at a time.
+ 
+<P><PRE>(define (<A NAME="g3"></A>letter-pairs wd)
+  (if (= (count wd) 1)
+      '()
+      (se (word (first wd) (first (bf wd)))
+          (letter-pairs (bf wd)))))
+</PRE> 
+ 
+<P>Compare this with the earlier definition of <CODE>square-sent</CODE>.  The recursive case still uses <CODE>se</CODE> to combine one
+part of the result with a recursive call based on the <CODE>butfirst</CODE> of
+the argument, but here both the first letter and the second letter of the
+argument contribute to the first word of the result.  That's why the base
+case also has to be different; the recursive case requires at least two
+letters, so the base case is a one-letter word.
+ 
+<P>Let's solve a slightly different problem.  This time, we want to break the
+word down into <EM>non-overlapping</EM> pairs of letters, like this:
+ 
+<P><PRE>&gt; (disjoint-pairs 'tripoli)                  ;; the new problem
+(TR IP OL I)
+ 
+&gt; (letter-pairs 'tripoli)                    ;; compare the old one
+(TR RI IP PO OL LI)
+</PRE> 
+ 
+<P>The main difference between these two functions is that in <CODE>disjoint-pairs</CODE> we eliminate two letters at once in the recursive call.  A
+second difference is that we have to deal with the special case of
+odd-length words.
+ 
+<P><PRE>(define (<A NAME="g4"></A>disjoint-pairs wd)
+  (cond ((empty? wd) '())
+    ((= (count wd) 1) (se wd))
+    (else (se (word (first wd) (first (bf wd)))
+      (disjoint-pairs (bf (bf wd)))))))
+</PRE> 

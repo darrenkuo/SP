@@ -1,0 +1,102 @@
+<P>One possible pitfall is a recursive case that doesn't make progress,
+that is, one that doesn't reduce the size of the problem in the recursive call.
+For example, let's say we're trying to write the procedure <CODE>down</CODE> that
+works this way:
+ 
+<P><PRE>&gt; (down 'town)
+(TOWN TOW TO T)
+</PRE> 
+ 
+<P>Here's an incorrect attempt:
+ 
+<P><PRE>(define (down wd)                            ;; wrong!
+  (if (empty? wd)
+      '()
+      (se wd (down (first wd)))))
+</PRE> 
+ 
+<P>The recursive call looks as if it reduces the size of the problem,
+but try it with an actual example.  What's <CODE>first</CODE> of the word <CODE>splat</CODE>?  What's <CODE>first</CODE> of that result?  What's <CODE>first</CODE> of <EM>that</EM> result?
+ 
+<P>A pitfall that sounds unlikely in the abstract but is actually
+surprisingly common is to try to do the second step of the procedure &quot;by
+hand&quot; instead of trusting the recursion to do it.  For example, here's
+another attempt at that <CODE>down</CODE> procedure:
+ 
+<P><PRE>(define (down wd)                            ;; incomplete
+  (se wd &hellip;))
+</PRE> 
+ 
+<P>You know the first word in the result has to be the argument
+word.  Then what?  The next thing is the same word with its last letter
+missing:
+ 
+<P><PRE>(define (down wd)                            ;; wrong!
+  (se wd (bl wd) &hellip;))
+</PRE> 
+ 
+<P>Instead of taking care of the entire rest of the problem with a
+recursive call, it's tempting to take only one more step, figuring out how
+to include the second word of the required solution.  But that approach
+won't get you to a general recursive solution.  Just take the first step
+and then trust the recursion for the rest:
+ 
+<P><PRE>(define (<A NAME="g6"></A>down wd)
+  (if (empty? wd)
+      '()
+      (se wd (down (bl wd)))))
+</PRE> 
+ 
+<P>The value returned in the base case of your procedure must be in the
+range of the function you are representing.  If your function is supposed to
+return a number, it must return a number all the time, even in the base
+case.  You can use this idea to help you check the correctness of the
+base case expression.
+ 
+<P>For example, in <CODE>downup</CODE>, the base case returns <CODE>(se wd)</CODE> for the
+base case argument of a one-letter word.  How did we think to enclose the
+word in a sentence?  We know that in the recursive cases <CODE>downup</CODE> always
+returns a sentence, so that suggests to us that it must return a sentence in
+the base case also.
+ 
+<P>If your base case doesn't make sense in its own right, it probably
+means that you're trying to compensate for a mistake in the recursive case.
+ 
+<P>For example, suppose you've fallen into the pitfall of trying to handle the
+second word of a sentence by hand, and you've written the following
+procedure:
+ 
+<P><PRE>(define (square-sent sent)                   ;; wrong
+  (if (empty? sent)
+      '()
+      (se (square (first sent))
+      (square (first (bf sent)))
+      (square-sent (bf sent)))))
+ 
+&gt; (square-sent '(2 3))
+ERROR: Invalid argument to FIRST:  ()
+</PRE> 
+ 
+<P>After some experimentation, you find that you can get this example
+to work by changing the base case:
+ 
+<P><PRE>(define (square-sent sent)                   ;; still wrong
+  (if (= (count sent) 1)
+      '()
+      (se (square (first sent))
+      (square (first (bf sent)))
+      (square-sent (bf sent)))))
+ 
+&gt; (square-sent '(2 3))
+(4 9)
+</PRE> 
+ 
+<P>The trouble is that the base case doesn't make sense on its own:
+ 
+<P><PRE>&gt; (square-sent '(7))
+()
+</PRE> 
+ 
+<P>In fact, this procedure doesn't work for any sentences of length
+other than two.  The moral is that it doesn't work to correct an error in the
+recursive case by introducing an absurd base case.

@@ -1,0 +1,160 @@
+<P>The little-people model explains recursion very well, as long as you're
+willing to focus your attention on the job of one little person, taking the
+next little person's subtask as a &quot;black box&quot; that you assume is carried
+out correctly.  Your willingness to make that assumption is a necessary step
+in becoming truly comfortable with recursive programming.
+ 
+<P>Still, some people are very accustomed to a <EM>sequential</EM> model of
+computing.  In that model, there's only one computer, not a lot of little
+people, and that one computer has to carry out one step at a time.  If
+you're one of those people, you may find it hard to take the subtasks on
+faith.  You want to know exactly what happens when!  There's nothing wrong
+with such healthy scientific skepticism about recursion.
+ 
+<P>If you're a sequential thinker, you can <EM>trace</EM> procedures to get
+<A NAME="g7"></A> 
+detailed information about the sequence of events. But if
+you're happy with the way we've been talking about recursion up to now, and
+if you find that this section doesn't contribute to your
+understanding of recursion, don't worry about it.  Our experience
+shows that this way of thinking helps some people but not
+everybody. 
+Before we get to recursive procedures, let's just trace some nonrecursive
+ones:
+ 
+<P><PRE>(define (double wd) (word wd wd))
+ 
+&gt; (trace double)
+&gt; (double 'frozen)
+<SMALL><CODE>(double frozen)
+frozenfrozen
+</CODE></SMALL>FROZENFROZEN
+</PRE> 
+ 
+<P>The argument to <CODE>trace</CODE> specifies a procedure.  When you
+invoke <CODE>trace</CODE>, that procedure becomes &quot;traced&quot;; this means that every time
+you invoke the procedure, Scheme will print out the name of the procedure
+and the actual arguments.  When the procedure returns a
+<A NAME="g8"></A> 
+value, Scheme will print that value.
+ 
+<P>Tracing isn't very interesting if we're just invoking a traced procedure
+once.  But look what happens when we trace a procedure that we're using
+more than once:
+ 
+<P><PRE>&gt; (double (double (double 'yum)))
+<SMALL><CODE>(double yum)
+yumyum
+(double yumyum)
+yumyumyumyum
+(double yumyumyumyum)
+yumyumyumyumyumyumyumyum
+</CODE></SMALL> 
+YUMYUMYUMYUMYUMYUMYUMYUM
+</PRE> 
+ 
+<P>This time, there were three separate
+invocations of <CODE>double</CODE>, and we saw each one as it happened.  First we
+<CODE>double</CODE>d <CODE>yum</CODE>, and the answer was <CODE>yumyum</CODE>. Then we <CODE>double</CODE>d <CODE>yumyum</CODE>, and so on.  Finally, after we invoked <CODE>double</CODE> for
+the last time, its result was printed by the read-eval-print loop.
+ 
+<P> 
+<P>When you're finished investigating a procedure, you can turn off tracing by
+invoking <A NAME="g9"></A><CODE>untrace</CODE> with the procedure as argument:
+ 
+<P><PRE>&gt; (untrace double)
+</PRE> 
+ 
+<P>Let's try tracing a recursive procedure:
+ 
+<P><PRE>(define (downup wd)
+  (if (= (count wd) 1)
+      (se wd)
+      (se wd (downup (bl wd)) wd)))
+ 
+&gt; (trace downup)
+ 
+&gt; (downup 'trace)
+<SMALL><CODE>(downup trace)
+|  (downup trac)
+|  |  (downup tra)
+|  |  |  (downup tr)
+|  |  |  |  (downup t)
+|  |  |  |  (t)
+|  |  |  (tr t tr)
+|  |  (tra tr t tr tra)
+|  (trac tra tr t tr tra trac)
+(trace trac tra tr t tr tra trac trace)
+</CODE></SMALL>(TRACE TRAC TRA TR T TR TRA TRAC TRACE)
+</PRE> 
+<P>When a procedure calls itself recursively, depending on the
+<A NAME="g10"></A><A NAME="g11"></A>phase of the moon, Scheme may indent the trace display to show the levels of
+procedure calling, and draw a line of vertical bars (&quot;<CODE>|</CODE>&quot;) from a
+procedure's invocation to its return value below.  This is so you can look at
+a procedure invocation and see what value it returned, or vice versa.
+ 
+<P>How does the trace help us understand what is going on in the recursion?
+First, by reading the trace results from top to bottom, you can see
+the actual sequence of events when the computer is carrying out your
+Scheme program.  For example, you can see that we start trying to figure
+out <CODE>(downup 'trace)</CODE>; the first thing printed is the line that says
+we're starting that computation.  But, before we get a result from that,
+four more <CODE>downup</CODE> computations have to begin.  The one that begins
+last finishes first, returning <CODE>(t)</CODE>; then another one returns a value;
+the one that started first is the last to return.
+ 
+<P>You can also read the trace horizontally instead of vertically, focusing
+on the levels of indentation.  If you do this, then instead of a sequence
+of independent events (such-and-such starts, such-and-such returns a value)
+you see the <EM>inclusion</EM> of processes within other ones.  The
+smallest <CODE>downup</CODE> invocation is entirely inside the next-smallest
+one, and so on.  The initial invocation of <CODE>downup</CODE> includes all of
+the others.
+ 
+<P>Perhaps you're thinking that <CODE>downup</CODE>'s pattern of inclusion is the only
+one possible for recursive procedures.  That is, perhaps you're thinking that
+every invocation includes exactly one smaller invocation, and <EM>that</EM> 
+one includes a yet-smaller one, and so on.  But actually the pattern can be
+more complicated.  Here's an example.  The <EM><A NAME="g12"></A><A NAME="g13"></A>Fibonacci numbers</EM> are a sequence of numbers in which the first
+two numbers are 1 and each number after that is the sum of the two before
+it:
+ 
+<P><CENTER>1, 1, 2, 3, 5, 8, 13, 21, 34, 55, ...</CENTER> 
+<P> (They're named after
+<A NAME="g14"></A>Leonardo Pisano.  You'd think they'd be called &quot;Pisano numbers,&quot;
+but Leonardo had a kind of alias, Leonardo Fibonacci, just to confuse
+people.)  Here's a procedure to compute the <EM>n</EM>th Fibonacci number:
+ 
+<P><PRE>(define (<A NAME="g15"></A>fib n)
+  (if (&lt;= n 2)
+      1
+      (+ (fib (- n 1))
+         (fib (- n 2)))))
+</PRE> 
+ 
+<P>Here's a trace of computing the fourth Fibonacci number:
+ 
+<PRE>&gt; (fib 4)
+<SMALL><CODE>(fib 4)
+|  (fib 2)
+|  1
+|  (fib 3)
+|  |  (fib 1)
+|  |  1
+|  |  (fib 2)
+|  |  1
+|  2
+3
+</CODE></SMALL>3
+</PRE> 
+ 
+<P>(By the way, this trace demonstrates that in the dialect of
+Scheme we used, the argument subexpressions of the <CODE>+</CODE> expression in
+<CODE>fib</CODE> are evaluated from right to left, because the smaller <CODE>fib</CODE> 
+arguments come before the larger ones in the trace.)
+ 
+<P>As you can see, we still have invocations within other invocations, but the
+pattern is not as simple as in the <CODE>downup</CODE> case.  If you're having
+trouble making sense of this pattern, go back to thinking about the problem
+in terms of little people; who hires whom?
+ 

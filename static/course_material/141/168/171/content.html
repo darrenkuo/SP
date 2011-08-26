@@ -1,0 +1,33 @@
+<P>Here are two recursive procedures for functions that combine all of the
+elements of the argument into a single result:
+ 
+<P><PRE>(define (<A NAME="g8"></A>addup nums)
+  (if (empty? nums)
+      0
+      (+ (first nums) (addup (bf nums)))))
+ 
+(define (<A NAME="g9"></A>scrunch-words sent)
+  (if (empty? sent)
+      &quot;"
+      (word (first sent) (scrunch-words (bf sent)))))
+ 
+&gt; (addup '(8 3 6 1 10))
+28
+ 
+&gt; (scrunch-words '(ack now ledge able))
+ACKNOWLEDGEABLE
+</PRE> 
+ 
+<P>What's the pattern?  We're using some combiner (<CODE>+</CODE> or <CODE>word</CODE>) to connect the word we're up to with the result of the recursive
+call.  The base case tests for an empty argument, but the base case return
+value must be the identity element of the combiner function.
+ 
+<P>If there is no identity element for the combiner, as in the case of <CODE>max</CODE>, we modify the pattern slightly:
+ 
+<P><PRE>(define (<A NAME="g10"></A>sent-max sent)
+  (if (= (count sent) 1)
+      (first sent)
+      (max (first sent)
+       (sent-max (bf sent)))))
+</PRE>      
+ 

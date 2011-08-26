@@ -1,0 +1,21 @@
+<P>Of course, our definition of <CODE>reverse</CODE> isn't finished yet: As always, we
+need a base case.  But base cases are the easy part.  Base cases transform
+simple arguments into simple answers, and you can do that transformation in
+your head.
+ 
+<P>For example, what's the simplest argument to <CODE>reverse</CODE>?  If you
+answered &quot;a one-letter word&quot; then pick a one-letter word and decide what
+the result should be:
+ 
+<P><PRE>&gt; (reverse 'x)
+X
+</PRE> 
+ 
+<P><CODE>reverse</CODE> of a one-letter word should just be that same word:
+ 
+<P><PRE>(define (reverse wd)
+  (if (= (count wd) 1)
+      wd
+      (word (last wd)
+        (reverse (bl wd)))))
+</PRE> 

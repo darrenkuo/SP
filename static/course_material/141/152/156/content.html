@@ -1,0 +1,36 @@
+<P>If we think of this Scheme fragment merely as a statement of a true fact
+about <CODE>reverse</CODE>, it's not very remarkable.  The amazing part is that
+this fragment is <EM>runnable!</EM> It doesn't <EM>look</EM> runnable because it invokes itself as a
+helper procedure, and&mdash;if you haven't already been through the combining
+method&mdash;that looks as if it can't work.  &quot;How can you use <CODE>reverse</CODE> 
+when you haven't written it yet?&quot;
+ 
+<P>The leap of faith method is the assumption that the procedure we're in the
+middle of writing already works.  That is, if we're thinking about writing a
+<CODE>reverse</CODE> procedure that can compute <CODE>(reverse 'paul)</CODE>, we
+assume that <CODE>(reverse 'aul)</CODE> will work.
+ 
+<P>Of course it's not <EM>really</EM> a leap of faith, in the sense of something
+accepted as miraculous but not understood.  The assumption is justified
+by our understanding of the combining method.  For example, we understand
+that the four-letter <CODE>reverse</CODE> is relying on the three-letter version of
+the problem, not really on itself, so there's no circular reasoning involved.
+And we know that if we had to, we could write <CODE>reverse1</CODE> through <CODE>reverse3</CODE> &quot;by hand.&quot;
+ 
+<P>The reason that our technique in this chapter may seem more mysterious than
+the combining method is that this time we are thinking about the problem
+top-down.  In the combining method, we had already written <CODE>whatever3</CODE> 
+before we even raised the question of <CODE>whatever4</CODE>.  Now we start by
+thinking about the larger problem and assume that we can rely on the
+smaller one.  Again, we're entitled to that assumption because we've gone
+through the process from smaller to larger so many times already.
+ 
+<P>The leap of faith method, once you understand it, is faster than the
+combining method for writing new recursive procedures, because we can write
+the recursive solution immediately, without bothering with many individual
+cases.  The reason we showed you the combining method first is that the leap
+of faith method seems too much like magic, or like &quot;cheating,&quot; until
+you've seen several believable recursive programs.  The combining method is
+the way to learn about recursion; the leap of faith method is the way to
+write recursive procedures once you've learned.
+ 

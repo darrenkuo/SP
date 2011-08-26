@@ -1,0 +1,30 @@
+<P>Here's how we might rewrite <CODE><A NAME="g2"></A>downup</CODE> using the leap of faith
+method.  Start by looking at the desired return value for a medium-sized
+example:
+ 
+<P><PRE>&gt; (downup 'paul)
+(PAUL PAU PA P PA PAU PAUL)
+</PRE> 
+ 
+<P>Since this is a procedure whose argument is a word, we guess that
+the <CODE>butfirst</CODE> or the <CODE>butlast</CODE> might be helpful.
+ 
+<P><PRE>&gt; (downup 'aul)
+(AUL AU A AU AUL)
+ 
+&gt; (downup 'pau)
+(PAU PA P PA PAU)
+</PRE> 
+ 
+<P>This is a case in which it matters which we choose; the solution for the
+<CODE>butfirst</CODE> of the original argument doesn't help, but the solution for
+the <CODE>butlast</CODE> is most of the solution for the original word.  All we
+have to do is add the original word itself at the beginning and end:
+ 
+<P><PRE>(define (downup wd)                          ;; no base case
+  (se wd (downup (bl wd)) wd))
+</PRE> 
+ 
+<P>As before, this is missing the base case, but by now you know how
+to fill that in.
+ 

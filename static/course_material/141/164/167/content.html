@@ -1,0 +1,21 @@
+P>Whenever you catch yourself using the words &quot;go back&quot; or &quot;goes
+back&quot; in describing how some procedure works, bite your tongue.  A recursive
+invocation isn't a going back; it's a separate process.  The model
+behind &quot;go back&quot; is that the same little person starts over again at the
+beginning of the procedure body.  What actually happens is that a new little
+person carries out the same procedure.  It's an important difference because
+when the second little person finishes, the first may still have more work
+to do.
+ 
+<P>For example, when we used little people to show the working of <CODE>downup</CODE>, Dennis computes the result <CODE>(smi sm s sm smi)</CODE> and returns that
+value to David; at that point, David still has work to do before returning
+his own result to Donna.
+ 
+<P>The <CODE>trace</CODE> mechanism doesn't work for <A NAME="g16"></A><A NAME="g17"></A>special forms.  For
+example, you can't say
+ 
+<P><PRE>(trace or)
+</PRE> 
+ 
+<P>although you can, and often will, trace primitive procedures that
+aren't special forms.

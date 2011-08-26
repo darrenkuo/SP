@@ -1,0 +1,85 @@
+<P>
+
+<P>
+<HTML>
+<HEAD>
+<TITLE>Simply Scheme: Introducing Computer Science, Part 3: Composition of Functions</TITLE>
+</HEAD>
+<BODY>
+<CITE>Simply Scheme:</CITE>
+<CITE>Introducing Computer Science</CITE> 2/e Copyright (C) 1999 MIT
+<H2>Part II</H2>
+<H1>Composition of Functions</H1>
+
+<TABLE width="100%"><TR><TD>
+<IMG SRC="../simply.jpg" ALT="cover photo">
+<TD><TABLE>
+<TR><TD align="right"><CITE><A HREF="http://www.cs.berkeley.edu/~bh/">Brian
+Harvey</A><BR>University of California, Berkeley</CITE>
+<TR><TD align="right"><CITE><A HREF="http://ccrma.stanford.edu/~matt">Matthew
+Wright</A><BR>University of California, Santa Barbara</CITE>
+<TR><TD align="right"><BR>
+<TR><TD align="right"><A HREF="../pdf/ssch03.pdf">Download PDF version</A>
+<TR><TD align="right"><A HREF="../ss-toc2.html">Back to Table of Contents</A>
+<TR><TD align="right"><A HREF="../ssch2/functions.html"><STRONG>BACK</STRONG></A>
+chapter thread <A HREF="../ssch3/people.html"><STRONG>NEXT</STRONG></A>
+<TR><TD align="right"><A HREF="http://mitpress.mit.edu/0262082810">MIT
+Press web page for <CITE>Simply Scheme</CITE></A>
+</TABLE></TABLE>
+
+<HR><BIG>
+<A NAME="g1"></A>
+<A NAME="g2"></A>
+
+<P>The big idea in this part of the book is deceptively simple.  It's that we
+can take the value returned by one function and use it as an argument to
+another function.  By &ldquo;hooking up&rdquo; two functions in this way, we invent a
+new, third function.  For example, let's say we have a function that adds
+the letter <CODE>s</CODE> to the end of a word:
+
+<P><P><CENTER><EM>add-s</EM>(&ldquo;<CODE>run</CODE>&rdquo;) = &ldquo;<CODE>runs</CODE>&rdquo;</CENTER>
+<P>
+and another function that puts two words together into a sentence:
+
+<P><P><CENTER><EM>sentence</EM>(&ldquo;<CODE>day</CODE>&rdquo;, &ldquo;<CODE>tripper</CODE>&rdquo;) = &ldquo;<CODE>day tripper</CODE>&rdquo;</CENTER>
+<P>
+We can combine these to create a new function that represents the
+third person singular form of a verb:
+
+<P><P><CENTER><EM>third-person</EM>(verb) = <EM>sentence</EM>(&ldquo;<CODE>she</CODE>&rdquo;, <EM>add-s</EM>(verb))</CENTER>
+<P>
+That general formula looks like this when applied to a particular
+verb:
+
+<P><P><CENTER><EM>third-person</EM>(&ldquo;<CODE>sing</CODE>&rdquo;) = &ldquo;<CODE>she sings</CODE>&rdquo;</CENTER>
+<P>
+The way we say it in Scheme is
+
+<P><PRE>(define (third-person verb)
+  (sentence 'she (add-s verb)))
+</PRE>
+
+<P>(When we give an example like this at the beginning of a part,
+don't worry about the fact that you don't recognize the notation.  The
+example is meant as a preview of what you'll learn in the coming chapters.)
+
+We know that this idea probably doesn't look like much of a big deal to
+you.  It seems obvious.  Nevertheless, it will turn out that we can express
+a wide variety of computational algorithms by linking functions together in
+this way.  This linking is what we mean by
+&ldquo;<A NAME="g3"></A><A NAME="g4"></A>functional programming.&rdquo;
+
+<P>
+</BIG>
+<HR>
+<P><A HREF="../ss-toc2.html">(back to Table of Contents)</A><P>
+<A HREF="../ssch2/functions.html"><STRONG>BACK</STRONG></A>
+chapter thread <A HREF="../ssch3/people.html"><STRONG>NEXT</STRONG></A>
+
+<P>
+<ADDRESS>
+<A HREF="../index.html">Brian Harvey</A>, 
+<CODE>bh@cs.berkeley.edu</CODE>
+</ADDRESS>
+</BODY>
+</HTML>

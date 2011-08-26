@@ -1,0 +1,35 @@
+<P><CODE>Downup</CODE> illustrates the structure of every recursive procedure. There is
+a choice among expressions to evaluate:  At least one is a <EM>recursive</EM> 
+<A NAME="g3"></A> 
+<A NAME="g4"></A> 
+case, in which the procedure (e.g., <CODE>downup</CODE>) itself is invoked with a
+smaller argument; at least one is a <EM>base</EM> case, that is, one that can
+be
+<A NAME="g5"></A> 
+<A NAME="g6"></A> 
+solved without calling the procedure recursively.  For <CODE>downup</CODE>, the base
+case is a single-letter argument.
+ 
+<P>How can this possibly work?  We're defining <CODE>downup</CODE> in terms of <CODE>downup</CODE>.  In English class, if the teacher asks you to define &quot;around,&quot;
+you'd better not say, &quot;You know, <EM>around!</EM>&quot; But we appear to be
+doing just that.  We're telling Scheme:  &quot;In order to find <CODE>downup</CODE> of a
+word, find <CODE>downup</CODE> of another word.&quot;
+ 
+<P>The secret is that it's not just any old other word.  The new word is
+<EM>smaller</EM> than the word we were originally asked to <CODE>downup</CODE>.  So
+we're saying, &quot;In order to find <CODE>downup</CODE> of a word, find <CODE>downup</CODE> 
+of a shorter word.&quot; We are posing a whole slew of <EM>subproblems</EM> 
+asking for the <CODE>downup</CODE> of words smaller than the one we started with.
+So if someone asks us the <CODE>downup</CODE> of <CODE>happy</CODE>, along the way we have
+to compute the <CODE>downup</CODE>s of <CODE>happ</CODE>, <CODE>hap</CODE>, <CODE>ha</CODE>, and <CODE>h</CODE>.
+ 
+<P>A recursive procedure doesn't work unless every possible argument can
+eventually be reduced to some base case.  When we are asked for <CODE>downup</CODE> 
+of <CODE>h</CODE>, the procedure just knows what to do without calling itself
+recursively.  
+ 
+<P>We've just said that there has to be a base case.  It's also important that
+each recursive call has to get us somehow closer to the base case.  For
+<CODE>downup</CODE>, &quot;closer&quot; means that in the recursive call we use a shorter
+word.  If we were computing a numeric function, the base case might be an
+argument of zero, and the recursive calls would use smaller numbers.

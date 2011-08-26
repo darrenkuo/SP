@@ -1,0 +1,38 @@
+<P>To make the leap of faith method work, we have to find a smaller, similar
+subproblem whose solution will help solve the given problem.  How do we find
+such a smaller subproblem?
+ 
+<P>In the examples so far, we've generally found it by finding a smaller,
+similar <EM>return value</EM> within the return value we're trying to
+achieve.  Then we worked backward from the smaller solution to figure out
+what smaller argument would give us that value.  For example, here's how we
+solved the <CODE>reverse</CODE> problem:
+ 
+<P><TABLE><TR><TD>original argument<TD>&nbsp;&nbsp;<CODE>beatles</CODE> 
+<TR><TD>desired return value<TD>&nbsp;&nbsp;<CODE>SELTAEB</CODE> 
+<TR><TD>smaller return value<TD>&nbsp;&nbsp;<CODE>ELTAEB</CODE> 
+<TR><TD>corresponding argument<TD>&nbsp;&nbsp;<CODE>beatle</CODE> 
+<TR><TD>relationship of arguments
+<TD>&nbsp;&nbsp;<CODE>beatle </CODE>is<CODE> (bl 'beatles)</CODE> 
+<TR><TD>Scheme expression<TD>&nbsp;&nbsp;<CODE>(word (last arg)
+<TR><TD>&nbsp;<TD>&nbsp;&nbsp;<CODE>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(reverse (bl arg)))
+</TABLE> 
+ 
+ 
+<P>Similarly, we looked at the definition of 843! and noticed within it
+the factorial of a smaller number, 842.
+ 
+<P>But a smaller return value won't necessarily leap out at us in every case.
+If not, there are some likely guesses we can try.  For example, if the
+problem is about integers, it makes sense to try <EM>n</EM>&minus;1 as a smaller
+argument.  If the problem is about words or sentences, try the <CODE>butfirst</CODE> or the <CODE>butlast</CODE>.  (Often, as in the <CODE>reverse</CODE> example,
+either will be helpful.)  Once you've guessed at a smaller argument, see
+what the corresponding return value should be, then compare that with the
+original desired return value as we've described earlier.
+ 
+<P>In fact, these two argument-guessing techniques would have suggested the same
+subproblems that we ended up using in our two examples so far.  The reason we
+didn't teach these techniques from the beginning is that we don't want you
+to think they're essential parts of the leap of faith method.  These are
+just good guesses; they don't always work.  When they don't, you have to be
+prepared to think more flexibly.

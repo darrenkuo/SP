@@ -1,0 +1,132 @@
+<P><A NAME="g1"></A> 
+The crowning achievement of the little-people model
+is explaining recursion.  Remember that every time you call a procedure, a
+little person is hired to compute the result.  If you want to know <CODE>(+ 2 (+ 3 4))</CODE>, there are two separate plus specialists involved.
+ 
+<P>When we used the combining method, it was probably clear that it's okay
+for <CODE>downup3</CODE> to invoke <CODE>downup2</CODE>, and for <CODE>downup2</CODE> to invoke
+<CODE>downup1</CODE>.  But it probably felt like magic when we combined these
+numbered procedures into a single <CODE>downup</CODE> procedure that calls <EM>itself.</EM> You may have thought, &quot;How can <CODE>downup</CODE> do all the different
+tasks at once without getting confused?&quot; The little-people model answers
+this question by showing that tasks are done by procedure <EM>invocations,</EM> not by procedures.  Each little person handles one task,
+even though several little people are carrying out the same procedure.  The
+procedure is just a set of instructions; someone has to carry out the
+instructions.
+ 
+<P>So what happens when we want to know <CODE>(downup 'smile)</CODE>?  We hire Donna,
+a <CODE>downup</CODE> specialist, and she substitutes <CODE>smile</CODE> for <CODE>wd</CODE> in
+the body of <CODE>downup</CODE>, leaving her with
+ 
+<P><PRE>(if (= (count 'smile) 1)
+    (se 'smile)
+    (se 'smile (downup (bl 'smile)) 'smile)))
+</PRE> 
+ 
+<P>We'll leave out the details about hiring the <CODE>if</CODE>, <CODE>=</CODE>, <CODE>count</CODE>,
+and <CODE>bl</CODE> specialists in this example, so Donna ends up with
+ 
+<P><PRE>(se 'smile (downup 'smil) 'smile)
+</PRE> 
+ 
+<P>In order to evaluate this, Donna needs to know <CODE>(downup 'smil)</CODE>.  She hires David, another <CODE>downup</CODE> specialist, and
+waits for his answer.
+ 
+<P>David's <CODE>wd</CODE> is <CODE>smil</CODE>. He substitutes <CODE>smil</CODE> for <CODE>wd</CODE> in the
+body of <CODE>downup</CODE>, and <EM>he</EM> gets
+ 
+<P><PRE>(if (= (count 'smil) 1)
+    (se 'smil)
+    (se 'smil (downup (bl 'smil)) 'smil)))
+</PRE> 
+ 
+<P>After some uninteresting work, David has
+ 
+<P><PRE>(se 'smil (downup 'smi) 'smil)
+</PRE> 
+ 
+<P>and he hires Dennis to compute <CODE>(downup 'smi)</CODE>.  There are
+now three little people, all in the middle of some <CODE>downup</CODE> computation,
+and each of them is working on a different word.
+ 
+<P>Dennis substitutes <CODE>smi</CODE> for <CODE>wd</CODE>, and ends up with
+ 
+<P><PRE>(se 'smi (downup 'sm) 'smi)
+</PRE> 
+ 
+<P>He hires Derek to compute <CODE>(downup 'sm)</CODE>.  Derek needs to
+compute
+ 
+<P><PRE>(se 'sm (downup 's) 'sm)
+</PRE> 
+ 
+<P>Derek hires Dexter to find <CODE>downup</CODE> of <CODE>s</CODE>. Now we have to
+think carefully about the substitution again.  Dexter substitutes his
+actual argument, <CODE>s</CODE>, for his formal parameter <CODE>wd</CODE>, and ends up
+with
+ 
+<P><PRE>(if (= (count 's) 1)
+    (se 's)
+    (se 's (downup (bl 's)) 's)))
+</PRE> 
+ 
+<P><CODE>Count</CODE> of <CODE>s</CODE> <EM>is</EM> 1.  So Dexter hires Simi,
+a <CODE>sentence</CODE> specialist, who returns <CODE>(s)</CODE>.  Dexter returns the same
+answer to Derek.
+ 
+<P>Derek, you will recall, is trying to compute
+ 
+<P><PRE>(se 'sm (downup 's) 'sm)
+</PRE> 
+ 
+<P>and now he knows the value of <CODE>(downup 's)</CODE>.  So he hires
+Savita to compute
+ 
+<P><PRE>(se 'sm '(s) 'sm)
+</PRE> 
+ 
+<P>and the answer is <CODE>(sm s sm)</CODE>.  Derek returns this answer to
+Dennis.  By the way, do you remember what question Derek was hired to
+answer?  Dennis wanted to know <CODE>(downup 'sm)</CODE>.  The answer Derek gave
+him was <CODE>(sm s sm)</CODE>, which <EM>is</EM> <CODE>downup</CODE> of <CODE>sm</CODE>.  Pretty
+neat, huh?
+<A NAME="g2"></A> 
+<A NAME="g3"></A> 
+<A NAME="g4"></A> 
+<A NAME="g5"></A> 
+<A NAME="g6"></A> 
+<CENTER><IMG SRC="###content_dir###/elves.jpg" ALT="figure: elves"></CENTER> 
+ 
+<P> 
+Dennis hires Sigrid to compute
+ 
+<P><PRE>(se 'smi '(sm s sm) 'smi)
+</PRE> 
+ 
+<P>and returns <CODE>(smi sm s sm smi)</CODE> to David.  His answer is the
+correct value of <CODE>(downup 'smi)</CODE>.  David returns
+ 
+<P><PRE>(smil smi sm s sm smi smil)
+</PRE> 
+ 
+<P>to Donna, who has been waiting all this time to evaluate
+ 
+<P><PRE>(se 'smile (downup 'smil) 'smile)
+</PRE> 
+ 
+<P>Her waiting microseconds are over.  She hires a <CODE>sentence</CODE> 
+specialist and returns
+ 
+<P><PRE>(smile smil smi sm s sm smi smil smile)
+</PRE> 
+ 
+<P><P> 
+If you have a group of friends whose names all start with &quot;D,&quot; you can try
+this out yourselves.  The rules of the game are pretty simple.  Remember
+that each one of you can have only one single value for <CODE>wd</CODE>.  Also,
+only one of you is in charge of the game at any point.  When you hire
+somebody, that new person is in charge of the game until he or she tells you
+the answer to his or her question.  If some of you have names that don't
+start with &quot;D,&quot; you can be specialists in <CODE>sentence</CODE> or <CODE>butlast</CODE> 
+or something.  Play hard, play fair, nobody hurt.
+ 
+<P> 

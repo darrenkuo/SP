@@ -1,0 +1,47 @@
+<P>This chapter is dedicated to teaching some basic programming ideas through an
+introduction to the Scheme langugage.
+
+<P>Depending on how you answered the initial questionnaire, some sections of
+this chapter may not be required.  The "next page" button at the end of each
+page will take you to <i>your</i> next page.  But the entire chapter can be
+seen by navigating the table of contents on the home page.
+
+<hr>
+
+<P>The big idea in this part of the book is deceptively simple.  It's that we
+can take the value returned by one function and use it as an argument to
+another function.  By &ldquo;hooking up&rdquo; two functions in this way, we invent a
+new, third function.  For example, let's say we have a function that adds
+the letter <CODE>s</CODE> to the end of a word:
+
+<P><P><CENTER><EM>add-s</EM>(&ldquo;<CODE>run</CODE>&rdquo;) = &ldquo;<CODE>runs</CODE>&rdquo;</CENTER>
+<P>
+and another function that puts two words together into a sentence:
+
+<P><P><CENTER><EM>sentence</EM>(&ldquo;<CODE>day</CODE>&rdquo;, &ldquo;<CODE>tripper</CODE>&rdquo;) = &ldquo;<CODE>day tripper</CODE>&rdquo;</CENTER>
+<P>
+We can combine these to create a new function that represents the
+third person singular form of a verb:
+
+<P><P><CENTER><EM>third-person</EM>(verb) = <EM>sentence</EM>(&ldquo;<CODE>she</CODE>&rdquo;, <EM>add-s</EM>(verb))</CENTER>
+<P>
+That general formula looks like this when applied to a particular
+verb:
+
+<P><P><CENTER><EM>third-person</EM>(&ldquo;<CODE>sing</CODE>&rdquo;) = &ldquo;<CODE>she sings</CODE>&rdquo;</CENTER>
+<P>
+The way we say it in Scheme is
+
+<P><PRE>(define (third-person verb)
+  (sentence 'she (add-s verb)))
+</PRE>
+
+<P>(When we give an example like this at the beginning of a part,
+don't worry about the fact that you don't recognize the notation.  The
+example is meant as a preview of what you'll learn in the coming chapters.)
+
+We know that this idea probably doesn't look like much of a big deal to
+you.  It seems obvious.  Nevertheless, it will turn out that we can express
+a wide variety of computational algorithms by linking functions together in
+this way.  This linking is what we mean by
+&ldquo;<A NAME="g3"></A><A NAME="g4"></A>functional programming.&rdquo;

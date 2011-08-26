@@ -1,0 +1,155 @@
+<A NAME="basecasereduce"></A> 
+<A NAME="g4"></A> 
+<A NAME="g5"></A> 
+ 
+<P>The leap of faith is mostly about recursive cases, not base cases.  In the
+examples in this chapter, we've picked base cases without talking about them
+much.  How do you pick a base case?
+ 
+<P>In general, we recommend using the smallest possible base case argument,
+because that usually leads to the simplest procedures.  For example,
+consider using the empty word, empty sentence, or zero instead of one-letter
+words, one-word sentences, or one.
+ 
+<P>How can you go about finding the simplest possible base case?  Our first
+example in this chapter was <CODE>reverse</CODE>.  We arbitrarily chose to use
+one-letter words as the base case:
+ 
+<P><PRE>(define (reverse wd)
+  (if (= (count wd) 1)
+      wd
+      (word (last wd)
+        (reverse (bl wd)))))
+</PRE> 
+ 
+<P>Suppose we want to consider whether a smaller base case would work.  One
+approach is to pick an argument that would be handled by the current base
+case, and see what would happen if we tried to let the recursive step handle
+it instead.  (To go along with this experiment, we pick a smaller base case,
+since the original base case should now be handled by the recursive step.)
+In this example, we pick a one-letter word, let's say <CODE>m</CODE>, and use that
+as the value of <CODE>wd</CODE> in the expression
+ 
+<P><PRE>(word (last wd)
+      (reverse (bl wd)))
+</PRE> 
+ 
+<P>The result is
+ 
+<P><PRE>(word (last 'm)
+      (reverse (bl 'm)))
+</PRE> 
+ 
+<P>which is the same as
+ 
+<P><PRE>(word 'm
+      (reverse &quot;&quot;))
+</PRE> 
+ 
+<P>We want this to have as its value the word <CODE>M</CODE>.  This will
+work out provided that <CODE>(reverse &quot;&quot;)</CODE> has the empty word as its value.
+So we could rewrite the procedure this way:
+ 
+<P><PRE>(define (reverse wd)
+  (if (empty? wd)
+      &quot;"
+      (word (last word)
+        (reverse (bl word)))))
+</PRE> 
+ 
+<P>We were led to this empty-word base case by working downward from the needs
+of the one-letter case.  However, it's also important to ensure that the
+return value used for the empty word is the correct value, not only to make
+the recursion work, but for an empty word in its own right.  That is, we
+have to convince ourselves that <CODE>(reverse &quot;&quot;)</CODE> should return an empty
+word.  But it should; the <CODE>reverse</CODE> of any word is a word containing the
+same letters as the original word.  If the original has no letters, the <CODE>reverse</CODE> must have no letters also.  This exemplifies a general principle:
+Although we choose a base case argument for the sake of the recursive step,
+we must choose the corresponding return value for the sake of the argument
+itself, not just for the sake of the recursion.
+ 
+<P>We'll try the base case reduction technique on <CODE>downup</CODE>:
+ 
+<P><PRE>(define (downup wd)
+  (if (= (count wd) 1)
+      (se wd)
+      (se wd (downup (bl wd)) wd)))
+</PRE> 
+ 
+<P>If we want to use the empty word as the base case, instead of
+one-letter words, then we have to ensure that the recursive case can return
+a correct answer for a one-letter word.  The behavior we want is
+ 
+<P><PRE>&gt; (downup 'a)
+(A)
+</PRE> 
+ 
+<P>But if we substitute <CODE>'a</CODE> for <CODE>wd</CODE> in the recursive-case
+expression we get
+ 
+<P><PRE>(se 'a (downup &quot;&quot;) 'a)
+</PRE> 
+ 
+<P>which will have two copies of the word <CODE>A</CODE> in its value no
+matter what value we give to <CODE>downup</CODE> of the empty word.  We can't
+avoid treating one-letter words as a base case.
+ 
+<P>In writing <CODE>factorial</CODE>, we used <CODE>1</CODE> as the base case.
+ 
+<P><PRE>(define (factorial n)
+  (if (= n 1)
+      1
+      (* n (factorial (- n 1)))))
+</PRE> 
+ 
+<P>Our principle of base case reduction suggests that we try for <CODE>0</CODE>.  To do this, we substitute <CODE>1</CODE> for <CODE>n</CODE> in the recursive case
+expression:
+ 
+<P><PRE>(* 1 (factorial 0))
+</PRE> 
+ 
+<P>We'd like this to have the value <CODE>1</CODE>; this will be true only
+if we define 0! = 1.  Now we can say
+ 
+<P><PRE>(define (factorial n)
+  (if (= n 0)
+      1
+      (* n (factorial (- n 1)))))
+</PRE> 
+ 
+<P>In this case, the new procedure is no simpler than the previous
+version.  Its only advantage is that it handles a case, 0!, that
+mathematicians find useful.
+ 
+<P>Here's another example in which we can't reduce the base case to an empty
+word.  In Chapter 11 we used the combining method to write <CODE>letter-pairs</CODE>:
+ 
+<P><PRE>(define (letter-pairs wd)
+  (if (&lt;= (count wd) 1)
+      '()
+      (se (first-two wd)
+      (letter-pairs (bf wd)))))
+ 
+(define (first-two wd)
+  (word (first wd) (first (bf wd))))
+</PRE> 
+ 
+<P>It might occur to you that one-letter words could be handled
+by the recursive case, and the base case could then handle only the empty
+word.  But if you try to evaluate the expression for the recursive case
+as applied to a one-letter word, you find that
+ 
+<P><PRE>(first-two 'a)
+</PRE> 
+ 
+<P>is equivalent to
+ 
+<P><PRE>(word (first 'a) (first (bf 'a)))
+</PRE> 
+ 
+<P>which is an error.  There is no second letter of a one-letter
+word.  As soon as you see the expression <CODE>(first (bf wd))</CODE> within
+this program, you know that one-letter words must be part of the base case.
+The same kind of reasoning can be used in many problems; the base case must
+handle anything that's too small to fit the needs of the recursive case.
+ 

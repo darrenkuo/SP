@@ -1,0 +1,1 @@
+{'index': 143, 'type': u'lesson', 'readable': u'True and checkAccessed(1, user) and checkAccessed(141, user) and (not checkSF(SF_RECURSION, user))', 'chapters': ['144', '145', '146', '147', '148', '149', u'153', '150', '151'], 'title': u'Introduction To Recursion'}

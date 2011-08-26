@@ -1,0 +1,1 @@
+{'index': 115, 'type': u'lesson', 'readable': u'True and checkAccessed(109, user) and checkAccessed(110, user) and checkAccessed(112, user) and checkAccessed(113, user) and checkAccessed(114, user)', 'chapters': ['116', '117', '118', '119', '120'], 'title': u'Lazy evaluator and Nondeterministic evaluator (SICP 4.2, 4.3)'}

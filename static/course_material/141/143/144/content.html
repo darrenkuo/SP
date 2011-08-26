@@ -1,0 +1,41 @@
+<P>Since we don't yet know how to solve the <CODE>downup</CODE> problem in general,
+let's start with a particular case that we <EM>can</EM> solve.  We'll write a
+version of <CODE>downup</CODE> that works only for one-letter words:
+ 
+<P><PRE>(define (downup1 wd)
+  (se wd))
+ 
+&gt; (downup1 'a)
+(A)
+</PRE> 
+ 
+<P>So far so good!  This isn't a very versatile program, but it does have the
+advantage of being easy to write.
+ 
+<P>Now let's see if we can do two-letter words:
+ 
+<P><PRE>(define (downup2 wd)
+  (se wd (first wd) wd))
+ 
+&gt; (downup2 'be)
+(BE B BE)
+</PRE> 
+ 
+<P>Moving right along&hellip;
+<PRE>(define (downup3 wd)
+  (se wd
+      (bl wd)
+      (first wd)
+      (bl wd)
+      wd))
+ 
+&gt; (downup3 'foo)
+(FOO FO F FO FOO)
+</PRE> 
+ 
+<P>We could continue along these lines, writing procedures <CODE>downup4</CODE> and so
+on.  If we knew that the longest word in English had 83 letters, we could
+write all of the single-length <CODE>downup</CODE>s up to <CODE>downup83</CODE>, and then
+write one overall <CODE>downup</CODE> procedure that would consist of an enormous
+<CODE>cond</CODE> with 83 clauses, one for each length.
+ 

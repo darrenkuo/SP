@@ -1,0 +1,11 @@
+<P>Although <CODE>downup59</CODE> was easy to write, the problem is that it won't work
+unless we also define <CODE>downup58</CODE>, which in turn depends on <CODE>downup57</CODE>, and so on.  This is a lot of repetitive, duplicated, and
+redundant typing.  Since these procedures are all basically the same, what
+we'd like to do is combine them into a single procedure:
+ 
+<P><PRE>(define (downup wd)                          ;; first version
+  (se wd (downup (bl wd)) wd))
+</PRE> 
+ 
+<P>Isn't this a great idea?  We've written one short procedure that
+serves as a kind of abbreviation for 59 other ones.

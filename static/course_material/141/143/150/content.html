@@ -1,0 +1,161 @@
+<P>What's the smallest word we can <CODE>explode</CODE>?  There's no reason we
+can't explode an empty word:
+ 
+<P><PRE>(define (explode0 wd)
+  '())
+</PRE> 
+ 
+<P>That wasn't very interesting, though.  It doesn't suggest a
+pattern that will apply to larger words.  Let's try a few larger cases:
+ 
+<P><PRE>(define (explode1 wd)
+  (se wd))
+ 
+(define (explode2 wd)
+  (se (first wd) (last wd)))
+ 
+(define (explode3 wd)
+  (se (first wd) (first (bf wd)) (last wd)))
+</PRE> 
+ 
+<P>With <CODE>explode3</CODE> the procedure is starting to get complicated enough that
+we want to find a way to use <CODE>explode2</CODE> to help.  What <CODE>explode3</CODE> 
+does is to pull three separate letters out of its argument word, and collect
+the three letters in a sentence.  Here's a sample:
+ 
+<P><PRE>&gt; (explode3 'tnt)
+(T N T)
+</PRE> 
+ 
+<P><CODE>Explode2</CODE> pulls <EM>two</EM> letters out of a word and
+collects them in a sentence.  So we could let <CODE>explode2</CODE> deal with two
+of the letters of our three-letter argument, and handle the remaining letter
+separately:
+ 
+<P><PRE>(define (explode3 wd)
+  (se (first wd) (explode2 (bf wd))))
+</PRE> 
+ 
+<P>We can use similar reasoning to define <CODE>explode4</CODE> in terms of
+<CODE>explode3</CODE>:
+ 
+<P><PRE>(define (explode4 wd)
+  (se (first wd) (explode3 (bf wd))))
+</PRE> 
+ 
+<P>Now that we see the pattern, what's the base case?  Our first three
+numbered <CODE>explode</CODE>s are all different in shape from <CODE>explode3</CODE>,
+but now that we know what the pattern should be we'll find that we
+can write <CODE>explode2</CODE> in terms of <CODE>explode1</CODE>, and even <CODE>explode1</CODE> 
+in terms of <CODE>explode0</CODE>:
+ 
+<P><PRE>(define (explode2 wd)
+  (se (first wd) (explode1 (bf wd))))
+ 
+(define (explode1 wd)
+  (se (first wd) (explode0 (bf wd))))
+</PRE> 
+ 
+<P>We would never have thought to write <CODE>explode1</CODE> in that
+roundabout way, especially since <CODE>explode0</CODE> pays no attention to
+its argument, so computing the <CODE>butfirst</CODE> doesn't contribute
+anything to the result, but by following the pattern we can let the
+recursive case handle one-letter and two-letter words, so that only
+zero-letter words have to be special:
+ 
+<P><A NAME="explodepage"></A> 
+<PRE>(define (explode wd)
+  (if (empty? wd)
+      '()
+      (se (first wd) (explode (bf wd)))))
+</PRE> 
+ 
+<P>Now for <CODE>letter-pairs</CODE>.  What's the smallest word we can use as its
+argument?  Empty and one-letter words have no letter pairs in them:
+ 
+<P><PRE>(define (letter-pairs0 wd)
+  '())
+ 
+(define (letter-pairs1 wd)
+  '())
+</PRE> 
+ 
+<P>This pattern is not very helpful.
+ 
+<P><PRE>(define (letter-pairs2 wd)
+  (se wd))
+ 
+(define (letter-pairs3 wd)
+  (se (bl wd) (bf wd)))
+ 
+(define (letter-pairs4 wd)
+  (se (bl (bl wd))
+      (bl (bf wd))
+      (bf (bf wd))))
+</PRE> 
+ 
+<P>Again, we want to simplify <CODE>letter-pairs4</CODE> by using <CODE>letter-pairs3</CODE> 
+to help.  The problem is similar to <CODE>explode</CODE>:  The value returned by
+<CODE>letter-pairs4</CODE> is a three-word sentence, and we can use <CODE>letter-pairs3</CODE> to generate two of those words.
+ 
+<P><PRE>&gt; (letter-pairs4 'nems)
+(NE <CODE STYLE="border:solid">EM MS</CODE>)
+</PRE> 
+ 
+<P>This gives rise to the following procedure:
+ 
+<P><PRE>(define (letter-pairs4 wd)
+  (se (bl (bl wd))
+      (letter-pairs3 (bf wd))))
+</PRE> 
+ 
+<P>Does this pattern work for defining <CODE>letter-pairs5</CODE> in terms of <CODE>letter-pairs4</CODE>?
+ 
+<P><PRE>(define (letter-pairs5 wd)                   ;; wrong
+  (se (bl (bl wd))
+      (letter-pairs4 (bf wd))))
+ 
+&gt; (letter-pairs5 'bagel)
+(BAG AG GE EL)
+</PRE> 
+ 
+<P>The problem is that <CODE>(bl (bl wd))</CODE> means &quot;the first two letters of <CODE>wd</CODE>&quot; only when <CODE>wd</CODE> has four letters.  In order to be able to
+generalize the pattern, we need a way to ask for the first two letters of a
+word that works no matter how long the word is.  You wrote a procedure to
+solve this problem in Exercise :
+ 
+<P><PRE>(define (first-two wd)
+  (word (first wd) (first (bf wd))))
+</PRE> 
+ 
+<P>Now we can use this for <CODE>letter-pairs4</CODE> and <CODE>letter-pairs5</CODE>:
+ 
+<P><PRE>(define (letter-pairs4 wd)
+  (se (first-two wd) (letter-pairs3 (bf wd))))
+ 
+(define (letter-pairs5 wd)
+  (se (first-two wd) (letter-pairs4 (bf wd))))
+</PRE> 
+ 
+<P><EM>This</EM> pattern <EM>does</EM> generalize.
+ 
+<P><PRE>(define (letter-pairs wd)
+  (if (&lt;= (count wd) 1)
+      '()
+      (se (first-two wd)
+      (letter-pairs (bf wd)))))
+</PRE> 
+ 
+<P>Note that we treat two-letter and three-letter words as recursive
+cases and not as base cases.  Just as in the example of <CODE>explode</CODE>, we
+noticed that we could rewrite <CODE>letter-pairs2</CODE> and <CODE>letter-pairs3</CODE> to
+follow the same pattern as the larger cases:
+ 
+<P><PRE>(define (letter-pairs2 wd)
+  (se (first-two wd)
+      (letter-pairs1 (bf wd))))
+ 
+(define (letter-pairs3 wd)
+  (se (first-two wd)
+      (letter-pairs2 (bf wd))))
+</PRE> 

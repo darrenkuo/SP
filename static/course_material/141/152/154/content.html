@@ -1,0 +1,26 @@
+<P>Let's look again at the way we developed the <CODE>letter-pairs</CODE> procedure in
+the last chapter.  We went through several steps:
+ 
+<P><P><TABLE><TR><TH align="right" valign="top">&bull;<TD>&nbsp;&nbsp;&nbsp;&nbsp;<TD valign="top">We wrote specific versions for zero-, one-, two-, and three-letter words.
+</TABLE><TABLE><TR><TH align="right" valign="top">&bull;<TD>&nbsp;&nbsp;&nbsp;&nbsp;<TD valign="top">We wrote <CODE>letter-pairs4</CODE>, decided it was too complicated, and looked
+for a way to use <CODE>letter-pairs3</CODE> to help.
+</TABLE><TABLE><TR><TH align="right" valign="top">&bull;<TD>&nbsp;&nbsp;&nbsp;&nbsp;<TD valign="top">Having rewritten <CODE>letter-pairs4</CODE>, we tried to write <CODE>letter-pairs5</CODE> using the same pattern.  Since it didn't quite work, we
+revised the pattern.
+</TABLE><TABLE><TR><TH align="right" valign="top">&bull;<TD>&nbsp;&nbsp;&nbsp;&nbsp;<TD valign="top">We generalized the pattern to write an unnumbered, recursive <CODE>letter-pairs</CODE>.
+</TABLE><TABLE><TR><TH align="right" valign="top">&bull;<TD>&nbsp;&nbsp;&nbsp;&nbsp;<TD valign="top">We checked to make sure that the recursive pattern would work for
+two-letter and three-letter words.
+</TABLE><TABLE><TR><TH align="right" valign="top">&bull;<TD>&nbsp;&nbsp;&nbsp;&nbsp;<TD valign="top">Since the pattern doesn't work for zero- or one-letter words, we made
+those the base cases.
+ 
+</TABLE> 
+<P> 
+Although we needed the lowest numbered procedures in order to make
+the entire collection of numbered procedures work, those low-numbered ones
+didn't contribute to the critical step of finding a generalizable pattern.
+Once you understand the idea of recursion, writing the individual procedures
+is wasted effort.
+ 
+<P>In the leap of faith method, we short-circuit this process in two ways.
+First, we don't bother thinking about small examples; we begin with, for
+example, a seven-letter word.  Second, we don't use our example to write a
+particular numbered procedure; we write the recursive version directly.

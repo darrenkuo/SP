@@ -1,0 +1,11 @@
+$def with (render, helper_frame)
+<html>
+  <header>
+    $:render[0].render()
+  </header>
+  <body>
+    $if helper_frame:
+      $:helper_frame.render()
+    $:render[1].render()
+  </body>
+</html>
