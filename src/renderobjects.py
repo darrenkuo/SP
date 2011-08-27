@@ -300,13 +300,4 @@ class lesson_layout:
         self.content = content
 
     def render(self):
-        f = open(join('static', 'sidebar.html'), 'r')
-        html = f.read()
-        '''
-        return ('<frameset cols="25%, 75%" noresize="noresize">' + 
-                '<frame src="static/sidebar.html" />' +
-                #self.sidebar.render() + '\n' + 
-                self.content.render() + 
-                '</frameset>' )
-        '''
         return self.content.render()
