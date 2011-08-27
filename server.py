@@ -4,7 +4,6 @@ from src.globals import *
 from src.display import *
 from src.lesson import *
 from src.quiz import *
-from src.login import *
 from src.summary import *
 from src.course_admin import *
 from src.utils import *
@@ -280,14 +279,4 @@ else:
     session = web.config._session
 
 if __name__ == "__main__":
-    if not exists('dbs'):
-        print "Creating database folder"
-        mkdir('dbs')
-        setup_dbs()
-        
-    if not exists('requests'):
-        mkdir('requests')
-        mkdir('requests/quiz')
-        mkdir('requests/admin')
-
     app.run()
