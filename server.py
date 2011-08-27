@@ -21,7 +21,7 @@ web.config.debug = True
 #CherryPyWSGIServer.ssl_certificate = "SSL/ssl.crt"
 #CherryPyWSGIServer.ssl_private_key = "SSL/ssl.key"
 
-urls = (#'/', 'main', 
+urls = ('/', 'main', 
         '/logout', 'logout', 
         '/register_admin', 'register_admin',
         #'/register', 'register', 
@@ -57,6 +57,7 @@ urls = (#'/', 'main',
         '/summary/', '/admin/', '/admin_login/')
 """
 class main:
+    """
     def GET(self):
         my_signin = signin_form()
         #session = web.config.get('_session')
@@ -74,6 +75,12 @@ class main:
         else:
             session.user = my_signin['username'].value
             raise web.seeother('/magic?page=/summary')
+    """
+    def GET(self):
+        raise web.seeother('/magic?page=/summary')
+    
+    def POST(self):
+        return self.GET()
 
 class logout:
     def GET(self):
@@ -275,7 +282,7 @@ app = web.application(urls, globals(), True)
 
 if web.config.get('_session') is None:
     session = web.session.Session(app, web.session.DiskStore('sessions'),
-                                  initializer={'user': '!@#$%^&*anonymous*&^%$#@!'})
+                                  initializer={'user': 'Guest'})
     web.config._session = session
 else:
     session = web.config._session
