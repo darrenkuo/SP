@@ -12,6 +12,8 @@ from os.path import exists
 from subprocess import Popen, PIPE
 from time import time
 
+import cProfile
+
 #from src.web.wsgiserver import CherryPyWSGIServer
 
 web.config.debug = True
@@ -279,4 +281,4 @@ else:
     session = web.config._session
 
 if __name__ == "__main__":
-    app.run()
+    cProfile.run('app.run()')
