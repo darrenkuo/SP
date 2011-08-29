@@ -101,7 +101,6 @@ def new_page_form():
 
 def make_new_page(data):
     (title, path, code, page_type) = (data['title'], data['page'], data['code'], data['type'])
-    #print data
     from utils import *
     (conn, cursor) = getDbCursor('course.db')
     tmp_path = str(randint(0, maxint))

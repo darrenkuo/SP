@@ -59,6 +59,12 @@ def getUserDb(user):
         return db_file
 
     print exists(db_file), db_file
+
+    from web.utils import sendmail
+    sendmail('cs61as@imail.eecs.berkeley.edu', 
+             'cs61as-tb@imail.eecs.berkeley.edu',
+             'New student: %s' % (user),
+             '%s has join cs61as' % (user))
     
     (conn, cursor) = getDbCursor(db_file)
     cursor.execute('CREATE TABLE visits_times(login TEXT, chapter_id INTEGER, timestamp INTEGER);')
