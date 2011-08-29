@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 from os.path import join
 from sqlite3 import connect
 from sys import argv
