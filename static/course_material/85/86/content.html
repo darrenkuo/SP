@@ -1,25 +1,23 @@
 <b>CS 61A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Lecture Notes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Week 9</b>
-<div class="p"><!----></div>
+<p>
 Topic: Mutable data, queues, tables
-<div class="p"><!----></div>
+<p>
 <b>Reading:</b>
 Abelson &amp; Sussman, 
 <a href="http://mitpress.mit.edu/sicp/full-text/book/book-Z-H-22.html#%_sec_3.3">
 Section 3.3.1-3</a>
-<div class="p"><!----></div>
+<p>
 Play the animal game:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>&#62; (load "lectures/3.3/animal.scm")<!--hbox-->
 #f
 &#62; (animal-game)<!--hbox-->
 Does it have wings? no<!--hbox-->
 Is it a rabbit? no<!--hbox-->
 
-<div class="p"><!----></div>
 I give up, what is it? gorilla<!--hbox-->
 
-<div class="p"><!----></div>
 Please tell me a question whose answer is YES for a gorilla
 and NO for a rabbit.
 Enclose the question in quotation marks.
@@ -33,28 +31,28 @@ Is it a rabbit? yes<!--hbox-->
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 The crucial point about this program is that its behavior changes each time
 it learns about a new animal.  Such <i>learning </i> programs have to modify
 a data base as they run.  We represent the animal game data base as a tree;
 we want to be able to splice a new branch into the tree (replacing what used
 to be a leaf node).
 
-<div class="p"><!----></div>
+<p>
 Changing what's in a data structure is called <i>mutation</i>.  Scheme
 provides primitives <tt>set-car!</tt>&nbsp;and <tt>set-cdr!</tt>&nbsp;for this purpose.
 
-<div class="p"><!----></div>
+<p>
 They aren't special forms!  The pair that's being mutated must be located
 by computing some expression.  For example, to modify the second element
 of a list:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(set-car! (cdr lst) 'new-value)
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 They're different from <tt>set!</tt>, which changes the binding of a variable.
 We use them for different purposes, and the syntax is different.  Still,
 they are connected in two ways:  (1) Both make your program non-functional,
@@ -64,20 +62,20 @@ state variables to simulate mutable pairs, and later we'll see how the Scheme
 interpreter uses mutable pairs to implement environments, including the use
 of <tt>set!</tt>&nbsp;to change variable values.
 
-<div class="p"><!----></div>
+<p>
 The only purpose of mutation is efficiency.  In principle we could write the
 animal game functionally by recopying the entire data base tree each time,
 and using the new one as an argument to the next round of the game.  But the
 saving can be quite substantial.
 
-<div class="p"><!----></div>
+<p>
 <b>Identity.</b> Once we have mutation we need a subtler view of the idea of
 equality.  Up to now, we could just say that two things are equal if they
 look the same.  Now we need <i>two </i> kinds of equality, that old kind
 plus a new one:  Two things are <i>identical </i> if they are the very same
 thing, so that mutating one also changes the other.  Example:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>&#62; (define a (list 'x 'y 'z))
 &#62; (define b (list 'x 'y 'z))
 &#62; (define c a)
@@ -92,12 +90,12 @@ thing, so that mutating one also changes the other.  Example:
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 The two lists <tt>a</tt> and <tt>b</tt> are equal, because they print the same,
 but they're not identical.  The lists <tt>a</tt> and <tt>c</tt> are identical;
 mutating one will change the other:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>&#62; (set-car! (cdr a) 'foo)
 &#62; a
 (X FOO Z)
@@ -108,23 +106,23 @@ mutating one will change the other:
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 If we use mutation we have to know what shares storage with what.  For
 example, <tt>(cdr&nbsp;a)</tt> shares storage with <tt>a</tt>.  <tt>(Append&nbsp;a&nbsp;b)</tt>
 shares storage with <tt>b</tt> but not with <tt>a</tt>.  (Why not?  Read the
 <tt>append</tt> procedure.)
 
-<div class="p"><!----></div>
+<p>
 The Scheme standard says you're not allowed to mutate quoted constants.
 That's why I said <tt>(list&nbsp;'x&nbsp;'y&nbsp;'z)</tt> above and not <tt>'(x&nbsp;y&nbsp;z)</tt>.  The
 text sometimes cheats about this.  The reason is that Scheme implementations
 are allowed to share storage when the same quoted constant is used twice in
 your program.
 
-<div class="p"><!----></div>
+<p>
 Here's the animal game:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>;;;;;                        In file cs61a/lectures/3.3/animal.scm
 (define (animal node)
   (define (type node) (car node))
@@ -139,7 +137,6 @@ Here's the animal game:
   (define (set-no! node x)
     (set-car! (cdddr node) x))
 
-<div class="p"><!----></div>
   (define (yorn)
     (let ((yn (read)))
       (cond ((eq? yn 'yes) #t)
@@ -149,7 +146,7 @@ Here's the animal game:
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>  (display (question node))
   (display " ")
   (let ((yn (yorn)) (correct #f) (newquest #f))
@@ -183,34 +180,30 @@ Here's the animal game:
                                                           next)))
                               "Thanks.  Now I know better.")))))))
 
-<div class="p"><!----></div>
 (define (make-branch q y n)
   (list 'branch q y n))
 
-<div class="p"><!----></div>
 (define (make-leaf a)
   (list 'leaf a))
 
-<div class="p"><!----></div>
 (define animal-list
   (make-branch "Does it have wings?"
                (make-leaf 'parrot)
                (make-leaf 'rabbit)))
 
-<div class="p"><!----></div>
 (define (animal-game) (animal animal-list))
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 Things to note:  Even though the main structure of the program is sequential
 and BASIC-like, we haven't abandoned data abstraction.  We have
 constructors, selectors, and <i>mutators </i>-a new idea-for the nodes
 of the game tree.
 
-<div class="p"><!----></div>
+<p>
 
-<div class="p"><!----></div>
+<p>
 <font face="symbol"></font
 > Tables.  We're now ready to understand how to implement the <tt>
 put</tt> and <tt>get</tt> procedures that A&amp;S used at the end of chapter 2.  A
@@ -219,7 +212,7 @@ so that adding the first entry to the table will be no diffferent from
 adding later entries.  (That is, even in an "empty" table we have a pair
 to <tt>set-cdr!</tt>)
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>;;;;;                        In file cs61a/lectures/3.3/table.scm
 (define (get key)
   (let ((record (assoc key (cdr the-table))))
@@ -227,7 +220,6 @@ to <tt>set-cdr!</tt>)
         #f
         (cdr record))))
 
-<div class="p"><!----></div>
 (define (put key value)
   (let ((record (assoc key (cdr the-table))))
     (if (not record)
@@ -237,15 +229,14 @@ to <tt>set-cdr!</tt>)
         (set-cdr! record value)))
   'ok)
 
-<div class="p"><!----></div>
 (define the-table (list '*table*))
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 <tt>Assoc</tt> is in the book:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(define (assoc key records)
   (cond ((null? records) #f)
         ((equal? key (caar records)) (car records))
@@ -253,12 +244,12 @@ to <tt>set-cdr!</tt>)
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 In chapter 2, A&amp;S provided a single, global table, but we can generalize
 this in the usual way by taking an extra argument for which table to use.
 That's how <tt>lookup</tt> and <tt>insert!</tt>&nbsp;work.
 
-<div class="p"><!----></div>
+<p>
 One little detail that always confuses people is why, in creating
 two-dimensional tables, we don't need a <tt>*table*</tt> header on each of the
 subtables.  The point is that <tt>lookup</tt> and <tt>insert!</tt>&nbsp;don't pay any
@@ -270,17 +261,17 @@ key-value pair in the main table.  What it means to be "the value of a
 key-value pair" is to be the <tt>cdr</tt> of that pair.  So we can think of
 that pair as the header pair for the subtable.
 
-<div class="p"><!----></div>
+<p>
 <table border="0"><tr><td><a href="note-figs/10-1.eps">Figure</a>
 
 </td></tr></table><!--vbox-->
-<div class="p"><!----></div>
+<p>
 <font face="symbol"></font
 > Memoization.  Exercise 3.27 is a pain in the neck because it asks
 for a very complicated environment diagram, but it presents an extremely
 important idea.  If we take the simple Fibonacci number program:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>;;;;;                        In file cs61a/lectures/3.3/fib.scm
 (define (fib n)
   (if (&lt; n 2)
@@ -290,7 +281,7 @@ important idea.  If we take the simple Fibonacci number program:
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 we recall that it takes <font face="symbol">Q</font
 >(2<sup>n</sup>) time because it ends up doing a lot of
 subproblems redundantly.  For example, if we ask for <tt>(fib&nbsp;5)</tt> we end up
@@ -299,7 +290,7 @@ values that we've already computed.  The book's version does it by entering
 those values into a local table.  It may be simpler to understand this
 version, using the global get/put:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>;;;;;                        In file cs61a/lectures/3.3/fib.scm
 (define (fast-fib n)
   (if (&lt; n 2)
@@ -314,7 +305,7 @@ version, using the global get/put:
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 Is this functional programming?  That's a more subtle question than it seems.
 Calling <tt>memo-fib</tt> makes
 a permanent change in the environment, so that a second call to <tt>
@@ -324,19 +315,19 @@ inside the box, <tt>memo-fib</tt> works non-functionally.  But if we look only
 at its input-output behavior, <tt>memo-fib</tt> <i>is </i> a function because
 it always gives the same answer when called with the same argument.
 
-<div class="p"><!----></div>
+<p>
 What if we tried to memoize <tt>random</tt>?  It would be a disaster; instead
 of getting a random number each time, we'd get the same number repeatedly!
 Memoization only makes sense if the underlying function really <i>is </i>
 functional.
 
-<div class="p"><!----></div>
+<p>
 This idea of using a non-functional implementation for something that has
 functional behavior will be very useful later when we look at streams.
 
-<div class="p"><!----></div>
+<p>
 
-<div class="p"><!----></div>
+<p>
 <b><font face="symbol"></font
 ><font face="symbol"></font
 > VECTORS.</b>
@@ -344,7 +335,7 @@ So far we have seen one primitive data aggregation mechanism:&nbsp;the
 pair.  We use linked pairs to represent <i>sequences </i> (an abstract
 type) in the form of <i>lists</i>.
 
-<div class="p"><!----></div>
+<p>
 The list suffers from one important weakness:  Finding the nth
 element of a list takes time <font face="symbol">Q</font
 >(n) because you have to call
@@ -356,26 +347,26 @@ languages it's called an <i>array,</i> but it's the same idea.
 Finding the nth element of a vector takes <font face="symbol">Q</font
 >(1) time.
 
-<div class="p"><!----></div>
+<p>
 <b><font face="symbol"></font
 > Vector primitives</b>
 
-<div class="p"><!----></div>
+<p>
 Some of the procedures for vectors are exact analogs to procedures
 for lists:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>    (vector a b c d ...)               (list a b c d ...)
     (vector-ref vec n)                 (list-ref lst n)
     (vector-length vec)                (length lst)
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 Most notably, the <i>selector </i> for vectors, <tt>vector-ref</tt>,
 is just like the selector for lists (except that it's faster).
 
-<div class="p"><!----></div>
+<p>
 What about constructors?  There's a <tt>vector</tt> procedure, just
 like the <tt>list</tt> procedure, that's good for situations in which
 you know exactly how many elements the sequence will have, and all
@@ -385,75 +376,75 @@ which are useful for <i>extending </i> lists.  In particular,
 <tt>cons</tt> is the workhorse of recursive list processing procedures;
 we'll see that vector processing is done quite differently.
 
-<div class="p"><!----></div>
+<p>
 The weakness of vectors is that they can't be extended.  You have
 to know the length of the vector when you create it.  So instead
 of <tt>cons</tt> and <tt>append</tt> we have
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(make-vector len)
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 which creates a vector of length <tt>len</tt>, in which the element
 values are unspecified.  (You then use mutation, discussed below,
 to fill in the desired values.)  Alternatively, if you want to create a
 vector in which every element has the same initial value, you can say
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(make-vector len value)
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 Because vectors are created all at once, rather than one element
 at a time, <i>mutation </i> is crucial to any useful vector program.
 The primitive mutator for vectors is
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(vector-set! vec n value)
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 This procedure is comparable to <tt>set-car!</tt>&nbsp;and <tt>set-cdr!</tt>&nbsp;for
 pairs.  (It's interesting to note that Scheme doesn't provide a mutator
 for the nth element of a list; this is because most list processing
 is done using functional programming style, and pair mutation is
 mainly for special cases such as tables.)
 
-<div class="p"><!----></div>
+<p>
 The printed format of a vector is
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>#(a b c d)
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 You can quote this to include a constant vector in a program.  (Note: In STk,
 vectors are self-evaluating, so you can omit the quotation mark, but this is a
 nonstandard extension to Scheme.)
 
-<div class="p"><!----></div>
+<p>
 Scheme also provides functions <tt>list-&#62;vector</tt> and <tt>vector-&#62;list</tt>
 that let you convert between the two sequence implementations.
 
-<div class="p"><!----></div>
+<p>
 
-<div class="p"><!----></div>
+<p>
 <b><font face="symbol"></font
 > Vector programming style</b>
 
-<div class="p"><!----></div>
+<p>
 Let's write a mapping function for vectors; it will take a function
 and a vector as arguments, and return a vector.
 
-<div class="p"><!----></div>
+<p>
 For reference, here's the <tt>map</tt> function for lists:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(define (map fn lst)
   (if (null? lst)
       '()
@@ -462,12 +453,12 @@ For reference, here's the <tt>map</tt> function for lists:
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 To do the same task for vectors, we must first create a new
 vector of the same length as the argument vector, then fill
 in the values using mutation:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>;;;;;                         In file cs61a/lectures/vector.scm
 (define (vector-map fn vec)
   (define (loop newvec n)
@@ -479,21 +470,21 @@ in the values using mutation:
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 This is a lot more complicated!  It requires a helper procedure,
 and an extra <i>index variable </i>, <tt>n</tt>, to keep track of the
 element number within the vector.  By contrast, the list version
 of <tt>map</tt> never actually knows how long its argument list is.
 
-<div class="p"><!----></div>
+<p>
 <b><font face="symbol"></font
 > Strengths and weaknesses</b>
 
-<div class="p"><!----></div>
+<p>
 Of course, if we wanted, we could write our own equivalent to <tt>cons</tt>
 for vectors:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>;;;;;                         In file cs61a/lectures/vector.scm
 (define (vector-cons value vec)
   (define (loop newvec n)
@@ -506,7 +497,7 @@ for vectors:
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 If we wrote similar procedures <tt>vector-car</tt> and <tt>vector-cdr</tt>,
 we could then write <tt>vector-map</tt> in a style exactly like <tt>map</tt>.
 But this would be a bad idea, because our <tt>vector-cons</tt> requires
@@ -514,7 +505,7 @@ But this would be a bad idea, because our <tt>vector-cons</tt> requires
 >(n) time to copy the elements from the old vector to the
 new one.
 
-<div class="p"><!----></div>
+<p>
 <br />
 <table>
 <tr><td align="left"><b>operation</b></td><td align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>lists</b></td><td align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>vectors</b></td></tr>
@@ -527,33 +518,33 @@ new one.
 >(n)</td></tr></table>
 
 
-<div class="p"><!----></div>
+<p>
 <br />This is why there isn't one best way to represent sequences.
 Lists are faster (and allow for cleaner code) at adding elements,
 but vectors are faster at selecting arbitrary elements.
 
-<div class="p"><!----></div>
+<p>
 (Note, though, that if you want to select <i>all </i> the elements
 of a sequence, one after another, then lists are just as fast as
 arrays.  It's only when you want to jump around within the sequence
 that arrays are faster.)
 
-<div class="p"><!----></div>
+<p>
 
-<div class="p"><!----></div>
+<p>
 <b><font face="symbol"></font
 > Example: Shuffling</b>
 
-<div class="p"><!----></div>
+<p>
 Suppose we want to shuffle a deck of cards - we want to reorder
 the cards randomly.  We'll look at three solutions to this problem.
 
-<div class="p"><!----></div>
+<p>
 First, here's a solution using functional programming with lists.
 Because we aren't allowing mutation of pairs, this version does
 a lot of recopying:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>;;;;;                         In file cs61a/lectures/vector.scm
 (define (shuffle1 lst)
   (define (loop in out n)
@@ -566,7 +557,7 @@ a lot of recopying:
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 This is a case in which functional programming has few virtues.
 The code is hard to read, and it takes <font face="symbol">Q</font
 >(n<sup>2</sup>) time to
@@ -577,7 +568,7 @@ primitives <tt>append</tt> and <tt>length</tt> as well as <font face="symbol">Q<
 >(n)
 calls to the helper function <tt>loop</tt>.)
 
-<div class="p"><!----></div>
+<p>
 We can improve things using list mutation.  Any list-based
 solution will still be <font face="symbol">Q</font
 >(n<sup>2</sup>), because it takes <font face="symbol">Q</font
@@ -587,7 +578,7 @@ have to do that n times.  But we can improve the constant
 factor by avoiding the copying of pairs that <tt>append</tt> does
 in the first version:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>;;;;;                         In file cs61a/lectures/vector.scm
 (define (shuffle2! lst)
   (if (null? lst)
@@ -602,20 +593,20 @@ in the first version:
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 (Note:  This could be improved still further by calling <tt>length</tt>
 only once, and using a helper procedure to subtract one from the
 length in each recursive call.  But that would make the code more
 complicated, so I'm not bothering.  You can take it as an exercise
 if you're interested.)
 
-<div class="p"><!----></div>
+<p>
 Vectors allow a more dramatic speedup, because finding each
 element takes <font face="symbol">Q</font
 >(1) instead of <font face="symbol">Q</font
 >(n):
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>;;;;;                         In file cs61a/lectures/vector.scm
 (define (shuffle3! vec)
   (define (loop n)
@@ -630,19 +621,19 @@ element takes <font face="symbol">Q</font
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 The total time for this version is <font face="symbol">Q</font
 >(n), because it makes
 n recursive calls, each of which takes constant time.
 
-<div class="p"><!----></div>
+<p>
 <b><font face="symbol"></font
 > How it works</b>
 
-<div class="p"><!----></div>
+<p>
 One handwavy paragraph on why vectors have the performance they do:
 
-<div class="p"><!----></div>
+<p>
 A pair is two pointers attached to each other in a single block
 of memory.  A vector is similar, but it's a block of n pointers
 for an arbitrary (but fixed) number n.  Since a vector is one
@@ -652,12 +643,12 @@ of the kth element.  The downside is that in order to get all
 the elements in a single block of memory, you have to allocate
 the block all at once.
 
-<div class="p"><!----></div>
+<p>
 If you don't understand that, don't worry about it until 61B.
 
-<div class="p"><!----></div>
+<p>
 <b>Note:</b> Programming project 3 starts this week.
 
-<div class="p"><!----></div>
+<p>
 
-<div class="p"><!----></div>
+<p>

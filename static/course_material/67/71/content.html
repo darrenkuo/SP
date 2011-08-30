@@ -1,19 +1,19 @@
 <b>CS 61A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Week 6</b>
-<div class="p"><!----></div>
+<p>
 Topic: Generic Operators
-<div class="p"><!----></div>
+<p>
 <b>Reading:</b>
 Abelson &amp; Sussman, Sections 2.4 through 2.5.2 (pages 169-200)
-<div class="p"><!----></div>
+<p>
 <b>Homework:</b>
-<div class="p"><!----></div>
+<p>
 Abelson &amp; Sussman, exercises 2.74, 2.75, 2.76, 2.77, 2.79, 2.80, 2.81, 2.83
-<div class="p"><!----></div>
+<p>
 Note: Some of these are thought-exercises; you needn't actually run any Scheme
 programs for them!  (Some don't ask you to write procedures at all;
 others ask for modifications to a program that isn't online.)
 
-<div class="p"><!----></div>
+<p>
 <font face="symbol"></font
 > If you haven't already finished this week's lab exercises that
 involve the <tt>scheme-1</tt> interpreter, do it now.  Then write
@@ -21,7 +21,7 @@ a <tt>map</tt> primitive for <tt>scheme-1</tt> (call it <tt>map-1</tt> so you
 and Scheme don't get confused about which is which) that works
 correctly for all mapped procedures.
 
-<div class="p"><!----></div>
+<p>
 <font face="symbol"></font
 > Modify the <tt>scheme-1</tt> interpreter
 to add the <tt>let</tt> special form.  Hint: Like a procedure call, <tt>let</tt>
@@ -29,16 +29,16 @@ will have to use <tt>substitute</tt> to replace certain variables with their
 values.  Don't forget to evaluate the expressions that provide those
 values!
 
-<div class="p"><!----></div>
+<p>
 <b>Extra for experts:</b>
-<div class="p"><!----></div>
+<p>
 Another approach to the problem of type-handling is <i>type inference</i>.
 If, for instance, a procedure includes the expression <tt>(+ n k)</tt>,
 one can infer that <tt>n</tt> and <tt>k</tt> have numeric values.
 Similarly, the expression <tt>(f a b)</tt> indicates that the value of <tt>f</tt>
 is a procedure.
 
-<div class="p"><!----></div>
+<p>
 Write a procedure called <tt>inferred-types</tt> that, given a definition of a
 Scheme procedure as argument, returns a list of information about the
 parameters of the procedure.  The information list should contain one
@@ -47,15 +47,15 @@ element is the parameter name and whose second element is a word indicating
 the type inferred for the parameter.  Possible types are listed on the next
 page.
 
-<div class="p"><!----></div>
+<p>
 <b>Continued on next page.</b>
 
-<div class="p"><!----></div>
+<p>
 
-<div class="p"><!----></div>
+<p>
 <b>Week 6 continued...</b>
 
-<div class="p"><!----></div>
+<p>
 <br />
 <dl compact="compact">
  <dt>
@@ -93,35 +93,35 @@ although it may contain arbitrarily nested and quoted expressions.
 (A more ambitious inference procedure both would examine a more comprehensive
 set of procedures and could infer conditions like "nonempty list".)
 
-<div class="p"><!----></div>
+<p>
 Here's an example of what your inference procedure should return.
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(inferred-types
   '(define (foo a b c d e f)
     (f (append (a b) c '(b c)) (+ 5 d) (sentence (first e) f)) ) )
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 should return
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>((a procedure) (b ?) (c list) (d number)
  (e sentence-or-word) (f x))
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 If you're <i>really </i> ambitious, you could maintain a database of
 inferred argument types and use it when a procedure you've seen is
 invoked by another procedure you're examining!
 
-<div class="p"><!----></div>
+<p>
 <br /><hr />
 Unix feature of the week: <tt>du</tt>, <tt>df</tt>, <tt>quota</tt>
-<div class="p"><!----></div>
+<p>
 Emacs feature of the week: <tt>M-q</tt> (format paragraphs), <tt>C-M-q</tt> (format Scheme code)
-<div class="p"><!----></div>
+<p>
 
-<div class="p"><!----></div>
+<p>

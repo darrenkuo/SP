@@ -1,7 +1,17 @@
-<P>Let's take another example; we'll write the <A NAME="g7"></A><A NAME="g8"></A>Pig Latin procedure
-that we showed off in Chapter 1.  We're trying to take a word, move
-all the initial consonants to the end, and add &quot;ay.&quot;
- 
+<P>Our next example translates a word into <A NAME="g13"></A><A
+NAME="g14"></A>Pig Latin.
+
+<P><small><small>Pig Latin is a not-very-secret secret language that many
+little kids learn.  Each word is translated by moving all the initial
+consonants to the end of the word, and adding "ay" at the end.  It's usually
+spoken rather than written, but that's a little harder to do on a
+computer.</small></small>
+
+<P><A NAME="pig"></A>
+<CENTER><IMG
+SRC="http://inst.eecs.berkeley.edu/~cs61as/fa11/61as/static/course_material/141/143/149/pig.jpg"
+ALT="figure: pig"></CENTER>
+
 <P>The simplest case is that there are no initial consonants to move:
  
 <P><PRE>(define (pigl0 wd)
@@ -33,7 +43,7 @@ we'll rewrite <CODE>pigl1</CODE> in a way that separates the rearrangement from 
  
 <P><PRE>(define (pigl1 wd)
   (word (word (bf wd) (first wd))
-    'ay))
+        'ay))
  
 &gt; (pigl1 'pastrami)
 ASTRAMIPAY
@@ -71,9 +81,11 @@ AMPLETRAY
 OMECHRAY
 </PRE> 
  
-<P>So how about a version that will work for any word? The recursive case will involve taking the <CODE>pigl</CODE> of <CODE>(word (bf wd) (first wd))</CODE>, to match the pattern we found in
-<CODE>pigl1</CODE>, <CODE>pigl2</CODE>, and <CODE>pigl3</CODE>.  The base case will be a word
-that begins with a vowel, for which we'll just add <CODE>ay</CODE> on the end, as
+<P>So how about a version that will work for any word?<sup>*</sup> The
+recursive case will involve taking the <CODE>pigl</CODE> of <CODE>(word (bf
+wd) (first wd))</CODE>, to match the pattern we found in <CODE>pigl1</CODE>,
+<CODE>pigl2</CODE>, and <CODE>pigl3</CODE>.  The base case will be a word that
+begins with a vowel, for which we'll just add <CODE>ay</CODE> on the end, as
 <CODE>pigl0</CODE> does:
  
 <P><PRE>(define (<A NAME="g9"></A>pigl wd)
@@ -81,7 +93,18 @@ that begins with a vowel, for which we'll just add <CODE>ay</CODE> on the end, a
       (word wd 'ay)
       (pigl (word (bf wd) (first wd)))))
 </PRE> 
- 
+
+<P><small><small><sup>*</sup>As it happens, there are no English words that
+start with more than four consonants.  (There are only a few even with four:
+"phthalate" is one, and some others are people's names, such as "Schneider.")
+So we could solve the problem without recursion by writing the specific
+procedures up to <code>pigl4</code> and then writing a five-way
+<code>cond</code> to choose the appropriate specific case.  But as you see,
+it's easier to solve the more general case!  A single recursive procedure,
+which can handle even nonexistent words with hundreds of initial consonants,
+is less effort than the conceptually simpler four-consonant
+version.</small></small>
+
 <P>It's an unusual sense in which <CODE>pigl</CODE>'s recursive call poses a
 &quot;smaller&quot; subproblem.  If we're asked for the <CODE>pigl</CODE> of <CODE>scheme</CODE>,
 we construct a new word, <CODE>chemes</CODE>, and ask for <CODE>pigl</CODE> of that.  This

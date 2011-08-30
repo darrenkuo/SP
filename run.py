@@ -17,6 +17,7 @@ class ServerThread(threading.Thread):
 
     def run(self):
         self.proc = Popen(['python', 'server.py', str(port)])
+        print "PID:", self.proc.pid
         self.proc.communicate()
 
 def run():

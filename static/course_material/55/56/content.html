@@ -1,27 +1,28 @@
 <b>CS 61A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Lecture Notes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
-<div class="p"><!----></div>
+<p>
 <b>Topic:</b> Data abstraction, sequences
-<div class="p"><!----></div>
+<p>
 <b>Reading:</b>
-<a href="http://mitpress.mit.edu/sicp/full-text/book/book-Z-H-14.html#%_sec_2.1" target="_blank">Abelson & Sussman, Sections 2.1 and 2.2.1</a>
-<div class="p"><!----></div>
+Abelson & Sussman, Sections <a href="http://mitpress.mit.edu/sicp/full-text/book/book-Z-H-14.html#%_sec_2.1" target="_blank">2.1</a>
+and <a href="http://mitpress.mit.edu/sicp/full-text/book/book-Z-H-15.html#%_sec_2.2">2.2.1</a>
+<p>
 <b>Note:</b> The first midterm is next week.
 
-<div class="p"><!----></div>
+<p>
 <font face="symbol"></font
 > Big ideas: data abstraction, abstraction barrier.
 
-<div class="p"><!----></div>
+<p>
 If we are dealing with some particular type of data, we want to talk about
 it in terms of its <i>meaning</i>, not in terms of how it happens to be
 represented in the computer.
 
-<div class="p"><!----></div>
+<p>
 Example:  Here is a function that computes the total point score of a hand
 of playing cards.  (This simplified function ignores the problem of cards
 whose rank-name isn't a number.)
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>;;;;;                        In file cs61a/lectures/2.1/total.scm
 (define (total hand)
   (if (empty? hand)
@@ -29,17 +30,16 @@ whose rank-name isn't a number.)
       (+ (butlast (last hand))
          (total (butlast hand)) )))
 
-<div class="p"><!----></div>
 &#62; (total '(3h 10c 4d))
 17
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 This function calls <tt>butlast</tt> in two places.  What do those two
 invocations mean?  Compare it with a modified version:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>;;;;;                        In file cs61a/lectures/2.1/total.scm
 (define (total hand)
   (if (empty? hand)
@@ -47,45 +47,41 @@ invocations mean?  Compare it with a modified version:
       (+ (rank (one-card hand))
          (total (remaining-cards hand)) )))
 
-<div class="p"><!----></div>
 (define rank butlast)
 (define suit last)
 
-<div class="p"><!----></div>
 (define one-card last)
 (define remaining-cards butlast)
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 This is more work to type in, but the result is much more readable.
 If for some reason we wanted to modify the program to add up the cards left
 to right instead of right to left, we'd have trouble editing the original
 version because we wouldn't know which <tt>butlast</tt> to change.  In the new
 version it's easy to keep track of which function does what.
 
-<div class="p"><!----></div>
+<p>
 The auxiliary functions like <tt>rank</tt> are called <i>selectors </i> because
 they select one component of a multi-part datum.
 
-<div class="p"><!----></div>
+<p>
 
-<div class="p"><!----></div>
+<p>
 Actually we're <i>violating </i> the data abstraction when we type in a
 hand of cards as <tt>'(3h&nbsp;10c&nbsp;4d)</tt> because that assumes we know how the
 cards are represented-namely, as words combining the rank number with a
 one-letter suit.  If we want to be thorough about hiding the representation,
 we need <i>constructor </i> functions as well as the selectors:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>;;;;;                        In file cs61a/lectures/2.1/total.scm
 (define (make-card rank suit)
   (word rank (first suit)) )
 
-<div class="p"><!----></div>
 (define make-hand se)
 
-<div class="p"><!----></div>
 &#62; (total (make-hand (make-card 3 'heart)
                     (make-card 10 'club)
                     (make-card 4 'diamond) ))
@@ -93,13 +89,13 @@ we need <i>constructor </i> functions as well as the selectors:
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 Once we're using data abstraction we can change the implementation of the
 data type without affecting the programs that <i>use </i> that data type.
 This means we can change how we represent a card, for example, without
 rewriting <tt>total</tt>:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>;;;;;                        In file cs61a/lectures/2.1/total.scm
 (define (make-card rank suit)
   (cond ((equal? suit 'heart) rank)
@@ -108,23 +104,21 @@ rewriting <tt>total</tt>:
         ((equal? suit 'club) (+ rank 39))
         (else (error &#223;ay what?")) ))
 
-<div class="p"><!----></div>
 (define (rank card)
   (remainder card 13))
 
-<div class="p"><!----></div>
 (define (suit card)
   (nth (quotient card 13) '(heart spade diamond club)))
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 We have changed the internal <i>representation </i> so that a card is now
 just a number between 1 and 52 (why?&nbsp;maybe we're programming in FORTRAN) but
 we haven't changed the <i>behavior </i> of the program at all.  We still
 call <tt>total</tt> the same way.
 
-<div class="p"><!----></div>
+<p>
 Data abstraction is a really good idea because it helps keep you from
 getting confused when you're dealing with lots of data types, but don't get
 religious about it.  For example, we have invented the <i>sentence </i> data
@@ -137,11 +131,11 @@ first</tt> and <tt>butfirst</tt> take <font face="symbol">Q</font
 butlast</tt> take <font face="symbol">Q</font
 >(N) time.  If you know that, your programs will be faster.
 
-<div class="p"><!----></div>
+<p>
 <font face="symbol"></font
 > Pairs.
 
-<div class="p"><!----></div>
+<p>
 To represent data types that have component parts (like the rank and suit of
 a card), you have to have some way to <i>aggregate </i> information.  Many
 languages have the idea of an <i>array </i> that groups some number of
@@ -149,12 +143,12 @@ elements.  In Lisp the most basic aggregation unit is the <i>pair </i>-two
 things combined to form a bigger thing.  If you want more than two parts you
 can hook a bunch of pairs together; we'll discuss this more below.
 
-<div class="p"><!----></div>
+<p>
 The constructor for pairs is CONS; the selectors are CAR and CDR.
 
-<div class="p"><!----></div>
+<p>
 
-<div class="p"><!----></div>
+<p>
 The book uses pairs to represent many different abstract data types:
 rational numbers (numerator and denominator), complex numbers (real and
 imaginary parts), points (x and y coordinates), intervals (low and high
@@ -163,35 +157,35 @@ line segments we think of the representation as <i>one pair </i> containing
 two points, not as three pairs containing four numbers.  (That's what it
 means to respect a data abstraction.)
 
-<div class="p"><!----></div>
+<p>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="note-figs/5-1.eps">Figure</a>
 
-<div class="p"><!----></div>
+<p>
 Note:  What's the difference between these two:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(define (make-rat num den) (cons num den))
 (define make-rat cons)
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 They are both equally good ways to implement a constructor for an abstract
 data type.  The second way has a slight speed advantage (one fewer function
 call) but the first way has a debugging advantage because you can trace <tt>
 make-rat</tt> without tracing all invocations of <tt>cons</tt>.
 
-<div class="p"><!----></div>
+<p>
 <font face="symbol"></font
 > Data aggregation doesn't have to be primitive.
 
-<div class="p"><!----></div>
+<p>
 In most languages the data aggregation mechanism (the array or whatever)
 seems to be a necessary part of the core language, not something you could
 implement as a user of the language.  But if we have first-class functions
 we can use a function to represent a pair:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>;;;;;                        In file cs61a/lectures/2.1/cons.scm
 (define (cons x y)
   (lambda (which)
@@ -199,22 +193,20 @@ we can use a function to represent a pair:
           ((equal? which 'cdr) y)
           (else (error "Bad message to CONS" message)) )))
 
-<div class="p"><!----></div>
 (define (car pair)
   (pair 'car))
 
-<div class="p"><!----></div>
 (define (cdr pair)
   (pair 'cdr))
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 This is like the version in the book except that they use 0 and 1 as the
 <i>messages </i> because they haven't introduced quoted words yet.  This
 version makes it a little clearer what the argument named <tt>which</tt> means.
 
-<div class="p"><!----></div>
+<p>
 The point is that we can satisfy ourselves that this version of <tt>cons</tt>,
 <tt>car</tt>, and <tt>cdr</tt> works in the sense that if we construct a pair with
 this <tt>cons</tt> we can extract its two components with this <tt>car</tt> and
@@ -223,79 +215,79 @@ language!  All we need is <tt>lambda</tt> and we can implement the rest
 ourselves.  (It isn't really done this way, in real life, for efficiency
 reasons, but it's neat that it could be.)
 
-<div class="p"><!----></div>
+<p>
 
-<div class="p"><!----></div>
+<p>
 <font face="symbol"></font
 > Big idea: abstract data type <i>sequence </i> (or <i>list </i>).
 
-<div class="p"><!----></div>
+<p>
 We want to represent an ordered sequence of things.  (They can be any
 kind of things.)  We <i>implement </i> sequences using pairs, with each
 <tt>car</tt> pointing to an element and each <tt>cdr</tt> pointing to the next
 pair.
 
-<div class="p"><!----></div>
+<p>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="note-figs/5-2.eps">Figure</a>
 
-<div class="p"><!----></div>
+<p>
 What should the constructors and selectors be?  The most obvious thing
 is to have a constructor <tt>list</tt> that takes any number of arguments and
 returns a list of those arguments, and a selector <tt>nth</tt> that takes a
 number and a list as arguments, returning the nth element of the list.
 
-<div class="p"><!----></div>
+<p>
 Scheme does provide those, but it often turns out to be more useful to
 select from a list differently, with a selector for the first element and a
 selector for all the rest of the elements (i.e., a smaller list).  This
 helps us write recursive functions such as the mapping and filtering ones we
 saw for sentences earlier.
 
-<div class="p"><!----></div>
+<p>
 Since we are implementing lists using pairs, we ought to have
 specially-named constructors and selectors for lists, just like for
 rational numbers:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(define adjoin cons)
 (define first car)
 (define rest cdr)
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 Many Lisp systems do in fact provide <tt>first</tt> and <tt>rest</tt> as synonyms
 for <tt>car</tt> and <tt>cdr</tt>, but the fact is that this particular data
 abstraction is commonly violated; we just use the names <tt>car</tt>, <tt>
 cdr</tt>, and <tt>cons</tt> to talk about lists.
 
-<div class="p"><!----></div>
+<p>
 This abstract data type has a special status in the Scheme interpreter
 itself, because lists are read and printed using a special notation.
 If Scheme knew only about pairs, and not about lists, then when we
 construct the list <tt>(1&nbsp;2&nbsp;3)</tt> it would print as <tt>(1&nbsp;.&nbsp;(2&nbsp;.(3&nbsp;.&nbsp;())))</tt>
 instead.
 
-<div class="p"><!----></div>
+<p>
 <font face="symbol"></font
 > List constructors.
 
-<div class="p"><!----></div>
+<p>
 Sentences have a very simple structure, so there's just one constructor for
 them.  Lists are more complicated, and have three constructors:
 
-<div class="p"><!----></div>
+<p>
 <tt>List</tt> is the simplest to understand.  It takes any number of arguments,
 each of which can be anything, and returns a list containing those arguments
 as its elements:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>&#62; (list '(a list) 'word 87 #t)
 ((a list) word 87 #t)
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 This seems very straightforward, but in practice it's not the most useful
 constructor, because it can be used only when you know exactly how many
 elements you want in the list.  Most list programming deals with arbitrary
@@ -303,22 +295,22 @@ sequences, which could be of any length.  <tt>List</tt> is useful when you use
 a fixed-length list to represent an abstract data type, such as a point in
 three-dimensional space:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(define (point x y z)
   (list x y z))
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 <tt>Cons</tt> adds one new element at the front of an existing list:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>&#62; (cons '(new element) '(the old list))
 ((new element) the old list)
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 (Of course, <tt>cons</tt> really just takes two arguments and makes a pair
 containing them, but if you're using that pair as the head of a list, then
 the effect of <tt>cons</tt> in terms of the list abstraction is to add one
@@ -327,7 +319,7 @@ in fact <tt>cons</tt> is the most commonly used list constructor, because adding
 one new element is exactly what you want to do in a recursive transformation
 of a list:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(define (map fn seq)
   (if (null? seq)
       '()
@@ -336,44 +328,44 @@ of a list:
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 <tt>Append</tt> is used to combine two or more lists in a way that "flattens"
 some of the structure of the result: It returns a list whose elements are
 <i>the elements of </i> the arguments, which must be lists:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>&#62; (append '(one list) '(and another list))
 (one list and another list)
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 It's most useful when combining results from multiple recursive calls, each
 of which returns a subset of the overall answer; you want to take the union
 of those sets, and that's what <tt>append</tt> does.
 
-<div class="p"><!----></div>
+<p>
 <font face="symbol"></font
 > Lists vs.&nbsp;sentences.
 
-<div class="p"><!----></div>
+<p>
 We started out the semester using an abstract data type called <i>
 sentence </i> that looks a lot like a list.  What's the difference, and why
 did we do it that way?
 
-<div class="p"><!----></div>
+<p>
 Our goal was to allow you to create aggregates of words without having to
 think about the structure of their internal representation (i.e., about
 pairs).  We do this by deciding that the elements of a sentence must be
 words (not sublists), and enforcing that by giving you the constructor
 <tt>sentence</tt> that creates only sentences.
 
-<div class="p"><!----></div>
+<p>
 Example:  One of the homework problems this week asks you to reverse a
 list.  You'll see that this is a little tricky using <tt>cons</tt>, <tt>car</tt>,
 and <tt>cdr</tt> as the problem asks, but it's easy for sentences:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(define (reverse sent)
   (if (empty? sent)
       '()
@@ -381,93 +373,92 @@ and <tt>cdr</tt> as the problem asks, but it's easy for sentences:
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 
-<div class="p"><!----></div>
+<p>
 To give you a better idea about what a sentence is, here's a version
 of the constructor function:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>;;;;;                        In file cs61a/lectures/2.2/sentence.scm
 (define (se a b)
   (cond ((word? a) (se (list a) b))
         ((word? b) (se a (list b)))
         (else (append a b)) ))
 
-<div class="p"><!----></div>
 (define (word? x)
   (or (symbol? x) (number? x)) )
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 <tt>Se</tt> is a lot like <tt>append</tt>, except that the latter behaves oddly
 if given words as arguments.  <tt>Se</tt> can accept words or sentences as
 arguments.
 
-<div class="p"><!----></div>
+<p>
 <br /><br /><font face="symbol"></font
 > Box and pointer diagrams.
 
-<div class="p"><!----></div>
+<p>
 Here are a few details that people sometimes get wrong about them:
 
-<div class="p"><!----></div>
+<p>
 1.  An arrow can't point to half of a pair.  If an arrowhead touches a pair,
 it's pointing to the entire pair, and it doesn't matter exactly where the
 arrowhead touches the rectangle.  If you see something like
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(define x (car y))
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 where <tt>y</tt> is a pair, the arrow for <tt>x</tt> should point to <i>the
 thing that the </i> <tt>car</tt> <i>of </i> <tt>y</tt> <i>points to</i>, not to the
 left half of the <tt>y</tt> rectangle.
 
-<div class="p"><!----></div>
+<p>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="note-figs/5-3.eps">Figure</a>
 
-<div class="p"><!----></div>
+<p>
 2.  The direction of arrows (up, down, left, right) is irrelevant.  You can
 draw them however you want to make the arrangement of pairs neat.  That's
 why it's crucial not to forget the arrowheads!
 
-<div class="p"><!----></div>
+<p>
 3.  There must be a top-level arrow to show where the structure you're
 representing begins.
 
-<div class="p"><!----></div>
+<p>
 How do you draw a diagram for a complicated list?  Take this example:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>((a b) c (d (e f)))
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 You begin by asking yourself how many elements the list has.  In this
 case it has three elements: first <tt>(a&nbsp;b)</tt>, then <tt>c</tt>, then the rest.
 Therefore you should draw a three-pair <i>backbone </i>: three pairs with
 the <tt>cdr</tt> of one pointing to the next one.  (The final <tt>cdr</tt> is
 null.)
 
-<div class="p"><!----></div>
+<p>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="note-figs/5-4.eps">Figure</a>
 
-<div class="p"><!----></div>
+<p>
 Only after you've drawn the backbone should you worry about making the <tt>
 car</tt>s of your three pairs point to the three elements of the top-level list.
 
-<div class="p"><!----></div>
+<p>
 
-<div class="p"><!----></div>
+<p>
 <font face="symbol"></font
 > MapReduce
 
-<div class="p"><!----></div>
+<p>
 In the past, functional programming, and higher-order functions in particular,
 have been considered esoteric and unimportant by most programmers.  But the
 advent of highly parallel computation is changing that, because functional
@@ -479,14 +470,14 @@ functional programming at work: the <tt>MapReduce</tt> programming paradigm
 developed by Google that uses higher-order functions to allow a programmer to
 process large amount of data in parallel on many computers.
 
-<div class="p"><!----></div>
+<p>
 Much of the computing done at Google consists of relatively simple algorithms
 applied to massive amounts of data, such as the entire World Wide Web.  It's
 routine for them to use clusters consisting of many thousands of processors,
 all running the same program, with a distributed filesystem that gives each
 processor local access to part of the data.
 
-<div class="p"><!----></div>
+<p>
 In 2003 some very clever people at Google noticed that the majority of these
 computations could be viewed as a <tt>map</tt> of some function over the data
 followed by an <tt>accumulate</tt> (they use the name <tt>reduce</tt>, which is a
@@ -502,43 +493,43 @@ complicated, but this is the essence of it.)  Thus, only the implementors of
 <tt>MapReduce</tt> itself had to worry about the parallelism, and application
 programmers just have to write the two function arguments.<a href="#tthFtNtAAB" name="tthFrefAAB">*</a>
 
-<div class="p"><!----></div>
+<p>
 <tt>MapReduce</tt> is a little more complicated than just
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(define (mapreduce mapper reducer base-case data)    ; Nope.
   (accumulate reducer base-case (map mapper data)))
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 because of the parallelism.  The input data comes in pieces; several computers
 run the <tt>map</tt> part in parallel, and each of them produces some output.
 These intermediate results are rearranged into groups, and each computer does
 a <tt>reduce</tt> of part of the data.  The final result isn't one big list, but
 separate output files for each reducing process.
 
-<div class="p"><!----></div>
+<p>
 To make this a little more specific, today we'll see a toy version of the
 algorithm that just handles small data lists in one processor.
 
-<div class="p"><!----></div>
+<p>
 Data pass through the program in the form of <i>key-value pairs: </i>
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(define make-kv-pair cons)
 (define kv-key car)
 (define kv-value cdr)
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 A list of key-value pairs is called an <i>association list </i> or
 <i>a-list </i> for short.  We'll see a-lists in many contexts other than
 <tt>MapReduce</tt>.  Conceptually, the input to <tt>MapReduce</tt> is an a-list,
 although in practice there are several a-lists, each on a different processor.
 
-<div class="p"><!----></div>
+<p>
 Any computation in <tt>MapReduce</tt> involves two function arguments: the
 <i>mapper </i> and the <i>reducer</i>.  (Note: The Google <tt>MapReduce</tt> paper
 in the course reader says "the <tt>map</tt> function" to mean the function that
@@ -547,21 +538,21 @@ since everyone else uses "<tt>map</tt>" to mean the higher-order function that
 controls the invocation of the user's function, so we're calling the latter
 the <i>mapper </i>:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(map mapper<!--hbox-->00 data)
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 Similarly, we'll use <tt>reduce</tt> to refer to the higher-order function, and
 <tt>reducer</tt> to mean the user's accumulation function.)
 
-<div class="p"><!----></div>
+<p>
 
 <table align="center" border="0"><tr><td>
 <a href="mr.eps">Figure</a></td></tr></table><!--hboxt-->
 
-<div class="p"><!----></div>
+<p>
 The argument to the mapper is always one kv-pair.  Keys are typically used to
 keep track of where the data came from.  For example, if the input consists of
 a bunch of Web pages, the keys might be their URLs.  Another example we'll be
@@ -572,7 +563,7 @@ kv-pair with a given key, but that's not true here; for example, each line of
 text in a book or Web page might be a datum, and every line in the input will
 have the same key.
 
-<div class="p"><!----></div>
+<p>
 The value returned by the mapper must be <i>a list of </i> kv-pairs.  The
 reason it's a list instead of a single kv-pair, as you might expect, is
 twofold.  First, a single input may be split into smaller pieces; for example,
@@ -582,7 +573,7 @@ kv-pair shouldn't contribute to the result at all; thus, the mapper might also
 be viewed as a filterer.  The mapper is not required to use the same key in
 its output kv-pairs that it gets in its input kv-pair.
 
-<div class="p"><!----></div>
+<p>
 Since <tt>map</tt> handles each datum independently of all the others, the fact
 that many <tt>map</tt>s are running in parallel doesn't affect the result; we
 can model the entire process with a single <tt>map</tt> invocation.  That's not
@@ -596,7 +587,7 @@ partial accumulation of values already done.  In many cases, just as in the
 accumulations we've seen earlier, the reducer will be a simple associative
 and commutative operation such as <tt>+</tt>.
 
-<div class="p"><!----></div>
+<p>
 The overall result is an a-list, in which each key occurs only once, and the
 value paired with that key is the result of the <tt>reduce</tt> invocation that
 handled that key.  The keys are guaranteed to be in order. (This is the result
@@ -610,12 +601,11 @@ list of a-lists </i> as argument, with each sublist having kv-pairs with the
 same key, does a separate reduction for each sublist, and returns an a-list of
 the results.  So a complete <tt>MapReduce</tt> operation works roughly like this:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(define (mapreduce mapper reducer base-case data) ; handwavy approximation
   (groupreduce<!--hbox-->00 reducer base-case
 	       (sort-into-buckets<!--hbox-->00 (map<!--hbox-->00 mapper data))))
 
-<div class="p"><!----></div>
 (define (groupreduce reducer base-case buckets)
   (map (lambda (subset) (make-kv-pair
 			 (kv-key (car subset))
@@ -624,12 +614,12 @@ the results.  So a complete <tt>MapReduce</tt> operation works roughly like this
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 As a first example, we'll take some grades from various exams and add up
 the grades for each student.  This example doesn't require <tt>map</tt>.  Here's
 the raw data:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(define mt1 '((cs61a-xc . 27) (cs61a-ya . 40) (cs61a-xw . 35)
 	      (cs61a-xd . 38) (cs61a-yb . 29) (cs61a-xf . 32)))
 (define mt2 '((cs61a-yc . 32) (cs61a-xc . 25) (cs61a-xb . 40)
@@ -639,15 +629,15 @@ the raw data:
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 Each midterm in this toy problem corresponds to the output of a parallel
 <tt>map</tt> operation in a real problem.
 
-<div class="p"><!----></div>
+<p>
 First we combine these into one list, and use that as input to the
 <tt>sortintobuckets</tt> procedure:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>&#62; (sort-into-buckets (append mt1 mt2 mt3))
 (((cs61a-xb . 40) (cs61a-xb . 32))
  ((cs61a-xc . 27) (cs61a-xc . 25) (cs61a-xc . 28))
@@ -661,16 +651,16 @@ First we combine these into one list, and use that as input to the
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 In the real parallel context, instead of the <tt>append</tt>, each <tt>map</tt>
 process would sort its own results into the right buckets, so that too would
 happen in parallel.
 
-<div class="p"><!----></div>
+<p>
 Now we can use <tt>groupreduce</tt> to add up the scores in each bucket
 separately:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>&#62; (groupreduce + 0 (sort-into-buckets (append mt1 mt2 mt3)))
 ((cs61a-xb . 72) (cs61a-xc . 80) (cs61a-xd . 38) (cs61a-xf . 65)
  (cs61a-xk . 34) (cs61a-xw . 62) (cs61a-ya . 120) (cs61a-yb . 89)
@@ -678,17 +668,17 @@ separately:
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 Note that the returned list has the keys in sorted order.  This is a
 consequence of the sorting done by <tt>sort-into-buckets</tt>, and also, in the
 real parallel <tt>mapreduce</tt>, a consequence of the order in which keys are
 assigned to processors (the "partitioning function" discussed in the <tt>
 MapReduce</tt> paper).
 
-<div class="p"><!----></div>
+<p>
 Similarly, we could ask <i>how many </i> midterms each student took:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>&#62; (groupreduce (lambda (new old) (+ 1 old))<!--hbox-->00 0
 	       (sort-into-buckets (append mt1 mt2 mt3)))
 ((cs61a-xb . 2) (cs61a-xc . 3) (cs61a-xd . 1) (cs61a-xf . 2) (cs61a-xk . 1)
@@ -696,38 +686,37 @@ Similarly, we could ask <i>how many </i> midterms each student took:
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 We could combine these in the obvious way to get the average score per
 student, for exams actually taken.
 
-<div class="p"><!----></div>
+<p>
 <b>Word frequency counting.</b>  A common problem is to look for commonly used
 words in a document.  For starters, we'll count word frequencies in a single
 sentence.  The first step is to turn the sentence into key-value pairs in
 which the key is the word and the value is always 1:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>&#62; (map (lambda (wd) (list (make-kv-pair wd 1))) '(cry baby cry))
 ((cry . 1) (baby . 1) (cry . 1))
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 If we group these by key and add the values, we'll get the number of times
 each word appears.
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(define (wordcounts1 sent)
   (groupreduce + 0 (sort-into-buckets (map (lambda (wd) (make-kv-pair wd 1))
 					   sent))))
 
-<div class="p"><!----></div>
 &#62; (wordcounts1 '(cry baby cry))
 ((baby . 1) (cry . 2))
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 Now to try the same task with (simulated) files.  When we use the real
 <tt>mapreduce</tt>, it'll give us file data in the form of a key-value pair
 whose key is the name of the file and whose value is a line from the file,
@@ -736,16 +725,16 @@ list whose car is the "filename" and whose cdr is a list of sentences,
 representing the lines of the file.  In other words, a file is a list whose
 first element is the filename and whose remaining elements are the lines.
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(define filename car)
 (define lines cdr)
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 Here's some data for us to play with:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(define file1 '((please please me) (i saw her standing there) (misery)
 		(anna go to him) (chains) (boys) (ask me why)
 		(please please me) (love me do) (ps i love you)
@@ -764,16 +753,15 @@ Here's some data for us to play with:
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 We start with a little procedure to turn a "file" into an a-list in the
 form <tt>mapreduce</tt> will give us:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(define (file-&#62;linelist file)
   (map (lambda (line) (make-kv-pair (filename file) line))
        (lines file)))
 
-<div class="p"><!----></div>
 &#62; (file-&#62;linelist file1)
 (((please please me) i saw her standing there)
  ((please please me) misery)
@@ -789,14 +777,14 @@ form <tt>mapreduce</tt> will give us:
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 Note that <tt>((please please me) misery)</tt> is how Scheme prints the
 kv-pair <tt>((please&nbsp;please&nbsp;me)&nbsp;.&nbsp;(misery))</tt>.
 
-<div class="p"><!----></div>
+<p>
 Now we modify our <tt>wordcounts1</tt> procedure to accept such kv-pairs:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(define (wordcounts files)
   (groupreduce + 0 (sort-into-buckets
 		    (flatmap (lambda (kv-pair)
@@ -806,7 +794,7 @@ Now we modify our <tt>wordcounts1</tt> procedure to accept such kv-pairs:
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>&#62; (wordcounts (append (file-&#62;linelist file1)
 		      (file-&#62;linelist file2)
 		      (file-&#62;linelist file3)))
@@ -826,11 +814,11 @@ Now we modify our <tt>wordcounts1</tt> procedure to accept such kv-pairs:
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 (If you count yourself to check, remember that words in the album titles
 don't count!  They're keys, not values.)
 
-<div class="p"><!----></div>
+<p>
 Note the call to <tt>flatmap</tt> above.  In a real <tt>mapreduce</tt>, each file
 would be mapped on a different processor, and the results would be distributed
 to <tt>reduce</tt> processes in parallel.  Here, the <tt>map</tt> over files gives
@@ -838,11 +826,11 @@ us a list of a-lists, one for each file, and we have to append them to form
 a single a-list.  <tt>Flatmap</tt> flattens (appends) the results from calling
 <tt>map</tt>.
 
-<div class="p"><!----></div>
+<p>
 We can postprocess the groupreduce output to get an overall reduction to
 a single value:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(define (mostfreq files)
   (accumulate (lambda (new old)
 		(cond ((&#62; (kv-value new) (kv-value (car old)))
@@ -858,7 +846,6 @@ a single value:
 						(kv-value kv-pair)))
 					 files)))))
 
-<div class="p"><!----></div>
 &#62; (mostfreq (append (file-&#62;linelist file1)
 		    (file-&#62;linelist file2)
 		    (file-&#62;linelist file3)))
@@ -866,19 +853,19 @@ a single value:
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 (Second place is &#255;ou" and &#207;" with 7 appearances each, which would have
 made a two-element a-list as the result.)  If we had a truly enormous word
 list, we'd put it into a distributed file and use another <tt>mapreduce</tt> to
 find the most frequent words of subsets of the list, and then find the most
 frequent word of those most frequent words.
 
-<div class="p"><!----></div>
+<p>
 <b>Searching for a pattern.</b>  Another task is to search through files for
 lines matching a pattern.  A <i>pattern </i> is a sentence in which the
 word <tt>*</tt> matches any set of zero or more words:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>&#62; (match? '(* i * her *) '(i saw her standing there))
 #t
 &#62; (match? '(* i * her *) '(and i love her))
@@ -888,10 +875,10 @@ word <tt>*</tt> matches any set of zero or more words:
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 Here's how we look for lines in files that match a pattern:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(define (grep pattern files)
   (groupreduce cons '()
 	       (sort-into-buckets
@@ -901,7 +888,6 @@ Here's how we look for lines in files that match a pattern:
 			       '()))
 			 files))))
 
-<div class="p"><!----></div>
 &#62; (grep '(* i * her *) (append (file-&#62;linelist file1)
 			       (file-&#62;linelist file2)
 			       (file-&#62;linelist file3)))
@@ -910,27 +896,27 @@ Here's how we look for lines in files that match a pattern:
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 <b>Summary.</b>  The general pattern here is
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(groupreduce <i>reducer </i> <i>base-case </i>
 	     (sort-into-buckets
 	      (map-or-flatmap <i>mapper </i> <i>data </i>)))
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 This corresponds to
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(mapreduce <i>mapper </i> <i>reducer </i> <i>base-case </i> <i>data </i>)
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 in the truly parallel <tt>mapreduce</tt> exploration we'll be doing later.
 
-<div class="p"><!----></div>
+<p>
 
-<div class="p"><!----></div>
+<p>

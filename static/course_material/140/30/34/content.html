@@ -15,9 +15,15 @@ algebra class:
 </PRE> 
  
 <P>Since there are two possible solutions, we return a sentence containing two
-numbers.  This procedure works fine, but it does have the disadvantage of repeating a
+numbers.  This procedure works fine,<sup>*</sup> but it does have the disadvantage of repeating a
 lot of the work.  It computes the square root part of the formula twice.
 We'd like to avoid that inefficiency.
+
+<P><small><small><sup>*</sup> That is, it works if the equation has real
+roots, or if your version of Scheme has complex numbers.  Also, the limited
+precision with which computers can represent irrational numbers can make this
+particular algorithm give wrong answers in practice even though it's correct in
+theory.</small></small>
  
 <P>One thing we can do is to compute the square root and use that as the
 actual argument to a helper procedure that does the rest of the job:

@@ -77,5 +77,50 @@ on to the next argument.
 instead of an expression.  You can think of this as representing a true
 value, but <CODE>else</CODE> doesn't mean true in any other context; you're only
 allowed to use it as the condition of the last clause of a <CODE>cond</CODE>.
- 
-<P>Don't get into bad habits of thinking about the
+
+<P><small><small>What if you don't use an <CODE>else</CODE> clause at all?  If
+none of the clauses has a true condition, then the return value is
+unspecified.  In other words, always use <CODE>else</CODE>.</small></small>
+
+<P>Don't get into bad habits of thinking about the appearance of
+<CODE>cond</CODE> clauses in terms of &quot;two parentheses in a row.&quot;
+That's often the case, but not always.  For example, here is a procedure that
+translates Scheme true or false values (<CODE>#t</CODE> and <CODE>#f</CODE>)
+into more human-readable words <CODE>true</CODE> and <CODE>false</CODE>.
+
+<P><PRE>(define (<A NAME="g107"></A>truefalse value)
+  (cond (value 'true)
+        (else 'false)))
+
+&gt; (truefalse (= 2 (+ 1 1)))
+TRUE
+
+&gt; (truefalse (= 5 (+ 2 2)))
+FALSE
+</PRE>
+
+<P>When a <CODE>cond</CODE> tests several possible conditions, they might not
+be <A NAME="g108"></A><A NAME="g109"></A>mutually exclusive.<sup>*</sup>
+This can be either a source of error or an advantage in
+writing efficient programs.  The trick is to make the <EM>most
+restrictive</EM> test first.  For example, it would be an error to say
+
+<P><PRE>(cond ((number? (first sent)) &hellip)           ;; wrong
+      ((empty? sent) &hellip)
+      &hellip)
+</PRE>
+
+<P>because the first test only makes sense once you've already
+established that there <EM>is</EM> a first word of the sentence.
+On the other hand, you don't have to say
+
+<P><PRE>(cond ((empty? sent) &hellip)
+      ((and (not (empty? sent)) (number? (first sent))) &hellip)
+      &hellip)
+</PRE>
+
+<P>because you've already established that the sentence is nonempty
+if you get as far as the second clause.
+
+<P><small><small><sup>*</sup> Conditions are <em>mutually exclusive</em>
+if only one of them can be true at a time.</small></small>

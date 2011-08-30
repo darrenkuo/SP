@@ -1,6 +1,10 @@
-<P>We've paid a lot of attention to the details of formal parameters and actual
-arguments, but we've been a little handwavy about how a procedure actually computes a value when you invoke it.
- 
+<P>We've paid a lot of attention to the details of formal parameters and
+actual arguments, but we've been a little handwavy<sup>*</sup> about how a
+procedure actually computes a value when you invoke it.
+
+<P><small><small><sup>*</sup> You know, that's when you wave your hands
+around in the air instead of explaining what you mean.</small></small>
+
 <P>We're going to explain what happens when you invoke a user-defined procedure.
 Every explanation is a story.  No story tells the entire truth, because there
 are always some details left out.  A <EM>model</EM> is a story that
@@ -45,6 +49,12 @@ that the procedure's definition is changed in any permanent way.  The body of
 the procedure doesn't change; what happens, as we said before, is that Scheme
 constructs a new expression that looks like the body, except for the
 substitutions.
+
+<P><small><small>You may be thinking that this is rather an inefficient way
+to do things&mdash;all this copying and replacement before you can actually
+compute anything.  Perhaps you're afraid that your Scheme programs will run
+very slowly as a result.  Don't worry.  It really happens in a different way,
+but the effect is the same except for the speed.</small></small>
  
 <P>There are little people who specialize in <CODE>square</CODE>, just as there
 are little people who specialize in <CODE>+</CODE> and <CODE>*</CODE>.  The difference is
@@ -80,7 +90,7 @@ body of <CODE>hypotenuse</CODE>:
 <P>Now he evaluates that expression, just as Alonzo would evaluate it
 if you typed it at a Scheme prompt.  That is, Harry hires four little
 people: one <CODE>sqrt</CODE> expert, one <CODE>+</CODE> expert, and two <CODE>square</CODE> 
-experts. In particular, some little
+experts.<sup>*</sup> In particular, some little
 person has to evaluate <CODE>(square 5)</CODE>, by substituting 5 for <CODE>x</CODE> in
 the body of <CODE>square</CODE>, as in the earlier example.  Similarly, we
 substitute 12 for <CODE>x</CODE> in order to evaluate <CODE>(square 12)</CODE>:
@@ -98,6 +108,17 @@ substitute 12 for <CODE>x</CODE> in order to evaluate <CODE>(square 12)</CODE>:
 (sqrt 169)
 13
 </PRE> 
+
+<P><small><small><sup>*</sup> Until we started defining our own procedures in
+this chapter, all of the little people were hired by Alonzo, because all
+expressions were typed directly to a Scheme prompt.  Now epressions can come
+from the bodies of procedures, and so the little people needed to compute
+those expressions are hired by the little person who's computing that
+procedure.  Notice also that each little person <em>reports to</em>
+another little person, not necessarily the one who <em>hired</em> her.  In this
+case, if Harry hires Shari for <code>sqrt</code>, Paul for <code>+</code>,
+and Slim and Syndey for the two <code>square</code>s, then Slim reports
+to Paul, not to Harry.  Only Shari reports directly to Harry.</small></small>
  
 <P>Don't forget, in the heady rush of learning about the substitution
 model, what you already knew from before:  Each piece of this computation is
