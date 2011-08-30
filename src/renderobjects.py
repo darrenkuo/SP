@@ -2,6 +2,7 @@ from os.path import join
 
 from globals import *
 from html import *
+from utils import *
 
 class css:
     def __init__(self):
@@ -131,7 +132,7 @@ def makeNewPath(previous_path, path):
         return '/display?page=%s' % (previous_path)
     else:
         return '/display?page=%s' % (path)
-
+"""
 def findPreviousNext(path, user):
     from utils import readLessonData
     from utils import convertToRealPath
@@ -153,7 +154,7 @@ def findPreviousNext(path, user):
             new_path_fake = '%s-%s' % (p, c)
             #print 'checking path: ', new_path_fake
             if checkReadable(new_lesson_data, user):
-                return (None, '/display?page=%s' % (new_path_fake))
+                return (None, '/magic?page=/display?page=%s' % (new_path_fake))
 
             for c1 in new_lesson_data['chapters']:
                 stack.insert(0, (c1, new_path_fake))
@@ -185,56 +186,12 @@ def findPreviousNext(path, user):
                         #print 'checking parent path:', new_path
                         if checkReadable(temp_lesson_data, user):
                             print 'checked readable for', new_path
-                            return (None, '/display?page=%s' % (page_path))
+                            return (None, '/magic?page=/display?page=%s' % (page_path))
                         else:
                             print 'find next with', new_path
                             return findPreviousNext(new_path, user)
+"""
         
-        """
-        paths = path.strip().split('-')
-        cur_ch = paths[-1]
-        parent_path = join(course_material, '/'.join(paths[:-1]))
-
-        f = open(join(parent_path, 'lesson.data'), 'r')
-        x = eval(f.read())
-        f.close()
-
-        chapters = x['chapters']
-        previous_join_path = '-'.join(paths[:-1])
-        
-        previous = None
-        cur = False
-        next = None
-        for c in chapters:
-            if cur:
-                next = c
-                break
-            if c == cur_ch:
-                cur = True
-
-            if not cur:
-                previous = c
-                
-        try:
-            f = open(join(parent_path, cur_ch, 'lesson.data'), 'r')
-            x = eval(f.read())
-            y = x['chapters'][0]
-            next = cur_ch + '-' + y
-        except Exception, err:
-            print err
-
-        if next and previous:
-            return (makeNewPath(previous_join_path, previous),
-                    makeNewPath(previous_join_path, next))
-        elif not previous and next:
-            return (None, makeNewPath(previous_join_path, next))
-        elif previous and not next:
-            return (makeNewPath(previous_join_path, previous),
-                    None)
-        else:
-            return (None, makeNewPath(previous_join_path, ''))
-        """
-
 class unreadable_content:
     def render(self):
         return '<h2>This page is not accessible at the moment. It might be because unsatified requirements</h2>'
@@ -268,36 +225,28 @@ class lesson_content:
             output += '<h2>%s</h2>' % (self.title)
         
         if self.content:
-            if not self.renderContent:#type(self.content) == str:
-                #output += self.content
+            if not self.renderContent:
                 output += self.content
             else:
                 output += self.content.render()
 
         if self.path != None and self.user:
-            (previous, next) = findPreviousNext(self.path, self.user)
+            next = findPreviousNext(self.path, self.user)
             output += '</p>'
-            output += '<table class="chapter" border="0" width="90%" cellspacing="0" cellpadding="0"><tr>'
-            """
-            output += '<td class="prev">'
-            if previous:
-                output += '<a class="chapter" href="%s">&laquo; Previous</a>' % (previous)
-            output += '</td>'
-            """
-                
-            output += '<td class="next" ALIGN=RIGHT>'
+            
             if next:
-                output += '<a class="chapter" href="%s">Next Page &raquo;</a>' % (next)
-            output += '</td>'
-
-            output += '</tr></table>'
+                output += '<P align="right">'
+                output += '<a class="chapter" href="%s" target="_top">Next&raquo;</a>' % (next)
+                output += '</P>'
 
         return output + '</div>'
 
 class lesson_layout:
-    def __init__(self, sidebar=lesson_sidebar(), content=lesson_content()):
-        self.sidebar = sidebar
+    def __init__(self, content=lesson_content()):
         self.content = content
 
     def render(self):
+        if type(self.content) == str:
+            return self.content
+
         return self.content.render()

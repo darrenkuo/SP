@@ -12,20 +12,14 @@ from os.path import exists
 from subprocess import Popen, PIPE
 from time import time
 
-import cProfile
+import sys
 
-#from src.web.wsgiserver import CherryPyWSGIServer
+import cProfile
 
 web.config.debug = True
 
-#CherryPyWSGIServer.ssl_certificate = "SSL/ssl.crt"
-#CherryPyWSGIServer.ssl_private_key = "SSL/ssl.key"
-
 urls = ('/', 'main', 
         '/logout', 'logout', 
-        '/register_admin', 'register_admin',
-        #'/register', 'register', 
-        '/admin_login', 'admin_login', 
         '/admin', 'admin',
         '/display', 'display',
         '/summary', 'summary', 
@@ -47,35 +41,17 @@ urls = ('/', 'main',
         '/libraryfiles', 'libraryfiles',
         '/lecturefiles', 'lecturefiles',
         '/help', 'help',
-        '/solution', 'solution'
+        '/solution', 'solution',
+        '/not_accessible', 'not_accessible',
+        '/quit', 'quit'
         )
 
-"""
-, 'main',
-        '/logout/', 
-        '/register/',
-        '/summary/', '/admin/', '/admin_login/')
-"""
-class main:
-    """
+class quit:
     def GET(self):
-        my_signin = signin_form()
-        #session = web.config.get('_session')
-        session = web.config._session
-        if (isStudent(session.user) or isAdmin(session.user)):
-            raise web.seeother('/magic?page=/summary')
-        obj = render.main(session.user, my_signin)
-        return obj
+        print "QUIT"
+        sys.exit()
 
-    def POST(self): 
-        my_signin = signin_form() 
-
-        if not my_signin.validates():
-            return render.main(session.user, my_signin)
-        else:
-            session.user = my_signin['username'].value
-            raise web.seeother('/magic?page=/summary')
-    """
+class main:
     def GET(self):
         raise web.seeother('/magic?page=/summary')
     
@@ -87,20 +63,6 @@ class logout:
         web.debug('[USER] %s logged out' % (session.user))
         session.kill()
         raise web.seeother(main_page)
-
-class admin_login:
-    def GET(self):
-        my_signin = admin_signin_form()
-        return render.admin_login(session.user, my_signin)
-
-    def POST(self): 
-        my_signin = admin_signin_form() 
-
-        if not my_signin.validates():
-            return render.admin_login(session.user, my_signin)
-        else:
-            session.user = my_signin['username'].value
-            raise web.seeother('/admin')
 
 class book:
     def GET(self):
@@ -146,9 +108,16 @@ class lecturefiles:
 class admin:
     def GET(self):
         if not isAdmin(session.user):
-            raise web.seeother('/admin_login')
+            raise web.seeother('not_accessible')
         return render.admin(getAdminPage())
     
+    def POST(self):
+        return self.GET()
+
+class not_accessible:
+    def GET(self):
+        return "This page is not accessible"
+
     def POST(self):
         return self.GET()
 
@@ -156,8 +125,8 @@ class course_control:
     def GET(self):
         if not isAdmin(session.user):
             raise web.seeother('/admin_login')
-        js_obj = js(script=\
-                        """function showHideToggle(id) {
+        
+        script = """function showHideToggle(id) {
   var obj = document.getElementById("div"+id);
   var obj1 = document.getElementById("sh"+id);
   if (obj.style.display == 'none') {
@@ -168,12 +137,14 @@ class course_control:
      obj.style.display = 'none';
   }
 }
-""")
-        html = (sidebar_css(), js_obj, lesson_layout(sidebar=admin_sidebar(),
-                                                     content=lesson_content(
+"""
+        js_obj = js(script=script)
+        html = (sidebar_css(), js_obj, 
+                lesson_layout(content=lesson_content(
                     title="Course Control page",
                     content=getCourseTree(),
                     path=None)))
+
         return render.course_control(html)
 
     def POST(self):
@@ -206,7 +177,8 @@ class new_page:
             raise web.seeother('/course_control')
 
         new_page = new_page_form()
-        return render.new_page(new_page, data['page'])
+        js_obj = js(script=toggle_script)
+        return render.new_page(new_page, js_obj, data['page'])
 
     def POST(self):
         return self.GET()
@@ -216,7 +188,10 @@ class course_admin:
         f = open(join(course_administration, 'content.html'), 'r')
         content = f.read().strip()
         f.close()
-        return render.course_admin((sidebar_css(), lesson_layout(content=page_content(title="Course Administration", content = content))))
+        return render.course_admin(
+            (sidebar_css(), 
+             lesson_layout(content=page_content(title="Course Administration",
+                                                content = content))))
 
     def POST(self):
         return self.GET()
@@ -232,7 +207,6 @@ class magic:
 
 class grades:
     def GET(self):
-        #proc = Popen('glookup %s' % (session.user), stdout=PIPE)
         proc = Popen(['glookup', session.user], stdout=PIPE, stderr=PIPE)
         (o, e) = proc.communicate()
         print 'output:', o
@@ -288,4 +262,6 @@ else:
     session = web.config._session
 
 if __name__ == "__main__":
-    cProfile.run('app.run()')
+    regenerateNext()
+    setup_dbs()
+    app.run()

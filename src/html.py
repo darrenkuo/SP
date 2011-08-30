@@ -14,12 +14,15 @@ class p(form.Input):
         return '<p>%s</p>' % (self.txt)
     
 class a(form.Input):
-    def __init__(self, txt, link, *validators, **attrs):
+    def __init__(self, txt, link, top=False, *validators, **attrs):
         self.txt = txt
         self.link = link
+        self.top = top
         super(a, self).__init__('', *validators, **attrs)
 
     def render(self):
+        if self.top:
+            return '<a href="%s" target="_top">%s</a>' % (self.link, self.txt)
         return '<a href="%s">%s</a>' % (self.link, self.txt)
 
 class showhide(form.Input):

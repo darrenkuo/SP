@@ -152,12 +152,11 @@ def edit_page_form(page):
                   Label(text='Date constaints'),
                   Br(),
                   Table([[Label(text='Before:'),
-                          form.Checkbox('before_check', onchange="enable_weekselector('before_week')"),
-                          #DateSelector(name="before_date", disable="true")],
+                          form.Checkbox('before_check', 
+                                        onchange="enable_weekselector('before_week')"),
                           WeekSelector(name="before_week", disabled="true")],
                          [Label(text='After:'),
                           form.Checkbox('after_check', onchange='enable_weekselector("after_week")'),
-                          #DateSelector(name="after_date", disable="true")]]),
                           WeekSelector(name="after_week", disabled="true")]]),
                   Br(),
                   ScriptButton("Generate code", "generateConstraints()"),
@@ -190,9 +189,14 @@ def process_edit_page(data):
     writeLessonData(path, lesson_data)
 
 def getAdminPage():
-    return sidebar_css(), lesson_layout(sidebar=admin_sidebar(),
-                                        content=unreadable_content())
+    content = """
+<frameset>
+<frame src="static/admin/content.html">
+</frameset>
+"""
+    return sidebar_css(), lesson_layout(content=content)
 
+#TODO: someone could just make requests and make changes....
 class up:
     def GET(self):
         input_data = web.input()
@@ -250,3 +254,15 @@ class down:
     def POST(self):
         return self.GET()
 
+toggle_script = """function showHideToggle(id) {
+  var obj = document.getElementById("div"+id);
+  var obj1 = document.getElementById("sh"+id);
+  if (obj.style.display == 'none') {
+     obj1.innerHTML = '&#9660;';
+    obj.style.display = '';
+  } else {
+     obj1.innerHTML = '&#9654;';
+     obj.style.display = 'none';
+  }
+}
+"""

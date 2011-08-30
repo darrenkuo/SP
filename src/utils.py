@@ -106,30 +106,20 @@ def isAdmin(user):
     return len(rows) == 1
 
 def isStudent(user):
-    (conn, cursor) = getDbCursor(student_db)
-    cursor.execute('SELECT * from users u WHERE u.login = "%s";' % (user))
-    rows = cursor.fetchall()
-    return len(rows) == 1
+    return exists(join(dbs_path, 'student_database', '%s.db' % (user)))
 
 def setup_dbs():
-    (conn, cursor) = getDbCursor(course_db)
-    cursor.execute('CREATE TABLE chapter(id INTEGER PRIMARY KEY, path TEXT);')
-    cursor.execute('CREATE TABLE visits(login TEXT, chapter_id INTEGER);')
-    cursor.execute('CREATE TABLE SPECIAL_FLAG(login TEXT, SPECIAL_FLAG TEXT);')
-    cursor.execute('CREATE TABLE quiz_times(login TEXT, chapter_id INTEGER, timestamp INTEGER);')
-    cursor.execute('CREATE TABLE visits_times(login TEXT, chapter_id INTEGER, timestamp INTEGER);')
-    conn.commit()
-    cursor.close()
+    if not exists(join(dbs_path, course_db)):
+        (conn, cursor) = getDbCursor(course_db)
+        cursor.execute('CREATE TABLE chapter(id INTEGER PRIMARY KEY, path TEXT);')
+        conn.commit()
+        cursor.close()
 
-    (conn, cursor) = getDbCursor(admin_db)
-    cursor.execute('CREATE TABLE users (login TEXT primary key, salt TEXT, saltpw TEXT);')
-    conn.commit()
-    cursor.close()
-
-    (conn, cursor) = getDbCursor(student_db)
-    cursor.execute('CREATE TABLE users (login TEXT primary key, salt TEXT, saltpw TEXT);')
-    conn.commit()
-    cursor.close()
+    if not exists(join(dbs_path, admin_db)):
+        (conn, cursor) = getDbCursor(admin_db)
+        cursor.execute('CREATE TABLE users (login TEXT primary key);')
+        conn.commit()
+        cursor.close()
 
 def clean_html(html):
     html = html.replace('\xc2', '.')
@@ -143,7 +133,6 @@ def clean_html(html):
     html = html.replace('\xd9', ' ')
     html = html.replace('\xae', ' ')
     html = html.replace('\xb7', ' ')
-
     
     return html
 
@@ -183,7 +172,6 @@ def new_chapter(n):
 
 def lastVisitedPage(user):
     (conn, cursor) = getDbCursor(course_db)
-    #(conn, cursor) = getDbCursor(getUserDb(user))
     cursor.execute("SELECT * from visits_times;")
     rows = cursor.fetchall()
 
@@ -192,13 +180,70 @@ def lastVisitedPage(user):
         if r[-1] > max_row[-1]:
             max_row = r
         
-    #print "user: %s was last at %s" % (user, max_row[1])
     cursor.execute('SELECT * from chapter where ID=%s;' % (max_row[1]))
     page = cursor.fetchall()[0]
-    #print page
 
     conn.close()
     
     return str(page[1])
-            
-        
+
+def regenerateNext(root='.'):
+    from utils import readLessonData
+    stack = []
+    data = readLessonData(root)
+    stack.extend(data['chapters'])
+
+    done = []
+
+    while len(stack) != 0:
+        c = stack[0]
+        done.append(c)
+        stack = stack[1:]
+        data = readLessonData(getRealPath(c))
+        d = list(data['chapters'])
+        d.extend(stack)
+        stack = d
+    
+    done = map(str, done)
+    f = open('static/course_flow', 'w')
+    f.write(str(done))
+    f.close()
+
+def getRealPath(lesson_number):
+    (conn, cursor) = getDbCursor('course.db')
+    cursor.execute('select tmp.path from chapter tmp where tmp.id=%s;'% (lesson_number))
+    rows = cursor.fetchall()
+    print lesson_number, rows
+    return str(rows[0][0])
+
+def findPreviousNext(path, user):
+    f = open('static/course_flow', 'r')
+    flow = eval(f.read())
+    f.close()
+
+    p = path.split('-')[-1]
+
+    print 'path', path
+    print "finding path of", p
+
+    start = -1
+    for i in range(len(flow)):
+        if flow[i] == p:
+            start = i + 1
+            break
+
+    if start == -1:
+        return '/magic?page=/summary'
+
+    
+    while True and start < len(flow):
+        real_path = getRealPath(flow[start])
+        data = readLessonData(real_path)
+        html_path = '-'.join(real_path.split("/")[1:])
+        if checkReadable(data, user):
+            return '/magic?page=/display?page=%s' % (html_path)
+
+        start += 1
+
+    return '/magic?page=/summary'
+                

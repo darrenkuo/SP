@@ -70,7 +70,8 @@ def getTableOfContent(lesson_data, path, user, level, page_path, lastVisited=Non
                                        show=show,
                                        script="javascript:showHideToggle(%s)" % (str(lesson_data['index']))))           
         components.append(a(lesson_data['title'],
-                            '/display?page=%s' % (page_path)))
+                            '/magic?page=/display?page=%s' % (page_path),
+                            top=True))
     
         #if not checkReadable(lesson_data, user):
         #    components.append(Label("(hidden)"));

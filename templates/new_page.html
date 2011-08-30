@@ -1,5 +1,6 @@
-$def with(object, path)
+$def with(object, js, path)
 <h2>Create New Page under path $:path</h2>
+$:js.render()
 <script type="text/javascript">
   function getDateString(id) {
     var dayObj = document.getElementById(id+"Day");

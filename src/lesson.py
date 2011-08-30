@@ -15,11 +15,9 @@ def getLesson(user, page=''):
     path = '.'
     if page:
         path = convertToRealPath(page)
-
+   
     data = readLessonData(path)
-    #if not checkReadable(data, user):
-    #    return css(), lesson_layout(content=unreadable_content())
-
+    """
     f = open(join(course_material, path, 'content.html'), 'r')
     html_code = f.read().strip().split('\n')
     f.close()
@@ -36,9 +34,26 @@ def getLesson(user, page=''):
     html = clean_html(html)
     html = sub('###content_dir###', join(course_material, path), html)
     #html = html.replace('###content_dir###', join(course_material, path))
+    """
 
-    #print html
-    #print type(html)
+    if 'redirect' in data:
+        html = "<meta HTTP-EQUIV='REFRESH' content='0; url=/magic?page=/display?page=%s'>" % (data['redirect'])
+    else:
+        html = """
+<script type='text/javascript'>
+function fixiframe() {
+document.getElementById('lesson_content').style.width = document.documentElement.clientWidth - 100 + 'px';
+resizeFrame(document.getElementById('lesson_content'));
+}
+function resizeFrame(f) {
+f.style.height = f.contentWindow.document.body.scrollHeight + "px";
+}
+</script>
+<style>iframe::-webkit-scrollbar{display:none;}</style>
+<iframe width='100%%' height='80%%' frameborder='0' style='overflow:hidden;' src='static/course_material/%s' onload='fixiframe();' id='lesson_content'>
+</iframe>""" % (join(path, 'content.html'))
+    
+    print "done with page:", page
 
     return (sidebar_css(), 
             lesson_layout(content=lesson_content(title=data['title'], 
@@ -64,8 +79,10 @@ class lesson:
                     results.append((t_data['title'], ps[0] + "-" + c))
                 lesson_buttons = lesson_shortcuts('', lesson_data['title'], 
                                                   results)
-                
-            return render.lesson(getLesson(session.user, data['page']), lesson_buttons)
+            print "hi!hi!"
+            lesson_page = getLesson(session.user, data['page'])
+            print "got lesson page"
+            return render.lesson(lesson_page, lesson_buttons)
         return render.lesson(getLesson(session.user, ''), None)
     
     def POST(self):
