@@ -1,10 +1,10 @@
 <P>Suppose we want to write a <CODE>greet</CODE> procedure that works like this:
  
 <P><PRE>&gt; (greet '(brian epstein))
-(PLEASED TO MEET YOU BRIAN - HOW ARE YOU?)
+(PLEASED TO MEET YOU BRIAN -- HOW ARE YOU?)
  
 &gt; (greet '(professor donald knuth))
-(PLEASED TO MEET YOU PROFESSOR KNUTH - HOW ARE YOU?)
+(PLEASED TO MEET YOU PROFESSOR KNUTH -- HOW ARE YOU?)
 </PRE> 
  
 <P>The response of the program in these two cases is almost the same;
@@ -17,22 +17,22 @@ the only difference is in the form of the person's name.
       (se '(pleased to meet you)
       'professor
       (last name)
-      '(- how are you?))
+      '(-- how are you?))
       (se '(pleased to meet you)
       (first name)
-      '(- how are you?))))
+      '(-- how are you?))))
  
 (define (greet name)
   (se '(pleased to meet you)
       (if (equal? (first name) 'professor)
       (se 'professor (last name))
       (first name))
-      '(- how are you?)))
+      '(-- how are you?)))
 </PRE> 
  
 <P>The second version avoids repeating the common parts of the
 response by using <CODE>if</CODE> within a larger expression.
- 
+
 <P>Some people find it counterintuitive to use <CODE>if</CODE> as we did in the second
 version.  Perhaps the reason is that in some other programming languages,
 <CODE>if</CODE> is a &quot;command&quot; instead of a function like any other.  A mechanism
@@ -40,6 +40,16 @@ that selects one part of a program to run, and leaves out another part, may
 seem too important to be a mere argument subexpression.  But in Scheme, the
 value returned by <EM>every</EM> function can be used as part of a larger
 expression.
+
+<P><small><small>Strictly speaking, since the argument expressions to a
+special form aren't evaluated, <code>if</code> is a function whose domain is
+expressions, not their values.  But many special forms, including
+<code>if</code>, <code>and</code>, and <code>or</code>, are designed to act as
+if they were ordinary functions, the kind whose arguments Scheme evaluates in
+advance.  The only difference is that it is sometimes possible for Scheme to
+figure out the correct return value after evaluating only some of the
+arguments.  Most of the time we'll just talk about the domains and ranges of
+these special forms as if they were ordinary functions.</small></small>
  
 <P>We aren't saying anything new here.  We've already explained the idea of
 composition of functions, and we're just making the same point again about

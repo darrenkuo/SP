@@ -1,61 +1,61 @@
-<div class="p"><!----></div>
+<p>
 1.  For this lab you'll need three people, each on a separate workstation.
 
-<div class="p"><!----></div>
+<p>
 One person should choose to be the server, and should do this:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>&#62; (load "&#126;cs61a/lib/im-server.scm")
 &#62; (im-server-start)
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 Make a note of the IP address and port number that this prints!
 
-<div class="p"><!----></div>
+<p>
 The other people will be clients.  They should do this:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>&#62; (load "&#126;cs61a/lib/im-client.scm")
 &#62; (im-enroll "123.45.67.89" 6543)    ; use actual numbers from server!
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 but using the server's IP address instead of 123.45.67.89 and the server's
 port number instead of 6543.  (Note that the IP address must be enclosed
 in quotation marks.)
 
-<div class="p"><!----></div>
+<p>
 The clients can then send each other messages:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>&#62; (im 'cs61a-xy "Hi there, how are you?")
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 The messages can't include more than one line.
 
-<div class="p"><!----></div>
+<p>
 A client can leave the IM system by running
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>&#62; (im-exit)
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 The server can quit (which disconnects all the clients) with
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>&#62; (im-server-close)
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 
-<div class="p"><!----></div>
+<p>
 2.  Start on the homework, since it'll be easier to
 test your work with several people.

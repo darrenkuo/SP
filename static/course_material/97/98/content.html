@@ -1,16 +1,17 @@
 <b>CS 61A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Lecture Notes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Week 11</b>
-<div class="p"><!----></div>
+<p>
 Topic: Streams
-<div class="p"><!----></div>
+<p>
 <b>Reading:</b>
-Abelson &amp; Sussman, Section 3.5.1-3, 3.5.5
-<div class="p"><!----></div>
+Abelson &amp; Sussman, Sections
+<a href="http://mitpress.mit.edu/sicp/full-text/book/book-Z-H-24.html">3.1.1&ndash;3.1.3, 3.1.5</a>
+<p>
 Streams are an abstract data type, not so different from rational numbers,
 in that we have constructors and selectors for them.  But we use a clever
 trick to achieve tremendously magical results.  As we talk about the
 mechanics of streams, there are three big ideas to keep in mind:
 
-<div class="p"><!----></div>
+<p>
 
 <dl compact="compact">
  <dt>
@@ -31,16 +32,16 @@ Efficiency: Decouple order of evaluation from the form of the program.
 </dd></dl>
 You'll understand what these all mean after we look at some examples.
 
-<div class="p"><!----></div>
+<p>
 How do we tell if a number n is prime?  Never mind computers, how would
 you express this idea as a mathematician?  Something like this:  "N is
 prime if it has no factors in the range 2  <font face="symbol"></font
 > f  &lt;  n."
 
-<div class="p"><!----></div>
+<p>
 So, to implement this on a computer, we should
 
-<div class="p"><!----></div>
+<p>
 
 <dl compact="compact">
  <dt>
@@ -67,10 +68,10 @@ Get all the numbers in the range [2,n<font face="symbol">-</font
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 But we don't usually program it that way.  Instead, we write a <i>loop </i>:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>;;;;;                        In file cs61a/lectures/3.5/prime0.scm
 (define (prime? n)
   (define (iter factor)
@@ -81,27 +82,27 @@ But we don't usually program it that way.  Instead, we write a <i>loop </i>:
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 (Never mind that we can make small optimizations like only checking for
 factors up to <font face="symbol"></font
 >n.  Let's keep it simple.)
 
-<div class="p"><!----></div>
+<p>
 Why don't we write it the way we expressed the problem in words?
 The problem is one of efficiency.  Let's say we want to know if 1000 is
 prime.  We end up constructing a list of 998 numbers and testing <i>all </i>
 of them as possible factors of 1000, when testing the first possible factor
 would have given us a false result quickly.
 
-<div class="p"><!----></div>
+<p>
 
-<div class="p"><!----></div>
+<p>
 The idea of streams is to let us have our cake and eat it too.  We'll write
 a program that <i>looks like </i> the first version, but <i>runs like </i>
 the second one.  All we do is change the second version to use the stream ADT
 instead of the list ADT:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>;;;;;                        In file cs61a/lectures/3.5/prime2.scm
 (define (prime? n)
   (stream-null? (stream-filter (lambda (x) (= (remainder n x) 0))
@@ -109,18 +110,18 @@ instead of the list ADT:
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 The only changes are <tt>stream-range</tt>
 instead of <tt>range</tt>, <tt>stream-null?</tt> instead of <tt>
 null?</tt>, and <tt>stream-filter</tt> instead of <tt>filter</tt>.
 
-<div class="p"><!----></div>
+<p>
 How does it work?  A list is implemented as a pair whose <tt>car</tt> is the
 first element and whose <tt>cdr</tt> is the rest of the elements.  A stream is
 almost the same:  It's a pair whose <tt>car</tt> is the first element and whose
 <tt>cdr</tt> is a <i>promise </i> to compute the rest of the elements later.
 
-<div class="p"><!----></div>
+<p>
 For example, when we ask for the range of numbers [2,999] what we get is a
 single pair whose <tt>car</tt> is 2 and whose <tt>cdr</tt> is a promise to compute
 the range [3,999].  The function <tt>stream-range</tt> returns
@@ -134,110 +135,110 @@ although maybe not.  But at least it contains the number 2, so it's not
 empty.  <tt>Stream-null?</tt>&nbsp;returns <tt>#f</tt> right away, without computing
 or testing any more numbers.
 
-<div class="p"><!----></div>
+<p>
 Sometimes (for example, if the number we're checking <i>is </i> prime) you
 do have to cash in the promises.  If so, the stream program still follows
 the same order of events as the original loop program; it tries one number
 at a time until either a factor is found or there are no more numbers to try.
 
-<div class="p"><!----></div>
+<p>
 Summary:  What we've accomplished is to decouple the form of a program-the
 order in which computations are presented-from the actual order of
 evaluation.  This is one more step on the long march that this whole course
 is about, i.e., letting us write programs in language that reflects the
 problems we're trying to solve instead of reflecting the way computers work.
 
-<div class="p"><!----></div>
+<p>
 <br /><br /><table border="0"><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="note-figs/13-1.eps">Figure</a>
 
 </td></tr></table><!--vbox-->
-<div class="p"><!----></div>
+<p>
 <font face="symbol"></font
 > Implementation.  How does it work?  The crucial point is that when
 we say something like
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(cons-stream from (stream-range (+ from 1) to))
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 (inside <tt>stream-range</tt>) we can't actually evaluate the
 second argument to <tt>cons-stream</tt>.  That would defeat the object, which
 is to defer that evaluation until later (or maybe never).  Therefore, <tt>
 cons-stream</tt> has to be a special form.  It has to <tt>cons</tt> its first
 argument onto a promise to compute the second argument.  The expression
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(cons-stream a b)
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 is equivalent to
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(cons a (delay b))
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 <tt>Delay</tt> is itself a special form, the one that constructs a promise.
 Promises could be a primitive data type, but since this is Scheme, we can
 represent a promise as a function.  So the expression
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(delay b)
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 really just means
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(lambda () b)
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 We use the promised expression as the body of a function with no arguments.
 (A function with no arguments is called a <i>thunk</i>.)
 
-<div class="p"><!----></div>
+<p>
 Once we have this mechanism, we can use ordinary functions to redeem our
 promises:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(define (force promise) (promise))
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
  and now we can write the selectors for streams:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(define (stream-car stream) (car stream))
 (define (stream-cdr stream) (force (cdr stream)))
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 Notice that forcing a promise doesn't compute the entire rest of the job at
 once, necessarily.  For example, if we take our range [2,999] and ask for
 its tail, we don't get a list of 997 values.  All we get is a pair whose
 <tt>car</tt> is 3 and whose <tt>cdr</tt> is a new promise to compute [4,999]
 later.
 
-<div class="p"><!----></div>
+<p>
 The name for this whole technique is <i>lazy evaluation </i> or <i>call by
 need</i>.
 
-<div class="p"><!----></div>
+<p>
 <font face="symbol"></font
 > Reordering and functional programming.  Suppose your program is
 written to include the following sequence of steps:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>...
 (set! x 2)
 ...
@@ -248,20 +249,20 @@ written to include the following sequence of steps:
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 Now suppose that, because we're using some form of lazy evaluation, the
 actual sequence of events is reordered so that the third <tt>set!</tt>&nbsp;happens
 before the second one.  We'll end up with the wrong value for <tt>y</tt>.  This
 example shows that we can only get away with below-the-line reordering if
 the above-the-line computation is functional.
 
-<div class="p"><!----></div>
+<p>
 (Why isn't it a problem with <tt>let</tt>?  Because <tt>let</tt> doesn't mutate
 the value of one variable in one environment.  It sets up a local
 environment, and any expression within the body of the <tt>let</tt> has to be
 computed within that environment, even if things are reordered.)
 
-<div class="p"><!----></div>
+<p>
 <font face="symbol"></font
 > Memoization of streams.  <tt>Delay</tt> is really slightly more
 complicated than what's shown above.  It returns a procedure of no arguments
@@ -271,11 +272,11 @@ the value is remembered and reused.  This is another reason why streams are
 a functional-only technique; any mutation operation in a promise will only
 happen once even if you cash in the promise repeatedly.
 
-<div class="p"><!----></div>
+<p>
 <font face="symbol"></font
 > Infinite streams.  Think about the plain old list function
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(define (range from to)
   (if (&#62; from to)
       '()
@@ -283,11 +284,11 @@ happen once even if you cash in the promise repeatedly.
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 When we change this to a stream function, we change very little in the
 appearance of the program:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(define (stream-range from to)
   (if (&#62; from to)
       THE-EMPTY-STREAM
@@ -295,20 +296,20 @@ appearance of the program:
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 but this tiny above-the-line change makes an enormous difference in the
 actual behavior of the program.
 
-<div class="p"><!----></div>
+<p>
 Now let's cross out the second argument and the end test:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(define (stream-range from)
   (cons-stream from (stream-range (+ from 1))) )
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 This is an <i>enormous </i> above-the-line change!  We now have what looks
 like a recursive function with no base case-an infinite loop.  And yet
 there is hardly any difference at all in the actual behavior of the program.
@@ -320,12 +321,12 @@ constructing a single pair whose <tt>car</tt> is 2 and whose <tt>cdr</tt> is a
 promise to compute [3,<font face="symbol"></font
 >] later!
 
-<div class="p"><!----></div>
+<p>
 This amazing idea lets us construct even some pretty complicated infinite
 sets, such as the set of all the prime numbers.  (Explain the sieve of
 Eratosthenes.  The program is in the book so it's not reproduced here.)
 
-<div class="p"><!----></div>
+<p>
 <font face="symbol"></font
 > Time-varying information.  Functional programming works great for
 situations in which we are looking for a timeless answer to some question.
@@ -334,13 +335,13 @@ in the world.  We invented OOP because functional programming didn't let us
 model changing state.  But with streams we <i>can </i> model state
 functionally.  We can say
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(define (user-stream)
   (cons-stream (read) (user-stream)) )
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 and this gives us <i>the stream of everything the user is going to type </i>
 from now on.  Instead of using local state variables to remember the effect
 of each thing the user types, one at a time, we can write a program that
@@ -349,9 +350,9 @@ all at once!  This feels really bizarre, but it does mean that purely
 functional programming languages can handle user interaction.  We don't <i>
 need </i> OOP.
 
-<div class="p"><!----></div>
+<p>
 <b>Note:</b> The third midterm exam is next week.
 
-<div class="p"><!----></div>
+<p>
 
-<div class="p"><!----></div>
+<p>

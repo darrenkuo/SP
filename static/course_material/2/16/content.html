@@ -42,9 +42,20 @@ SQUARE
 <P>(Since Scheme uses the apostrophe as an abbreviation for <CODE><A NAME="g5"></A> 
 quote</CODE>, you can't use one as an ordinary punctuation mark in a sentence.
 That's why we've been avoiding titles like <CODE>(can't buy me love)</CODE>.
-To Scheme this would mean <CODE>(can (quote t) buy me
-love)</CODE>!)
- 
+To Scheme this would mean <CODE>(can (quote t) buy me love)</CODE>!)
+
+<P><small><small>Actually, it <em>is</em> possible to put punctuation inside
+words as long as the entire word is enclosed in double-quote marks, like this:
+
+<P><pre>&gt; '("can't" buy me love)
+("can't" BUY ME LOVE)</pre>
+
+<p>Words like that are called <em>strings</em>.  We're not going to use them
+in any examples until almost the end of the book.  Stay away from punctuation
+and you won't get in trouble.  However, question marks and exclamation points
+are okay.  (Ordinary words, the ones that are neither strings nor numbers,
+are officially called <em>symbols</em>.</small></small>
+
 <P>This idea of quoting, although it may seem arbitrary in the context of
 computer programming, is actually quite familiar from ordinary English.
 What is a book?  It's a bunch of pieces of paper, with printing on them,

@@ -1,23 +1,24 @@
-<div class="p"><!----></div>
+<p>
 <b>Topic:</b> Hierarchical data/Scheme interpreter
-<div class="p"><!----></div>
+<p>
 <b>Reading:</b>
-<a href="http://mitpress.mit.edu/sicp/full-text/book/book-Z-H-15.html#%_sec_2.2.2" target="_blank">Abelson & Sussman, Section 2.2.2-2.2.3, 2.3.1, 2.3.3</a>
-<div class="p"><!----></div>
+Abelson & Sussman, Section <a href="http://mitpress.mit.edu/sicp/full-text/book/book-Z-H-15.html#%_sec_2.2.2" target="_blank">2.2.2-2.2.3</a>,
+<a href="http://mitpress.mit.edu/sicp/full-text/book/book-Z-H-16.html">2.3.1, 2.3.3</a>
+<p>
 <b>Midterm 1 is this week.</b>
 
-<div class="p"><!----></div>
+<p>
 <font face="symbol"></font
 > Example: A Calculator Program
 
-<div class="p"><!----></div>
+<p>
 Later in the course we'll be studying several variants of a Scheme interpreter
 written in Scheme.  As a first, small step in that direction, here is an
 interactive calculator that accepts arithmetic expressions in Scheme notation,
 but without variables, without the ability to define procedures, and with no
 data types other than numbers.  Here's how it works:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>STk&#62; (load "&#126;cs61a/lib/calc.scm")
 STk&#62; (calc)
 calc: (+ 2 3)
@@ -29,28 +30,28 @@ Error: calc: bad expression: foo
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 The last example shows that there are no variables in this language.
 
-<div class="p"><!----></div>
+<p>
 The entire program consists of three procedures in 30 lines of code.  You
 should find it easy to understand.  And yet these three procedures exactly
 parallel the core procedures in a real Scheme interpreter:
 
-<div class="p"><!----></div>
+<p>
 <dl><dd>1.  The read-eval-print loop: interact with the user.
 
-<div class="p"><!----></div>
+<p>
 2.  Eval: <tt>(eval expression)</tt> returns the value of the expression.
 
-<div class="p"><!----></div>
+<p>
 3.  Apply: <tt>(apply function argument-values)</tt> calls the function and
 returns the value it returns.
 
-<div class="p"><!----></div>
+<p>
 </dd></dl>Here's the read-eval-print loop (or REPL, pronounced "rep-uhl"):
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(define (calc)
   (display "calc: ")
   (flush)
@@ -59,7 +60,7 @@ returns the value it returns.
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 The calls to <tt>display</tt> and <tt>flush</tt> print the user prompt.  (<tt>Flush</tt>
 is used when you want to print something that doesn't end with a newline
 character, but you want it to print right away.  Ordinarily, most programs,
@@ -67,7 +68,7 @@ including STk, save up the characters you print until you finish a line, then
 send the entire line to the operating system at once.  <tt>Flush</tt> tells STk
 not to wait for the end of the line.)
 
-<div class="p"><!----></div>
+<p>
 The most important line is the <tt>(print (calc-eval (read)))</tt>.  <tt>Read</tt>
 is a Scheme primitive that reads a datum from the keyboard.  "Datum" here
 means a word, a list, or any other single Scheme value.  In our case, the
@@ -75,7 +76,7 @@ things we're reading are Scheme expressions, but <tt>read</tt> doesn't know that
 as far as <tt>read</tt> is concerned, <tt>(+&nbsp;2&nbsp;3)</tt> is just a list of three
 elements, not a request to add two numbers.
 
-<div class="p"><!----></div>
+<p>
 The fact that a Scheme expression is just a Scheme datum-a list-makes it
 very easy to write an interpreter.  This is why Scheme uses the <tt>(+&nbsp;2&nbsp;3)</tt>
 notation for function calls rather than, say, <tt>+(2,3)</tt> as in the usual
@@ -83,7 +84,7 @@ mathematical notation for functions!  Even a more complicated expression such
 as <tt>(+&nbsp;(*&nbsp;2&nbsp;3)&nbsp;(*&nbsp;4&nbsp;5))</tt> is one single Scheme datum, a list, in which some
 of the elements are themselves lists.
 
-<div class="p"><!----></div>
+<p>
 What do we want to do with the thing <tt>read</tt> returns?  We want to treat it
 as an expression in this Scheme-subset language and <i>evaluate </i> it.
 That's the job of <tt>calc-eval</tt>.  (We use the names <tt>calc-eval</tt> and
@@ -93,17 +94,17 @@ procedures have jobs exactly analogous to the ones in <tt>calc</tt>, though;
 every interpreter for any Lisp-family language has some form of <tt>eval</tt> and
 <tt>apply</tt>.)
 
-<div class="p"><!----></div>
+<p>
 Once we get the value from <tt>eval</tt>, what do we want to do with it?  We want
 to show it to the user by printing it to the display.  That's the job of <tt>
 print</tt>.  So now you understand why it's a "read-eval-print" loop!  Read an
 expression, evaluate it, and print its value.
 
-<div class="p"><!----></div>
+<p>
 Finally, the procedure ends with a recursive call to itself, so it loops
 forever; this is the "loop" part of the REPL.
 
-<div class="p"><!----></div>
+<p>
 Notice that <tt>read</tt> and <tt>print</tt> are not functional programming; <tt>
 read</tt> returns a different value each time it's called, and <tt>print</tt> changes
 something in the world instead of just returning a value.  The body of the
@@ -114,13 +115,13 @@ there's no base case to end the recursion.)  In functional programming, it
 doesn't make sense to have more than one expression in a procedure body, since
 a function can return only one value.
 
-<div class="p"><!----></div>
+<p>
 (It's also worth noting, in passing, that the REPL is the <tt>only</tt>
 non-functional part of this program.  Even though we're doing something
 interactive, functional programming techniques are still the best way to do
 most of the work of the calculator program.)
 
-<div class="p"><!----></div>
+<p>
 The job of <tt>eval</tt> is to turn expressions into values.  It's very
 important to remember that those are two different things.  Some people lose
 midterm exam points by thinking that when you type <tt>'foo</tt> into Scheme,
@@ -133,7 +134,7 @@ some </i> things in Scheme are both expressions and values; a number is a Scheme
 expression whose value is the number itself.  But most expressions have a
 value different from the expression itself.
 
-<div class="p"><!----></div>
+<p>
 Part of what makes one programming language different from another is what
 counts as an expression.  In Scheme, certain kinds of expressions have funny
 notation rules, such as the extra parentheses around clauses in a <tt>cond</tt>
@@ -143,7 +144,7 @@ Our simplified calculator language has only two kinds of syntax: numbers,
 which are <i>self-evaluating </i> (i.e., the value is the number itself),
 and lists, which represent function calls:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(define (calc-eval exp)
   (cond ((number? exp) exp)
 	((list? exp) (calc-apply (car exp) (map calc-eval (cdr exp))))
@@ -151,14 +152,14 @@ and lists, which represent function calls:
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 In real Scheme, there are more kinds of self-evaluating expressions, such as
 Booleans (<tt>#t</tt> and <tt>#f</tt>) and <tt>&#223;trings&nbsp;in&nbsp;double&nbsp;quotes"</tt>;
 there are variables, which are expressions; and some lists are special forms
 instead of procedure calls.  So in a Scheme interpreter, <tt>eval</tt> is a
 little more complicated, but not that much more.
 
-<div class="p"><!----></div>
+<p>
 By the way, notice that we're talking about two different programming
 languages here.  I've said that the calculator language doesn't have
 variables, and yet in <tt>calc-eval</tt> we're using a variable named <tt>exp</tt>.
@@ -171,7 +172,7 @@ Scheme, and you can easily get confused about whether some expression you're
 looking at is part of the interpreter, and therefore an STk expression, or
 data given to the interpreter, and therefore a mini-Scheme expression.
 
-<div class="p"><!----></div>
+<p>
 The way <tt>calc-eval</tt> handles function calls is the only part of the
 calculator that is <i>not </i> the same as the corresponding feature of real
 Scheme.  That's because in calculator language, numbers are the only data
@@ -181,12 +182,12 @@ procedure itself, has to be evaluated just as much as the argument
 subexpressions.  <i>Often </i> the first subexpression is just a variable
 name, such as <tt>+</tt> or <tt>cdr</tt>, but the expression could be
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>((lambda (x) (+ x 5))  (* 2 3))
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 in which case the first subexpression is a special form, a <tt>lambda</tt>
 expression.  But in calculator language, the first sub-"expression" is
 always the name of the function, and there are only four possibilities:
@@ -194,12 +195,12 @@ always the name of the function, and there are only four possibilities:
 because these symbols are <i>not </i> expressions in calculator language.
 So the expression in <tt>calc-eval</tt> that handles procedure calls is
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(calc-apply (car exp) (map calc-eval (cdr exp)))
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 The first argument to <tt>calc-apply</tt> is the <i>name </i> of the function we
 want to call.  The rest of the expression <tt>exp</tt> consists of actual
 argument subexpressions, which we recursively evaluate by calling <tt>
@@ -208,18 +209,18 @@ calc-eval</tt> for each of them.  (Remember that <tt>map</tt> is the list versio
 <tt>(cdr&nbsp;exp)</tt>.)  When we look at a more-nearly-real Scheme interpreter
 in another week, the corresponding part of <tt>eval</tt> will look like this:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(apply (EVAL (car exp)) (map eval (cdr exp)))
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 <tt>Eval</tt> is the part of the interpreter that knows about the syntax of
 the language.  By contrast, <tt>apply</tt> works entirely in the world of values;
 there are no expressions at all in the arguments to <tt>apply</tt>.  Our version
 of <tt>apply</tt> has the four permitted operations built in:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(define (calc-apply fn args)
   (cond ((eq? fn '+) (accumulate + 0 args))
 	((eq? fn '-) (cond ((null? args) (error "Calc: no args to -"))
@@ -233,7 +234,7 @@ of <tt>apply</tt> has the four permitted operations built in:
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 The associative operations can be done with a single call to the higher order
 <tt>accumulate</tt> function; the non-associative ones have to deal with the
 special case of one argument separately.  I'm not spending a lot of time on
@@ -243,9 +244,9 @@ doesn't have to have special knowledge of the operators built into itself.
 Also, the real <tt>apply</tt> handles user-defined procedures as well as the ones
 built into the language.
 
-<div class="p"><!----></div>
+<p>
 
-<div class="p"><!----></div>
+<p>
 <table border="0"><tr><td><br />
 </td></tr></table><!--vbox--><table border="0"><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="note-figs/6-1.eps">Figure</a>
 
@@ -253,10 +254,10 @@ built into the language.
 </td></tr></table><!--vbox--><font face="symbol"></font
 > Trees.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Big idea: representing a hierarchy of information.
 
-<div class="p"><!----></div>
+<p>
 What are trees good for?
 
-<div class="p"><!----></div>
+<p>
 
 <dl compact="compact">
  <dt>
@@ -278,7 +279,7 @@ Hierarchy: world, countries, states, cities.
 real trees in nature except that they're drawn with the root at the top and
 the leaves at the bottom.
 
-<div class="p"><!----></div>
+<p>
 A <i>node </i> is a point in the tree.  In these pictures, each node includes
 a <i>datum </i> (the value shown at the node, such as <tt>France</tt> or <tt>
 26</tt>) but also includes the entire structure under that datum and connected
@@ -289,31 +290,31 @@ generally use "tree" when we mean the entire structure that our program is
 manipulating, and "node" when we mean just one piece of the overall
 structure.  Therefore, another synonym for "node" is "subtree."
 
-<div class="p"><!----></div>
+<p>
 The <i>root node </i> (or just the <i>root </i>) of a tree is the node at
 the top.  Every tree has one root node.  (A more general structure in which
 nodes can be arranged more flexibly is called a <i>graph </i>; you'll study
 graphs in 61B and later courses.)
 
-<div class="p"><!----></div>
+<p>
 The <i>children </i> of a node are the nodes directly beneath it.  For
 example, the children of the <tt>26</tt> node in the picture are the <tt>15</tt>
 node and the <tt>33</tt> node.
 
-<div class="p"><!----></div>
+<p>
 A <i>branch </i> node is a node that has at least one child.  A <i>leaf </i>
 node is a node that has no children.  (The root node is also a branch node,
 except in the trivial case of a one-node tree.)
 
-<div class="p"><!----></div>
+<p>
 <font face="symbol"></font
 > <b>The <tt>Tree<!--hbox-->00</tt> abstract data type</b>
 
-<div class="p"><!----></div>
+<p>
 Lisp has one built-in way to represent sequences, but there is no official
 way to represent trees.  Why not?
 
-<div class="p"><!----></div>
+<p>
 
 <dl compact="compact">
  <dt>
@@ -341,14 +342,14 @@ commonly used version of trees, in which every tree has at least one node,
 every node has a datum, and nodes can have any number of children.  Here are
 the constructor and selectors:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(make-tree datum children)
 (datum node)
 (children node)
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 The selector <tt>children</tt> should return a <i>list of trees</i>, the children
 of the node.  These children are themselves trees.  There is a name for a list
 of trees: a <i>forest</i>.  It's very important to remember that Tree and
@@ -358,22 +359,22 @@ the standard procedures for sequences (<tt>cons</tt>, <tt>car</tt>, <tt>cdr</tt>
 etc.); a tree is <i>not </i> a sequence, and should be manipulated only with
 the tree constructor and selectors.
 
-<div class="p"><!----></div>
+<p>
 A leaf node is one with no children, so its <tt>children</tt> list is empty:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(define (leaf? node)
   (null? (children node)) )
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 This definition of <tt>leaf?</tt>&nbsp;should work no matter how we represent the ADT.
 
-<div class="p"><!----></div>
+<p>
 The straightforward implementation is
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>;;;;;                        In file cs61a/lectures/2.2/tree1.scm
 (define make-tree cons)
 (define datum car)
@@ -381,16 +382,16 @@ The straightforward implementation is
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 <font face="symbol"></font
 > <b>Mapping over trees</b>
 
-<div class="p"><!----></div>
+<p>
 One thing we might want to do with a tree is create another tree, with the
 same shape as the original, but with each datum replaced by some function of
 the original.  This is the tree equivalent of <tt>map</tt> for lists.
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>;;;;;                        In file cs61a/lectures/2.2/tree1.scm
 (define (treemap fn tree)
   (make-tree (fn (datum tree))
@@ -399,13 +400,13 @@ the original.  This is the tree equivalent of <tt>map</tt> for lists.
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 This is a remarkably simple and elegant procedure, especially considering the
 versatility of the data structures it can handle (trees of many different
 sizes and shapes).  It's one of the more beautiful things you'll see in the
 course, so spend some time appreciating it.
 
-<div class="p"><!----></div>
+<p>
 Every tree node consists of a datum and some children.  In the new tree, the
 datum corresponding to this node should be the result of applying <tt>fn</tt> to
 the datum of this node in the original tree.  What about the children of the
@@ -414,29 +415,28 @@ original node, and each new child should be the result of calling <tt>
 treemap</tt> on an original child.  Since a forest is just a list, we can use
 <tt>map</tt> (not <tt>treemap</tt>!)&nbsp;to generate the new children.
 
-<div class="p"><!----></div>
+<p>
 <font face="symbol"></font
 > <b>Mutual recursion</b>
 
-<div class="p"><!----></div>
+<p>
 Pay attention to the strange sort of recursion in this procedure.  <tt>
 Treemap</tt> does not actually call itself!  <tt>Treemap</tt> calls <tt>map</tt>, giving
 it a function that in turn calls <tt>treemap</tt>.  The result is that each call
 to <tt>treemap</tt> may give rise to any number of recursive calls, via <tt>
 map</tt>:&nbsp;one call for every child of this node.
 
-<div class="p"><!----></div>
+<p>
 This pattern (procedure <tt>A</tt> invokes procedure <tt>B</tt>, which invokes procedure
 <tt>A</tt>) is called <i>mutual recursion</i>.  We can rewrite <tt>treemap</tt>
 without using <tt>map</tt>, to make the mutual recursion more visible:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>;;;;;                        In file cs61a/lectures/2.2/tree11.scm
 (define (treemap fn tree)
   (make-tree (fn (datum tree))
              (forest-map fn (children tree))))
 
-<div class="p"><!----></div>
 (define (forest-map fn forest)
   (if (null? forest)
       '()
@@ -445,13 +445,13 @@ without using <tt>map</tt>, to make the mutual recursion more visible:
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 <tt>Forest-map</tt> is a helper function that takes a forest, not a tree, as
 argument.  <tt>Treemap</tt> calls <tt>forest-map</tt>, which calls <tt>treemap</tt>.
 
-<div class="p"><!----></div>
+<p>
 
-<div class="p"><!----></div>
+<p>
 Mutual recursion is what makes it possible to explore the two-dimensional
 tree data structure fully.  In particular, note that reaching the base case
 in <tt>forest-map</tt> does not mean that the entire tree has been visited!
@@ -460,7 +460,7 @@ It means merely that one group of sibling nodes has been visited (a
 case).  The entire tree has been seen when every child of the root node has
 been completed.
 
-<div class="p"><!----></div>
+<p>
 Note that we use <tt>cons</tt>, <tt>car</tt>, and <tt>cdr</tt> when manipulating a
 forest, but we use <tt>make-tree</tt>, <tt>datum</tt>, and <tt>children</tt> when
 manipulating a tree.  Some students make the mistake of thinking that data
@@ -468,40 +468,40 @@ abstraction means "always say <tt>datum</tt> instead of <tt>car</tt>"!  But
 that defeats the purpose of using different selectors and constructors for
 different data types.
 
-<div class="p"><!----></div>
+<p>
 <font face="symbol"></font
 > <b>Deep lists</b>
 
-<div class="p"><!----></div>
+<p>
 Trees are our first two-dimensional data structure.  But there's a sense in
 which any list that has lists as elements is also two-dimensional, and can be
 viewed as a kind of tree.  We'll use the name <i>deep lists </i> for lists
 that contain lists.  For example, the list
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>[[john lennon] [paul mccartney] [george harrison] [ringo starr]]
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 is probably best understood as a sequence of sentences, but instead we can draw
 a picture of it as a sort of tree:
 
-<div class="p"><!----></div>
+<p>
 
-<div class="p"><!----></div>
+<p>
 Don't be confused; this is <i>not </i> an example of the Tree abstract
 data type we've just developed.  In this picture, for example, only the "leaf
 nodes" contain data, namely words.  We didn't make this list with <tt>
 make-tree</tt>, and it wouldn't make sense to examine it with <tt>datum</tt> or
 <tt>children</tt>.
 
-<div class="p"><!----></div>
+<p>
 But we can still use the <i>ideas </i> of tree manipulation if we'd like to
 do something for every word in the list.  Compare the following procedure with
 the first version of <tt>treemap</tt> above:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>;;;;;                        In file cs61a/lectures/2.2/tree22.scm
 (define (deep-map fn lol)
   (if (list? lol)
@@ -511,12 +511,12 @@ the first version of <tt>treemap</tt> above:
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 The formal parameter <tt>lol</tt> stands for "list of lists."  This procedure
 includes the two main tasks of <tt>treemap</tt>: applying the function <tt>fn</tt>
 to one datum, and using <tt>map</tt> to make a recursive call for each child.
 
-<div class="p"><!----></div>
+<p>
 But <tt>treemap</tt> applies to the Tree abstract data type, in which every node
 has both a datum and children, so <tt>treemap</tt> carries out both tasks for
 each node.  In a deep list, by contrast, the "branch nodes" have children
@@ -524,7 +524,7 @@ but no datum, whereas the "leaf nodes" have a datum but no children.  That's
 why <tt>deep-map</tt> chooses only one of the two tasks, using <tt>if</tt> to
 distinguish branches from leaves.
 
-<div class="p"><!----></div>
+<p>
 Note:  SICP does not define a Tree abstract data type; they use the term
 "tree" to describe what I'm calling a deep list.  So they use the name
 <tt>tree-map</tt> in Exercise 2.31, page 113, which asks you to write what I've
@@ -533,38 +533,38 @@ without using <tt>map</tt>.)  SICP does define an abstract data type for
 <i>binary </i> trees, in which each node can have a <tt>left-branch</tt> and/or a
 <tt>right-branch</tt>, rather than having any number of children.
 
-<div class="p"><!----></div>
+<p>
 
-<div class="p"><!----></div>
+<p>
 <font face="symbol"></font
 > <b>Car/cdr recursion</b>
 
-<div class="p"><!----></div>
+<p>
 Consider the deep list <tt>((a b) (c d))</tt>.  Ordinarily we would draw its box
 and pointer diagram with a horizontal spine at the top and the sublists
 beneath the spine:
 
-<div class="p"><!----></div>
+<p>
 
-<div class="p"><!----></div>
+<p>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="note-figs/6-3.eps">Figure</a>
 
 
-<div class="p"><!----></div>
+<p>
 
-<div class="p"><!----></div>
+<p>
 But imagine that we grab the first pair of this structure and "shake" it so
 that the pairs fall down as far as they can.  We'd end up with this diagram:
 
-<div class="p"><!----></div>
+<p>
 
-<div class="p"><!----></div>
+<p>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="note-figs/6-4.eps">Figure</a>
 
 
-<div class="p"><!----></div>
+<p>
 
-<div class="p"><!----></div>
+<p>
 Note that these two diagrams represent the same list!  They have the same
 pairs, with the same links from one pair to another.  It's just the position
 of the pairs on the page that's different.  But in this new picture, the
@@ -574,7 +574,7 @@ is its <tt>car</tt>, and the "right branch" is its <tt>cdr</tt>.  With this
 metaphor, we can rewrite <tt>deep-map</tt> to look more like a binary tree
 program:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>;;;;;                        In file cs61a/lectures/2.2/tree3.scm
 (define (deep-map fn xmas)
   (cond ((null? xmas) '())
@@ -585,46 +585,46 @@ program:
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 (The formal parameter <tt>xmas</tt> reflects the fact that the picture looks
 kind of like a Christmas tree.)
 
-<div class="p"><!----></div>
+<p>
 This procedure strongly violates data abstraction!  Ordinarily when dealing
 with lists, we write programs that treat the car and the cdr differently,
 reflecting the fact that the car of a pair is a list element, whereas the cdr
 is a sublist.  But here we treat the car and the cdr identically.  One
 advantage of this approach is that it works even for improper lists:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>&#62; (deep-map square '((3 . 4) (5 6))
 ((9 . 16) (25 36))
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 The two ways of thinking of a deep list as a tree correspond to the two
 abstract tree types:
 
-<div class="p"><!----></div>
+<p>
 <dl><dd><table border="0"><tr><td>
 <table>
 <tr><td align="right"><b></td><td align="center">&nbsp;&nbsp;&nbsp;<b>N children</td><td align="center">&nbsp;&nbsp;&nbsp;<b>2 children</td></tr>
 <tr><td colspan="3" align="left">
-<div class="p"><!----></div>
+<p>
  </td></tr>
 <tr><td align="right"><b>Abstract Data Type</td><td align="center">&nbsp;&nbsp;&nbsp;Tree</td><td align="center">&nbsp;&nbsp;&nbsp;binary tree</td></tr>
 <tr><td align="right"><b>List</td><td align="center">&nbsp;&nbsp;&nbsp;deep list</td><td align="center">&nbsp;&nbsp;&nbsp;car/cdr</td></tr></b></b></b></b></b></table>
 
 </td></tr></table><!--vbox--></dd></dl>
-<div class="p"><!----></div>
+<p>
 <font face="symbol"></font
 > <b>Tree recursion</b>
 
-<div class="p"><!----></div>
+<p>
 Compare the car/cdr version of <tt>deep-map</tt> with ordinary <tt>map</tt>:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(define (map fn seq)
   (if (null? seq)
       '()
@@ -633,18 +633,18 @@ Compare the car/cdr version of <tt>deep-map</tt> with ordinary <tt>map</tt>:
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 Each non-base-case invocation of <tt>map</tt> gives rise to one recursive call,
 to handle the cdr of the sequence.  The car, an element of the list, is not
 handled recursively.
 
-<div class="p"><!----></div>
+<p>
 By contrast, in <tt>deep-map</tt> there are <i>two </i> recursive calls, one for
 the car and one for the cdr.  This is what makes the difference between a
 sequential, one-dimensional process and the two-dimensional process used for
 deep lists and for the Tree abstraction.
 
-<div class="p"><!----></div>
+<p>
 A procedure in which each invocation makes more than one recursive call is
 given the name <i>tree recursion </i> because of the relationship between
 this pattern and tree structures.  It's tree recursion only if each call
@@ -652,7 +652,7 @@ this pattern and tree structures.  It's tree recursion only if each call
 not good enough to have two recursive calls of which only one is chosen each
 time, as in the following non-tree-recursive procedure:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(define (filter pred seq)
   (cond ((null? seq) '())
 	((pred (car seq)) (cons (car seq) (filter pred (cdr seq))))
@@ -660,16 +660,16 @@ time, as in the following non-tree-recursive procedure:
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 There are two recursive calls to <tt>filter</tt>, but only one of them is
 actually carried out each time, so this is a sequential recursion, not a
 tree recursion.
 
-<div class="p"><!----></div>
+<p>
 A program can be tree recursive even if there is no actual tree-like data
 structure used, as in the Fibonacci number function:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(define (fib n)
   (if (&lt; n 2)
       1
@@ -677,30 +677,30 @@ structure used, as in the Fibonacci number function:
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 This procedure just handles numbers, not trees, but each non-base-case call
 adds the results of two recursive calls, so it's a tree recursive program.
 
-<div class="p"><!----></div>
+<p>
 <font face="symbol"></font
 > <b>Tree traversal</b>
 
-<div class="p"><!----></div>
+<p>
 Many problems involve visiting each node of a tree to look for or otherwise
 process some information there.  Maybe we're looking for a particular node,
 maybe we're adding up all the values at all the nodes, etc.  There is one
 obvious order in which to traverse a sequence (left to right), but many ways in
 which we can traverse a tree.
 
-<div class="p"><!----></div>
+<p>
 In the following examples, we "visit" each node by printing the datum at
 that node.  If you apply these procedures to actual trees, you can see the
 order in which the nodes are visited.
 
-<div class="p"><!----></div>
+<p>
 <b>Depth-first traversal:</b>  Look at a given node's children before its siblings.
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>;;;;;                        In file cs61a/lectures/2.2/search.scm
 (define (depth-first-search tree)
   (print (datum tree))
@@ -708,22 +708,22 @@ order in which the nodes are visited.
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 This is the easiest way, because the program's structure follows the data
 structure; each child is traversed in its entirety (that is, including
 grandchildren, etc.)&nbsp;before looking at the next child.
 
-<div class="p"><!----></div>
+<p>
 <b>Breadth-first traversal:</b>  Look at the siblings before the children.
 
-<div class="p"><!----></div>
+<p>
 What we want to do is take horizontal slices of the tree.  First we look at
 the root node, then we look at the children of the root, then the
 grandchildren, and so on.  The program is a little more complicated because
 the order in which we want to visit nodes isn't the order in which they're
 connected together.
 
-<div class="p"><!----></div>
+<p>
 To solve this, we use an extra data structure, called a <i>queue</i>, which
 is just an ordered list of tasks to be carried out.  Each "task" is a node
 to visit, and a node is a tree, so a list of nodes is just a forest.  The
@@ -731,12 +731,11 @@ iterative helper procedure takes the first task in the queue (the car),
 visits that node, and adds its children at the end of the queue (using <tt>
 append</tt>).
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>;;;;;                        In file cs61a/lectures/2.2/search.scm
 (define (breadth-first-search tree)
   (bfs-iter (list tree)))
 
-<div class="p"><!----></div>
 (define (bfs-iter queue)
   (if (null? queue)
       'done
@@ -746,14 +745,14 @@ append</tt>).
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 Why would we use this more complicated technique?  For example, in some
 situations the same value might appear as a datum more than once in the tree,
 and we want to find the <i>shortest </i> path from the root node to a node
 containing that datum.  To do that, we have to look at nodes near the root
 before looking at nodes far away from the root.
 
-<div class="p"><!----></div>
+<p>
 Another example is a game-strategy program that <i>generates </i> a tree of
 moves.  The root node is the initial board position; each child is the result
 of a legal move I can make; each child of a child is the result of a legal
@@ -764,14 +763,14 @@ ten moves), then we look for desirable board positions at that depth.  (If we
 used a depth-first program, we'd follow one path all the way to the end of the
 game before starting to consider a different possible first move.)
 
-<div class="p"><!----></div>
+<p>
 For binary trees, within the general category of depth-first traversals, there
 are three possible variants:
 
-<div class="p"><!----></div>
+<p>
 Preorder:  Look at a node before its children.
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>;;;;;                        In file cs61a/lectures/2.2/print.scm
 (define (pre-order tree)
   (cond ((null? tree) '())
@@ -781,11 +780,11 @@ Preorder:  Look at a node before its children.
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 Inorder:  Look at the left child, then the node, then
 the right child.
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>;;;;;                        In file cs61a/lectures/2.2/print.scm
 (define (in-order tree)
   (cond ((null? tree) '())
@@ -795,12 +794,12 @@ the right child.
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 
-<div class="p"><!----></div>
+<p>
 Postorder:  Look at the children before the node.
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>;;;;;                        In file cs61a/lectures/2.2/print.scm
 (define (post-order tree)
   (cond ((null? tree) '())
@@ -810,31 +809,31 @@ Postorder:  Look at the children before the node.
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 For a tree of arithmetic operations, preorder traversal looks like Lisp; inorder
 traversal looks like
 conventional arithmetic notation; and postorder traversal is the HP calculator
 "reverse Polish notation."
 
-<div class="p"><!----></div>
+<p>
 <font face="symbol"></font
 > <b>Path finding</b>
 
-<div class="p"><!----></div>
+<p>
 As an example of a somewhat more complicated tree program, suppose we want
 to look up a place (e.g., a city) in the world tree, and find the path from
 the root node to that place:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>&#62; (find-place 'berkeley world-tree)
 (world (united states) california berkeley)
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 If a place isn't found, <tt>find-place</tt> will return the empty list.
 
-<div class="p"><!----></div>
+<p>
 To find a place within some tree, first we see if the place is the datum of
 the root node.  If so, the answer is a one-element list containing just the place.
 Otherwise, we look at each child of the root, and see if we can find the place
@@ -842,15 +841,15 @@ within that child.  If so, the path within the complete tree is the path
 within the child, but with the root datum added at the front of the path.
 For example, the path to Berkeley within the USA subtree is
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>((united states) california berkeley)
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 so we put <tt>world</tt> in front of that.
 
-<div class="p"><!----></div>
+<p>
 Broadly speaking, this program has the same mutually recursive tree/forest
 structure as the other examples we've seen, but one important difference is
 that once we've found the place we're looking for, there's no need to visit
@@ -860,7 +859,7 @@ child, see if we've found a path, and only if we haven't found it should we
 go on to the second child (if any).  This is the reason for the <tt>let</tt> in
 <tt>find-forest</tt>.
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>;;;;;                        In file cs61a/lectures/2.2/world.scm
 (define (find-place place tree)
   (if (eq? place (datum tree))
@@ -870,7 +869,6 @@ go on to the second child (if any).  This is the reason for the <tt>let</tt> in
 	    (cons (datum tree) try)
 	    '()))))
 
-<div class="p"><!----></div>
 (define (find-forest place forest)
   (if (null? forest)
       '()
@@ -881,22 +879,22 @@ go on to the second child (if any).  This is the reason for the <tt>let</tt> in
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 (Note: In 61B we come back to trees in more depth, including the study of
 <i>balanced </i> trees, i.e., using special techniques to make sure a search
 tree has about as much stuff on the left as on the right.)
 
-<div class="p"><!----></div>
+<p>
 
-<div class="p"><!----></div>
+<p>
 <font face="symbol"></font
 > The <tt>Scheme-1</tt> interpreter
 
-<div class="p"><!----></div>
+<p>
 <b>[This topic may be in week 5 or in week 6 depending on the
 holiday schedule.]</b>
 
-<div class="p"><!----></div>
+<p>
 We're going to investigate a Scheme interpreter written in Scheme.  SICP
 has a rather large and detailed Scheme interpreter in Chapter 4, which
 we'll get to near the end of the semester.  But students often find
@@ -905,16 +903,16 @@ series of three smaller versions that leave out some details and some
 of the features of real Scheme.  This week we'll use the <tt>Scheme-1</tt>
 interpreter.
 
-<div class="p"><!----></div>
+<p>
 We weren't ready for this investigation until we had the idea of lists
 that contain sublists, because that's what a Scheme program is - a list.
 That's the point of all those parentheses; the Scheme language can look
 at a Scheme program as data, rather than as something different from data.
 
-<div class="p"><!----></div>
+<p>
 Here's how we use the interpreter:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>STk&#62; (load "&#126;cs61a/lib/scheme1.scm")
 STk&#62; (scheme-1)
 Scheme-1: (+ 2 3)
@@ -924,15 +922,15 @@ Scheme-1: ((lambda (x) (* x 3)) 4)
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 To leave <tt>Scheme-1</tt> and return to the STk prompt, just enter an
 illegal expression, such as <tt>()</tt>.
 
-<div class="p"><!----></div>
+<p>
 Why bother?  What good is an interpreter for Scheme that we can't use unless
 we already have another interpreter for Scheme?
 
-<div class="p"><!----></div>
+<p>
 
 <dl compact="compact">
  <dt>
@@ -961,7 +959,7 @@ evaluation that we learned in Chapter 1 of SICP.  In Chapter 3, we'll get to
 a more complicated but more realistic evaluation model, called the
 <i>environment </i> model.
 
-<div class="p"><!----></div>
+<p>
 Universality means we can write <i>one program </i> that's equivalent to all
 other programs.  We'll talk more about this when we see SICP's full
 Scheme interpreter in Chapter 4.  This week's interpreter, although
@@ -969,7 +967,7 @@ universal in principle, doesn't make the point clearly because it's
 quite difficult to write serious programs in it, mainly because it
 lacks <tt>define</tt>.
 
-<div class="p"><!----></div>
+<p>
 Our Scheme interpreter leaves out many of the important components of a real
 one.  It gets away with this by taking advantage of the capabilities of the
 underlying Scheme.  Specifically, we don't deal with storage allocation,
@@ -977,20 +975,19 @@ tail recursion elimination, or implementing any of the Scheme primitives.
 All we <i>do </i> deal with is the evaluation of expressions.  That turns
 out to be quite a lot in itself, and pretty interesting.
 
-<div class="p"><!----></div>
+<p>
 
-<div class="p"><!----></div>
+<p>
 Here is a one-screenful version of a Scheme interpreter, using the
 substitution model, with most of the details left out:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>;;;;;                        In file cs61a/lectures/2.2/tiny.scm
 (define (scheme)
   (display &#187; ")
   (print (eval (read)))
   (scheme) )
 
-<div class="p"><!----></div>
 (define (eval exp)
   (cond ((self-evaluating? exp) exp)
         ((symbol? exp) (look-up-global-value exp))
@@ -998,7 +995,6 @@ substitution model, with most of the details left out:
         (else (apply (eval (car exp))
                      (map eval (cdr exp)) ))))
 
-<div class="p"><!----></div>
 (define (apply proc args)
   (if (primitive? proc)
       (do-magic proc args)
@@ -1006,7 +1002,7 @@ substitution model, with most of the details left out:
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 Although the versions we can actually run are bigger, this really does capture
 the essential structure of every Lisp interpreter, namely, a mutual
 recursion between <tt>eval</tt> (evaluate an expression) and <tt>apply</tt> (apply a
@@ -1016,16 +1012,16 @@ the subexpressions recursively, then apply the <tt>car</tt> (a function) to the
 evaluate the body of the function with the argument values in place of
 the formal parameters.
 
-<div class="p"><!----></div>
+<p>
 The <tt>substitute</tt> procedure is essentially the <tt>substitute2</tt> that
 you wrote in last week's homework, except that it has to be a little more
 complicated to avoid substituting for quoted symbols and for the formal
 parameters of a <tt>lambda</tt> inside the body.
 
-<div class="p"><!----></div>
+<p>
 What's left out?  Primitives, special forms, and a lot of details.
 
-<div class="p"><!----></div>
+<p>
 The <tt>Scheme-1</tt> interpreter has only three special forms: <tt>quote</tt>,
 <tt>if</tt>, and <tt>lambda</tt>.  In particular, it doesn't have <tt>define</tt>,
 so there are no global variables, and
@@ -1034,7 +1030,7 @@ procedure, we have to use it as an argument to another procedure.
 In particular, if we want to write <i>recursive </i> procedures we
 have to use a trick that was an extra-for-experts in week 2:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>Scheme-1: ((lambda (n)
 	     ((lambda (f) (f f n))   ; the "Y combinator"
 	      (lambda (fact n)
@@ -1046,8 +1042,8 @@ have to use a trick that was an extra-for-experts in week 2:
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 
-<div class="p"><!----></div>
+<p>
 
-<div class="p"><!----></div>
+<p>

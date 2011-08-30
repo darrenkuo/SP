@@ -1,41 +1,41 @@
-<div class="p"><!----></div>
+<p>
 Abelson and Sussman, exercises <a href="http://mitpress.mit.edu/sicp/full-text/book/book-Z-H-29.html#%_thm_4.55" target="_blank">4.55</a> and <a href="http://mitpress.mit.edu/sicp/full-text/book/book-Z-H-29.html#%_thm_4.62" target="_blank">4.62</a>:
 
-<div class="p"><!----></div>
+<p>
 <br /><b>4.55</b> Give simple queries that retrieve the following information
 from the data base:
 <br/><br/>
-<div class="p"><!----></div>
+<p>
 All people supervised by Ben Bitdiddle;
 <br/><br/>
-<div class="p"><!----></div>
+<p>
 The names and jobs of all people in the accounting division;
 <br/><br/>
-<div class="p"><!----></div>
+<p>
 The names and addresses of all people who live in Slumerville.
 
-<div class="p"><!----></div>
+<p>
 <br /><br /><b>4.62</b> Define rules to implement the <tt>last-pair</tt> operation of exercise
 2.17, which returns a list containing the last element of a nonempty list.  Check
 your rules on queries such as
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(last-pair (3) ?x)
 (last-pair (1 2 3) ?x)
 (last-pair (2 ?x) (3))
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 Do your rules work correctly on queries such as <tt>(last-pair&nbsp;?x&nbsp;(3))</tt>?
 
-<div class="p"><!----></div>
+<p>
 <br /><br />For the lab exercises and the homework problems
 that involve writing queries or rules,
 test your solutions using the query system.
 To run the query system and load in the sample data:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>stk
 (load "&#126;cs61as/lib/query.scm")
 (initialize-data-base microshaft-data-base)
@@ -43,21 +43,21 @@ To run the query system and load in the sample data:
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 You're now in the query system's interpreter.  To add an assertion:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(assert! (foo bar))
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 To add a rule:
 
-<div class="p"><!----></div>
+<p>
 <tt>  <pre>(assert! (rule (foo) (bar)))
 
 </pre></tt>
 
-<div class="p"><!----></div>
+<p>
 Anything else is a query.

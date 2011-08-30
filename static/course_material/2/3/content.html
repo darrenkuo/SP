@@ -4,7 +4,7 @@ it, and prints the answer, and then does the same thing over again.  We're
 emphasizing the word &quot;evaluates&quot; because the essence of understanding
 Scheme is knowing what it means to evaluate something.
  
-<P>Each question you type is called an <EM>expression.</EM> The
+<P>Each question you type is called an <EM>expression.</EM><sup>*</sup> The
 expression can be a single value, such as <CODE>26</CODE>, or something more
 complicated in parentheses, such as <CODE>(+ 14 7)</CODE>.  The first kind of
 expression is called an <EM>atom</EM> (or <EM><A NAME="g1"></A><A NAME="g2"></A>atomic expression</EM>), while the second kind of expression is
@@ -13,6 +13,14 @@ smaller expressions <CODE>+</CODE>, <CODE>14</CODE>, and <CODE>7</CODE>.  The me
 chemistry, where atoms of single elements are combined to form chemical
 compounds.  We sometimes call the expressions within a compound expression
 its <EM>subexpressions.</EM> 
+
+<P><small><small><sup>*</sup> In other programming languages, the name for what
+you type might be a "command" or and "instruction."  The name "expression"
+is meant to emphasize that we are talking about the notation in which
+you ask the question, as distinct from the idea in your head, just as in
+English you <em>express</em> an idea in words.  Also, in Scheme we are
+more often asking questions rather than telling the computer to take
+some action.</small></small>
  
 <P>Compound expressions tell Scheme to &quot;do&quot; a procedure.  This idea is so
 important that it has a lot of names.  You can <EM>call</EM> a procedure; you

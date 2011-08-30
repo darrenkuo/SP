@@ -1,8 +1,8 @@
-<P>The biggest pitfall in this chapter is the unusual notation of <CODE>cond</CODE>.  Keeping track of the parentheses that mean function invocation, as
+<P>&rArr; The biggest pitfall in this chapter is the unusual notation of <CODE>cond</CODE>.  Keeping track of the parentheses that mean function invocation, as
 usual, and the parentheses that just group the parts of a <CODE>cond</CODE> clause
 is tricky until you get accustomed to it.
  
-<P>Many people also have trouble with the asymmetry of the <A NAME="g110"></A><CODE>member?</CODE> 
+<P>&rArr; Many people also have trouble with the asymmetry of the <A NAME="g110"></A><CODE>member?</CODE> 
 predicate.  The first argument is something small; the second is something
 big.  (The order of arguments is the same as the order of a typical English
 sentence about membership:  &quot;Is Mick a member of the Beatles?&quot;)
@@ -12,7 +12,7 @@ define a procedure and use its parameters as the arguments to <CODE>member?</COD
 Compare writing a procedure that says, &quot;does the letter E appear in this
 word?&quot; with one that says, &quot;is this letter a vowel?&quot;
  
-<P>Many people try to use <CODE>and</CODE> and <CODE>or</CODE> with the full flexibility
+<P>&rArr; Many people try to use <CODE>and</CODE> and <CODE>or</CODE> with the full flexibility
 of the corresponding English words.  Alas, Scheme is not English.  For
 example, suppose you want to know whether the argument to a procedure is
 either the word <CODE>yes</CODE> or the word <CODE>no</CODE>.  You can't say
@@ -36,7 +36,7 @@ with something else.  You have to make two separate equality tests:
 <P>but the question of trying to use <CODE>or</CODE> as if it were English
 comes up in other cases for which <CODE>member?</CODE> won't help.
  
-<P>This isn't exactly a pitfall, because it won't stop your program from
+<P>&rArr; This isn't exactly a pitfall, because it won't stop your program from
 working, but programs like
  
 <P><PRE>(define (odd? n)

@@ -1,8 +1,10 @@
-<P><CODE>And</CODE> and <A NAME="g93"></A><CODE>or</CODE> are also <A NAME="g94"></A><A NAME="g95"></A>special forms.  They evaluate
-<A NAME="g96"></A> their arguments in order from left to right and stop as soon as they can.  For <CODE>or</CODE>, this means
-returning true as soon as any of the arguments is true.  <CODE>And</CODE> returns
-false as soon as any argument is false.  This turns out to be useful in
-cases like the following:
+<P><CODE>And</CODE> and <A NAME="g93"></A><CODE>or</CODE> are also <A
+NAME="g94"></A><A NAME="g95"></A>special forms.  They evaluate <A
+NAME="g96"></A> their arguments in order from left to right<sup>*</sup> and
+stop as soon as they can.  For <CODE>or</CODE>, this means returning true as
+soon as any of the arguments is true.  <CODE>And</CODE> returns false as soon
+as any argument is false.  This turns out to be useful in cases like the
+following:
  
 <P><PRE>(define (divisible? big small)
   (= (remainder big small) 0))
@@ -22,6 +24,12 @@ cases like the following:
 &gt; (divisible? 'aardvark 4)
 ERROR: AARDVARK IS NOT A NUMBER
 </PRE> 
+
+<P><small><small><sup>*</sup> Since you can start a new line in the middle of
+an expression, in some cases the arguments will be "top to bottom" rather
+than "left to right," but don't forget that Scheme doesn't care about line
+breaks.  That's why Lisp programmers always talk as if their programs were
+written on one enormously long line.</small></small>
  
 <P>We want to see if <CODE>x</CODE> is a number, and, if so, if it's
 divisible by <CODE>4</CODE>.  It would be an error to apply <CODE>divisible?</CODE> to a

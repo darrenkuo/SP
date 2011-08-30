@@ -1,4 +1,4 @@
-<P>Don't forget that a function can have only <EM>one</EM> return value.
+<P>&rArr; Don't forget that a function can have only <EM>one</EM> return value.
 For example, here's a program that's supposed to return the sum of the
 squares of its two arguments:
  
@@ -18,7 +18,7 @@ procedure should say
      (square y)))
 </PRE> 
  
-<P>Another pitfall comes from thinking that a procedure call changes the
+<P>&rArr; Another pitfall comes from thinking that a procedure call changes the
 value of a parameter.  Here's a faulty program that's supposed to compute
 the function described by <EM>f</EM>(<EM>x</EM>)=3<EM>x</EM>+10:
  
@@ -29,8 +29,12 @@ the function described by <EM>f</EM>(<EM>x</EM>)=3<EM>x</EM>+10:
  
 <P>Again, the first expression has no effect and Scheme will just
 return the value <EM>x</EM>+10.
- 
-<P>A very common pitfall in Scheme comes from choosing the name of
+
+<P><small><small>This is especially problematic for people who used to
+program in a language like Pascal or BASIC, where you say things like
+"<code>X = X + 3</code>" all the time.</small></small>
+
+<P>&rArr; A very common pitfall in Scheme comes from choosing the name of
 a procedure as a parameter.  It doesn't come up very often with
 procedures like the ones in this chapter whose domains and ranges
 are both numbers, but it will be more likely later.  If you have a
@@ -56,7 +60,7 @@ same name, e.g., <CODE>square</CODE>, with two meanings within a single procedur
 But special forms are an exception; you can never use the name of a special
 form as a parameter.
  
-<P>A similar problem about name conflicts comes up if you try to
+<P>&rArr; A similar problem about name conflicts comes up if you try to
 use a keyword (the name of a special form, such as <CODE>define</CODE>) as
 some other kind of name&mdash;either a formal parameter or the name of a
 procedure you're defining.  We're listing this separately because the
@@ -64,7 +68,7 @@ result is likely to be different.  Instead of getting the wrong value
 substituted, as above, you'll probably see a special error message
 along the lines of &quot;improper use of keyword.&quot;
  
-<P>Formal parameters <EM>must</EM> be words.  Some people try to write
+<P>&rArr; Formal parameters <EM>must</EM> be words.  Some people try to write
 procedures that have compound expressions as the formal parameters, like this:
  
 <P><PRE>(define (f (+ 3 x) y)                        ;; wrong!

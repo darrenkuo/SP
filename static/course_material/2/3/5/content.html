@@ -11,14 +11,14 @@ write down a complicated expression and then <EM>rewrite</EM> it repeatedly,
 each time replacing some small expression with a simpler expression
 that has the same value.
  
-<P><PRE>(+ (* (- 10 7) (+ 4 1)) (- 15 (/ 12 3)) 17)
-(+ (* 3        (+ 4 1)) (- 15 (/ 12 3)) 17)
-(+ (* 3        5      ) (- 15 (/ 12 3)) 17)
-(+ 15                   (- 15 (/ 12 3)) 17)
-(+ 15                   (- 15 4       ) 17)
-(+ 15                   11              17)
+<P><pre><table><tr><td>(+&nbsp;(*&nbsp;<td><table frame=box border=2><tr><td>(-&nbsp;10&nbsp;7)</tr></table><td>(+&nbsp;4&nbsp;1))&nbsp;&nbsp;(-&nbsp;15&nbsp;(/&nbsp;12&nbsp;3))&nbsp;17)</tr></table>
+<table><tr><td>(+&nbsp;(*&nbsp;3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<td><table frame=box border=2><tr><td>(+&nbsp;4&nbsp;1)</tr></table><td>)&nbsp;(-&nbsp;15&nbsp;(/&nbsp;12&nbsp;3))&nbsp;17)</tr></table>
+<table><tr><td>(+<td><table frame=box border=2><tr><td>(*&nbsp;3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)</tr></table><td>(-&nbsp;15&nbsp;(/&nbsp;12&nbsp;3))&nbsp;17)</tr></table>
+<table><tr><td>(+&nbsp;15&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(-&nbsp;15<td><table frame=box border=2><tr><td>(/&nbsp;12&nbsp;3)</tr></table><td>)&nbsp;17)</tr></table>
+<table><tr><td>(+&nbsp;15&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<td><table frame=box border=2><tr><td>(-&nbsp;15&nbsp;4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)</tr></table><td>&nbsp;17)</tr></table>
+<table frame=box border=2><tr><td>(+&nbsp;15&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;11&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;17)</tr></table>
 43
-</PRE> 
+</pre> 
  
 <P>In each line of the diagram, the boxed expression
 is the one that will be replaced with its value on the following line.
@@ -26,8 +26,8 @@ is the one that will be replaced with its value on the following line.
 <P>If you like, you can save some steps by evaluating <EM>several</EM> small
 expressions from one line to the next:
  
-<P><PRE>(+ (* (- 10 7) (+ 4 1)) (- 15 (/ 12 3)) 17)
-(+ (* 3        5      ) (- 15 4       ) 17)
-(+ 15                   11              17)
+<P><PRE><table><tr><td>(+ (* <td><table frame=box border=2><tr><td>(-&nbsp;10&nbsp;7)</tr></table><td><td><table frame=box border=2><tr><td>(+&nbsp;4&nbsp;1)</tr></table><td>)&nbsp;(-&nbsp;15&nbsp;<td><table frame=box border=2><tr><td>(/&nbsp;12&nbsp;3)</tr></table><td>)&nbsp;17)</tr></table>
+<table><tr><td>(+<td><table frame=box border=2><tr><td>(*&nbsp;3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)</tr></table><td><table frame=box border=2><tr><td>(-&nbsp;15&nbsp;4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)</tr></table><td>17)</tr></table>
+<table frame=box border=2><tr><td>(+&nbsp;15&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;11&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;17)</tr></table>
 43
 </PRE> 
