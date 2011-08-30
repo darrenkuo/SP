@@ -30,12 +30,10 @@ def writeLessonData(path, data):
     f.close()
 
 def checkReadable(lesson_data, user):
-    #print 'checking readable:', lesson_data['readable']
     func = eval('lambda time, user: %s' % (lesson_data['readable']))
     return func(time() * 1000, user)
 
 def checkAccessed(index, user, oldconn=None, oldcursor=None):
-    #print 'checking if user %s accessed page %s' % (user, index)
     if not oldconn or not oldcursor:
         #(conn, cursor) = getDbCursor(course_db)
         (conn, cursor) = getDbCursor(getUserDb(user))
@@ -213,7 +211,6 @@ def getRealPath(lesson_number):
     (conn, cursor) = getDbCursor('course.db')
     cursor.execute('select tmp.path from chapter tmp where tmp.id=%s;'% (lesson_number))
     rows = cursor.fetchall()
-    print lesson_number, rows
     return str(rows[0][0])
 
 def findPreviousNext(path, user):
@@ -222,9 +219,6 @@ def findPreviousNext(path, user):
     f.close()
 
     p = path.split('-')[-1]
-
-    print 'path', path
-    print "finding path of", p
 
     start = -1
     for i in range(len(flow)):

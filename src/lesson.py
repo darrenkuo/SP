@@ -15,7 +15,7 @@ def getLesson(user, page=''):
     path = '.'
     if page:
         path = convertToRealPath(page)
-   
+
     data = readLessonData(path)
     """
     f = open(join(course_material, path, 'content.html'), 'r')
@@ -79,9 +79,7 @@ class lesson:
                     results.append((t_data['title'], ps[0] + "-" + c))
                 lesson_buttons = lesson_shortcuts('', lesson_data['title'], 
                                                   results)
-            print "hi!hi!"
             lesson_page = getLesson(session.user, data['page'])
-            print "got lesson page"
             return render.lesson(lesson_page, lesson_buttons)
         return render.lesson(getLesson(session.user, ''), None)
     
