@@ -55,7 +55,7 @@ class lesson:
     def GET(self):
         data = web.input()        
         if 'page' in data:
-            return render.lesson(html_content('', '<frameset border="0" rows="10%%, 90%%"><frame src="/lesson_nav?page=%s"/><frame src="/lesson_page?page=%s"/></frameset>' % (data['page'], data['page'])))
+            return render.lesson(html_content('', '<frameset border="0" rows="10%%, 90%%"><frame src="/lesson_nav?page=%s"/><frame id="content" src="/lesson_page?page=%s"/></frameset>' % (data['page'], data['page'])))
         return None
     
     def POST(self):
