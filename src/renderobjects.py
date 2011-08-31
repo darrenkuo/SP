@@ -236,7 +236,7 @@ class lesson_content:
             
             if next:
                 output += '<P align="right">'
-                output += '<a class="chapter" href="%s" target="_top">Next&raquo;</a>' % (next)
+                output += '<a id="next" class="chapter" href="%s" target="_top">Next&raquo;</a>' % (next)
                 output += '</P>'
 
         return output + '</div>'

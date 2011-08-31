@@ -3,8 +3,27 @@ $def with (render)
 <html>
   <header>
     $:render[0].render()
+    <!--<script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.min.js"></script>-->
+    <script type="text/javascript">
+    
+    document.onkeyup = KeyCheck;       
+
+    function KeyCheck(e)
+    {
+       var KeyID = (window.event) ? event.keyCode : e.keyCode;
+       switch(KeyID)
+       {
+          case 37:
+	     history.go(-1);
+	     break;
+          case 39:
+	     window.top.location = document.getElementById('next').href;
+	     break;
+       }
+    }
+    </script>  
   </header>
-  <body>
+  <body onload="self.focus()">
     $:render[1].render()
   </body>
 </html>
