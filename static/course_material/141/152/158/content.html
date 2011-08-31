@@ -19,7 +19,32 @@ product we're trying to compute.  So 843! = 843&#x00d7;842!.  In general,
 answer we don't know, 843!, in terms of another answer we don't know,
 842!.  But since 842! is a smaller, similar subproblem, we are confident
 that the same algorithm will find it.
- 
+
+<p><small><small>What makes us confident?  We imagine that we've worked on
+this problem using the combining method, so that we've written procedures like
+these:
+
+<pre>(define (factorial1 n)
+  1)
+
+(define (factorial2 n)
+  (* 2 (factorial1 (- n 1))))
+
+(define (factorial3 n)
+  (* 3 (factorial2 (- n 1))))
+
+; ...
+
+(define (factorial842 n)
+  (* 842 (factorial841 (- n 1))))
+</pre>
+
+<p>and therefore we're entitled to use those lower-numbered versions in
+finding the factorial of 843.  We haven't actually written them, but we could
+have, and that's what justifies using them. The reason we can take 842! on
+faith is that 842 is smaller than 843; it's the smaller values that we're
+pretending we've already written.</small></small>
+
 <P>Remember that in the <CODE>reverse</CODE> problem we mentioned that we could have
 chosen either the <CODE>butfirst</CODE> or the <CODE>butlast</CODE> of the argument as the
 smaller subproblem?  In the case of the <CODE>factorial</CODE> problem we don't
@@ -31,6 +56,11 @@ have a similar choice.  If we tried to subdivide the problem as
 then the part in
 parentheses would <EM>not</EM> be the factorial of a smaller
 number.
+
+<p><small><small>As it happens, the part in parentheses does equal the
+factorial of a number, 6 itself.  Bul expressing the solution for 6 in terms
+of the solution for 6 doesn't lead to a recursive procedure; we have to
+express this solution in terms of a <em>smaller</em> one.
  
 <P>As the base case for <CODE>factorial</CODE>, we'll use 1! = 1.
  

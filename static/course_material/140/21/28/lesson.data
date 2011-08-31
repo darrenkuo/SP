@@ -1,1 +1,1 @@
-{'index': 28, 'type': u'lesson', 'readable': u'True and checkAccessed(2, user) and checkAccessed(3, user) and checkAccessed(8, user) and checkAccessed(16, user) and checkAccessed(21, user) and (not checkSF(SF_PROGRAMMED, user) and not checkSF(SF_SCHEME, user))', 'chapters': [], 'title': u'If Is Composable'}
+{'index': 28, 'readable': u'True and (not checkSF(SF_PROGRAMMED, user) or not checkSF(SF_SCHEME, user))', 'type': u'lesson', 'chapters': [], 'title': u'If Is Composable'}

@@ -1,1 +1,1 @@
-{'index': 35, 'type': u'lesson', 'readable': u'True and checkAccessed(30, user) and (not checkSF(SF_PROGRAMMED, user) and not checkSF(SF_SCHEME, user))', 'chapters': [], 'title': u'Pitfalls'}
+{'index': 35, 'title': u'Pitfalls', 'type': u'lesson', 'chapters': [], 'readable': u'True and (not checkSF(SF_PROGRAMMED, user) or not checkSF(SF_SCHEME, user))'}

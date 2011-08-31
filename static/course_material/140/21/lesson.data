@@ -1,1 +1,1 @@
-{'index': 21, 'title': u'True and False', 'type': u'lesson', 'chapters': ['22', '23', '24', '25', '26', '27', '28', '29'], 'readable': u'True and checkAccessed(1, user) and checkAccessed(2, user) and (not checkSF(SF_SCHEME, user))'}
+{'index': 21, 'readable': u'True and (not checkSF(SF_PROGRAMMED, user) or not checkSF(SF_SCHEME, user))', 'type': u'lesson', 'chapters': ['22', '23', '24', '25', '26', '27', '28', '29'], 'title': u'True and False'}

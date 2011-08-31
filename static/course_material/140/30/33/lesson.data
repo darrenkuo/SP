@@ -1,1 +1,1 @@
-{'index': 33, 'type': u'lesson', 'readable': u'True and checkAccessed(30, user) and (not checkSF(SF_PROGRAMMED, user) and not checkSF(SF_SCHEME, user))', 'chapters': [], 'title': u'The Truth about Substitution'}
+{'index': 33, 'title': u'The Truth about Substitution', 'type': u'lesson', 'chapters': [], 'readable': u'True and (not checkSF(SF_PROGRAMMED, user) or not checkSF(SF_SCHEME, user))'}

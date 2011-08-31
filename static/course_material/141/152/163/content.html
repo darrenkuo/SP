@@ -1,4 +1,4 @@
-<P>One possible pitfall is a recursive case that doesn't make progress,
+<P>&rArr; One possible pitfall is a recursive case that doesn't make progress,
 that is, one that doesn't reduce the size of the problem in the recursive call.
 For example, let's say we're trying to write the procedure <CODE>down</CODE> that
 works this way:
@@ -18,7 +18,7 @@ works this way:
 <P>The recursive call looks as if it reduces the size of the problem,
 but try it with an actual example.  What's <CODE>first</CODE> of the word <CODE>splat</CODE>?  What's <CODE>first</CODE> of that result?  What's <CODE>first</CODE> of <EM>that</EM> result?
  
-<P>A pitfall that sounds unlikely in the abstract but is actually
+<P>&rArr; A pitfall that sounds unlikely in the abstract but is actually
 surprisingly common is to try to do the second step of the procedure &quot;by
 hand&quot; instead of trusting the recursion to do it.  For example, here's
 another attempt at that <CODE>down</CODE> procedure:
@@ -47,7 +47,7 @@ and then trust the recursion for the rest:
       (se wd (down (bl wd)))))
 </PRE> 
  
-<P>The value returned in the base case of your procedure must be in the
+<P>&rArr; The value returned in the base case of your procedure must be in the
 range of the function you are representing.  If your function is supposed to
 return a number, it must return a number all the time, even in the base
 case.  You can use this idea to help you check the correctness of the
@@ -59,7 +59,7 @@ word in a sentence?  We know that in the recursive cases <CODE>downup</CODE> alw
 returns a sentence, so that suggests to us that it must return a sentence in
 the base case also.
  
-<P>If your base case doesn't make sense in its own right, it probably
+<P>&rArr; If your base case doesn't make sense in its own right, it probably
 means that you're trying to compensate for a mistake in the recursive case.
  
 <P>For example, suppose you've fallen into the pitfall of trying to handle the

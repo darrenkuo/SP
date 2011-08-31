@@ -17,10 +17,17 @@ is to find the <CODE>reverse</CODE> of a word one letter shorter than <CODE>beat
 ELTAEB
 </PRE> 
  
-<P>This result is pretty close to the answer we want for <CODE>reverse</CODE> of <CODE>beatles</CODE>.  What's the relationship between <CODE>ELTAEB</CODE>,
+<P>This result is pretty close to the answer we want for <CODE>reverse</CODE>
+of <CODE>beatles</CODE>.  What's the relationship between <CODE>ELTAEB</CODE>,
 the answer to the smaller problem, and <CODE>SELTAEB</CODE>, the answer to the
-entire problem?  There's one extra letter, <CODE>S</CODE>, at the beginning.  Where
-did the extra letter come from?  Obviously, it's the last letter of <CODE>beatles</CODE>.
+entire problem?  There's one extra letter, <CODE>S</CODE>, at the beginning.
+Where did the extra letter come from?  Obviously, it's the last letter of
+<CODE>beatles</CODE>.
+
+<P><small><small>There's also a relationship between <code>(reverse
+'eatles)</code> and <code>(reverse 'beatles)</code>, with the extra letter
+<code>b</code> at the end.  We could take either of these subproblems as a
+starting point and end up with a working procedure.</small></small>
  
 <P>This may seem like a sequence of trivial observations leading nowhere.  But
 as a result of this investigation, we can translate what we've learned

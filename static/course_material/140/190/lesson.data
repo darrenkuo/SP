@@ -1,1 +1,1 @@
-{'index': 190, 'type': u'lesson', 'readable': u'True and checkAccessed(140, user)', 'chapters': [], 'title': u'Homework 0.2'}
+{'index': 190, 'title': u'Homework 0.2 (hw0-2)', 'type': u'lesson', 'chapters': [], 'readable': u'True and (not checkSF(SF_PROGRAMMED, user) or not checkSF(SF_SCHEME, user))'}

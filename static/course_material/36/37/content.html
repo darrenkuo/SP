@@ -29,14 +29,14 @@ value.  For example:
 <tr><td align="left"><tt>(+ 2 3)</tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left">function notation</td></tr>
 <tr><td align="left"><tt>(sqrt 16)</tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left">names don't have to be punctuation</td></tr>
 <tr><td align="left"><tt>(+ (* 3 4) 5)</tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left">composition of functions</td></tr>
-<tr><td colspan="2" align="left"> </td></tr>
+<tr><td colspan="2" align="left">&nbsp; </td></tr>
 
 <tr><td align="left"><tt>+</tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left">functions are things in themselves</td></tr>
 <tr><td align="left"><tt>'+</tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left">quoting</td></tr>
 <tr><td align="left"><tt>'hello</tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left">can quote any word</td></tr>
 <tr><td align="left"><tt>'(+ 2 3)</tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left">can quote any expression</td></tr>
 <tr><td align="left"><tt>'(good morning)</tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left">even non-expression sentences</td></tr>
-<tr><td colspan="2" align="left"> </td></tr>
+<tr><td colspan="2" align="left">&nbsp;</td></tr>
 
 <tr><td align="left"><tt>(first 274)</tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left">functions don't have to be arithmetic</td></tr>
 <tr><td align="left"><tt>(butfirst 274)</tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left">(abbreviation <tt>bf</tt>)</td></tr>
@@ -44,14 +44,14 @@ value.  For example:
 <tr><td align="left"><tt>(first hello)</tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left">reminder about quoting</td></tr>
 <tr><td align="left"><tt>(first (bf 'hello))</tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left">composition of non-numeric functions</td></tr>
 <tr><td align="left"><tt>(+ (first 23) (last 45))</tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left">combining numeric and non-numeric</td></tr>
-<tr><td colspan="2" align="left"> </td></tr>
+<tr><td colspan="2" align="left">&nbsp;</td></tr>
 
 <tr><td align="left"><tt>(define pi 3.14159)</tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left">special form</td></tr>
 <tr><td align="left"><tt>pi</tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left">value of a symbol</td></tr>
 <tr><td align="left"><tt>'pi</tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left">contrast with quoted symbol</td></tr>
 <tr><td align="left"><tt>(+ pi 7)</tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left">symbols work in larger expressions</td></tr>
 <tr><td align="left"><tt>(* pi pi)</tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
-<tr><td colspan="2" align="left"> </td></tr>
+<tr><td colspan="2" align="left">&nbsp;</td></tr>
 
 <tr><td align="left"><tt>(define (square x)</tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
 <tr><td align="left"><tt>&nbsp;&nbsp;(* x x))</tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left">defining a function</td></tr>
@@ -59,7 +59,9 @@ value.  For example:
 <tr><td align="left"><tt>(square (+ 2 3))</tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td align="left">composition with defined functions</td></tr></table>
 
 </td></tr></table><!--vbox-->
-</td><td></td></tr></table><!--hboxt-->Terminology: the <i>formal parameter </i> is the name of the
+</td><td></td></tr></table><!--hboxt-->
+
+<P>Terminology: the <i>formal parameter </i> is the name of the
 argument (<tt>x</tt>); the <i>actual argument expression </i> is
 the expression used in the invocation (<tt>(+&nbsp;2&nbsp;3)</tt>); the
 <i>actual argument value </i> is the value of the argument in
@@ -114,8 +116,8 @@ Pig Latin:  Move initial consonants to the end of the word and append
 </pre></tt>
 
 <p>
-<tt>Pigl</tt> demonstrates <i>recursion </i>-a function that invokes
-itself.  If this is new to you, maybe you should take CS&nbsp;3 first.
+<tt>Pigl</tt> demonstrates <i>recursion</i>&mdash;a function that invokes
+itself.  If this is new to you, you should do lesson 0.3 first.
 
 <p>
 Another example:  Remember how to play Buzz?  You go around the circle
@@ -157,7 +159,7 @@ art form (using programming as a medium for creative expression).
 
 <p>
 Programming is really easy, as long as you're solving small problems.
-Any kid in junior high school can write programs in BASIC, and not just
+Any kid in middle school can write programs in BASIC, and not just
 exercises, either; kids do quite interesting and useful things with
 computers.  But BASIC doesn't scale up; once the problem is so complicated
 that you can't keep it all in your head at once, you need help, in the
@@ -171,29 +173,14 @@ We deal with four big programming styles/approaches/paradigms:
 
 <p>
 
-<dl compact="compact">
- <dt>
-<font face="symbol"></font
-></dt>
-<dd>
-Functional programming (2 months)
-</dd>
- <dt>
-<font face="symbol"></font
-></dt>
-<dd>Object-oriented programming (1 month)
-</dd>
- <dt>
-<font face="symbol"></font
-></dt>
-<dd>Client-server programming (1 week)
-</dd>
- <dt>
-<font face="symbol"></font
-></dt>
-<dd>Logic programming (1 week)
-</dd></dl>
-The big idea of the course is <i>abstraction </i>:&nbsp;inventing languages that
+<ul>
+<li>Functional programming (2 units)
+<li>Object-oriented programming (1 unit)
+<li>Client-server programming (1 lesson)
+<li>Logic programming (1 lesson)
+</ul>
+
+<P>The big idea of the course is <i>abstraction </i>:&nbsp;inventing languages that
 let us talk more nearly in a problem's own terms and less in terms of the
 computer's mechanisms or capabilities.  There is a hierarchy of abstraction:
 
@@ -229,28 +216,28 @@ ones?)
 
 <p>
 <font face="symbol"></font
-> A function can have any number of arguments, including zero,
+>&bull; A function can have any number of arguments, including zero,
 but must have exactly one return value.  (Suppose you want two?  You
 combine them into one, e.g., in a sentence.)  It's not a function unless
 you always get the same answer for the same arguments.
 
 <p>
 <font face="symbol"></font
-> Why does that matter?  If each little computation is independent
+>&bull; Why does that matter?  If each little computation is independent
 of the past history of the overall computation, then we can <i>reorder </i>
 the little computations.  In particular, this helps cope with parallel
 processors.
 
 <p>
 <font face="symbol"></font
-> The function definition provides a formal parameter (a name),
+>&bull; The function definition provides a formal parameter (a name),
 and the function invocation provides an actual argument (a value).  These
 fit together like pieces of a jigsaw puzzle.  <i>Don't write a "function"
 that only works for one particular argument value!</i>
 
 <p>
 <font face="symbol"></font
-> Instead of a sequence of events, we have composition of functions,
+>&bull; Instead of a sequence of events, we have composition of functions,
 like f(g(x)) in high school algebra.  We can represent this visually with
 function machines and plumbing diagrams.
 
@@ -389,11 +376,6 @@ g
 </pre></tt>
 
 <p>
-(continued on next page)
-
-<p>
-
-<p>
 <tt>  <pre>&#62; (def (zero x) (- x x))        ; This function should always return 0.
 zero
 &#62; (applic (zero (random 10)))
@@ -437,233 +419,3 @@ semester we'll see that sometimes normal order is more efficient.)
 <p>
 <b>Note that the reading for next week is section 1.3, skipping 1.2
 for the time being.</b>
-
-<br/><br/>
-<p>
-
-<p>
-<font face="symbol"></font
-> <b>Unix Shell Programming</b>
-
-<p>
-<b>[This topic may be in week 1, week 4, or week 11 depending on the holidays
-each semester.]</b>
-
-<p>
-Sometimes the best way to solve a programming problem is not to write a
-program at all, but instead to glue together existing programs that
-solve the problem.
-
-<p>
-As an example, we'll construct a spelling-checker program.  It will take
-a text file as input, and will generate a list of words that are in the
-file but not in the online dictionary.
-
-<p>
-For this demonstration I'll use the file named <tt>summary</tt> as the
-text I want to spell-check.
-
-<p>
-We are given a file that contains several words per line, including
-things we don't want to compare against the dictionary, such as spaces
-and punctuation.  Our job will be easier if we transform the input
-into a file with exactly one word per line, with no spaces or
-punctuation (except that we'll keep apostrophes, which are part of
-words - contractions such as "we'll" - rather than word
-delimiters).
-
-<p>
-<tt>  <pre>tr -d '.,;:"'134!'134[]()' &lt; summary &#62; nopunct
-
-</pre></tt>
-
-<p>
-<tt>Tr</tt> is a Unix utility program that translates one character into
-another.  In this case, because of the <tt>-d</tt> switch, we are asking
-it to delete from the input any periods, commas, semicolons, colons,
-exclamation points, braces, and parentheses.
-
-<p>
-The single-quote (<tt>'</tt>) characters are used to tell the shell
-that the characters between them should not be interpreted according
-to the shell's usual syntax.  For example, a semicolon in a shell
-command line separates two distinct commands; the shell does one
-and then does the other.  Here we want the semicolon to be passed to
-the <tt>tr</tt> program just as if it were a letter of the alphabet.
-
-<p>
-When a program asks to read or print text, without specifying a
-particular source or destination, its input comes from something
-called the <i>standard input </i>; its output goes to the
-<i>standard output.</i>  Ordinarily, the standard input is the
-keyboard and the standard output is the screen.  But you can
-<i>redirect </i> them using the characters <tt>&lt;</tt> and <tt>&#62;</tt> in
-shell commands.  In this case, we are asking the shell to connect
-<tt>tr</tt>'s standard input to the file named <tt>summary</tt>, and to
-connect its standard output to a new file named <tt>nopunct</tt>.
-
-<p>
-Spacing characters in text files include the space character and
-the tab character.  To simplify things, let's translate tabs to
-spaces.
-
-<p>
-<tt>  <pre>tr '    ' ' ' &lt; nopunct &#62; notab
-
-</pre></tt>
-
-<p>
-Between the first pair of single-quotes is a tab character.  <tt>Tr</tt>
-will translate every tab in the file to a space.
-
-<p>
-We really want one word per line, so let's translate spaces to
-newline characters.
-
-<p>
-<tt>  <pre>tr ' ' ''134n' &lt; notab &#62; oneword
-
-</pre></tt>
-
-<p>
-The notation <tt>'134n</tt> is a standard Unix notation for
-the newline character.
-
-<p>
-In English text, we capitalize the first word of each sentence.
-The words in the dictionary aren't capitalized (unless they're
-proper nouns).  So let's translate capital letters to lower case:
-
-<p>
-<tt>  <pre>tr '[A-Z]' '[a-z]' &lt; oneword &#62; lowcase
-
-</pre></tt>
-
-<p>
-The notation <tt>[A-Z]</tt> means all the characters between the given
-extremes; it's equivalent to
-
-<p>
-<tt>  <pre>ABCDEFGHIJKLMNOPQRSTUVWXYZ
-
-</pre></tt>
-
-<p>
-What <tt>tr</tt> does is convert every instance of the nth character of its
-first argument into the nth character of the second argument.  So we are
-asking it to convert <tt>A</tt> to <tt>a</tt>, <tt>B</tt> to <tt>b</tt>, and so on.
-
-<p>
-
-<p>
-Our plan is to compare each word of the text against the words in
-the dictionary.  But we don't have to read every word of the
-dictionary for each word of the file; since the dictionary is
-sorted alphabetically, if we sort the words in our text file, we
-can just make one pass through both files in parallel.
-
-<p>
-<tt>  <pre>sort &lt; lowcase &#62; sorted
-
-</pre></tt>
-
-<p>
-The <tt>sort</tt> program can take arguments to do sorting in many
-different ways; for example, you can ask it to sort the lines of
-a file based on the third word of each line.  But in this case,
-we want the simplest possible sort: The "sort key" is the entire
-line, and we're sorting in character-code order (which is the same
-as alphabetical order since we eliminated capital letters).
-
-<p>
-Common words like "the" will occur many times in our text.  There's
-no need to spell-check the same word repeatedly.  Since we've sorted
-the file, all instances of the same word are next to each other in
-the file, so we can ask Unix to eliminate consecutive equal lines:
-
-<p>
-<tt>  <pre>uniq &lt; sorted &#62; nodup
-
-</pre></tt>
-
-<p>
-<tt>Uniq</tt> has that name because in its output file every line is
-unique; it eliminates (consecutive) duplicates.
-
-<p>
-Now we're ready to compare our file against the dictionary.  This may
-seem like a special-purpose operation for which we'll finally have to
-write our own program, but in fact what we want to do is a common
-database operation, combining entries from two different databases
-that have a certain element in common.  Our application is a trivial
-one in which each "database" entry has only one element, and we are
-just checking for matches.
-
-<p>
-This combining of databases is called a <i>join </i> in the technical
-terminology of database programming.  In our case, what we want is not
-the join itself, but rather a report of those elements of one database
-(our text file) that don't occur in the other database (the online
-dictionary).  This is what the <tt>-v1</tt> switch means:
-
-<p>
-<tt>  <pre>join -v1 nodup words &#62; errors
-
-</pre></tt>
-
-<p>
-That's it!  We now have a list of misspelled words that we can correct
-in Emacs.  The user interface of this spelling program isn't fancy, but
-it gets the job done, and we didn't have to work hard to get it.
-
-<p>
-It's a little ugly that we've created all these intermediate files.
-But we don't have to, because the shell includes a "pipe" feature that
-lets you connect the standard output of one program to the standard
-input of another.  So we can do it this way:
-
-<p>
-<tt>  <pre>tr -d '.,;:"'134!'134[]()'  -  tr '    ' ' '  -  tr ' ' ''134n' '134
- -  tr '[A-Z]' '[a-z]'  -  sort  -  uniq  -  join -v1 - words
-
-</pre></tt>
-
-<p>
-The backslash at the end of the first line is the shell's <i>continuation </i>
-character, telling it that the same command continues on the next line.
-The minus sign (<tt>-</tt>) as the second argument to <tt>join</tt> tells it to
-take its first database input from its standard input rather than from a
-named file.  (This is a standard Unix convention for programs that read
-more than one input file.)
-
-<p>
-We can write a file named <tt>spell</tt> containing this command line, mark
-the file as executable (a program, rather than data) with the command
-
-<p>
-<tt>  <pre>chmod +x spell
-
-</pre></tt>
-
-<p>
-and then instead of the sequence of commands I used earlier we can
-just say
-
-<p>
-<tt>  <pre>spell &lt; summary &#62; errors
-
-</pre></tt>
-
-<p>
-What we've done is use existing programs, glued together in a "scripting
-language" (the Unix shell), to solve a new problem with very little effort.
-This is called "code re-use."  The huge collection of Unix utility programs
-have been written with this technique in mind; that's why almost all of them
-are what the Unix designers call "filters," meaning programs that take a
-text stream as input and produce a modified text stream as output.  Each
-filter doesn't care where its input and output are; they can be files, or
-they can be pipes connected to another filter program.
-
-<p>
-
-<p>

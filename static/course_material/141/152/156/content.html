@@ -1,9 +1,13 @@
 <P>If we think of this Scheme fragment merely as a statement of a true fact
-about <CODE>reverse</CODE>, it's not very remarkable.  The amazing part is that
-this fragment is <EM>runnable!</EM> It doesn't <EM>look</EM> runnable because it invokes itself as a
-helper procedure, and&mdash;if you haven't already been through the combining
-method&mdash;that looks as if it can't work.  &quot;How can you use <CODE>reverse</CODE> 
-when you haven't written it yet?&quot;
+about <CODE>reverse</CODE>, it's not very remarkable.  The amazing part is
+that this fragment is <EM>runnable!</EM><sup>*</sup> It doesn't <EM>look</EM>
+runnable because it invokes itself as a helper procedure, and&mdash;if you
+haven't already been through the combining method&mdash;that looks as if it
+can't work.  &quot;How can you use <CODE>reverse</CODE> when you haven't
+written it yet?&quot;
+
+<p><small><small><sup>*</sup> Well, almost.  It needs a base
+case.</small></small>
  
 <P>The leap of faith method is the assumption that the procedure we're in the
 middle of writing already works.  That is, if we're thinking about writing a

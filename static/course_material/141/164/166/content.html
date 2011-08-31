@@ -11,16 +11,13 @@ you're one of those people, you may find it hard to take the subtasks on
 faith.  You want to know exactly what happens when!  There's nothing wrong
 with such healthy scientific skepticism about recursion.
  
-<P>If you're a sequential thinker, you can <EM>trace</EM> procedures to get
-<A NAME="g7"></A> 
-detailed information about the sequence of events. But if
-you're happy with the way we've been talking about recursion up to now, and
-if you find that this section doesn't contribute to your
-understanding of recursion, don't worry about it.  Our experience
-shows that this way of thinking helps some people but not
-everybody. 
-Before we get to recursive procedures, let's just trace some nonrecursive
-ones:
+<P>If you're a sequential thinker, you can <EM>trace</EM> procedures to get <A
+NAME="g7"></A> detailed information about the sequence of events.<sup>*</sup>
+But if you're happy with the way we've been talking about recursion up to now,
+and if you find that this section doesn't contribute to your understanding of
+recursion, don't worry about it.  Our experience shows that this way of
+thinking helps some people but not everybody.<sup>**</sup> Before we get to
+recursive procedures, let's just trace some nonrecursive ones:
  
 <P><PRE>(define (double wd) (word wd wd))
  
@@ -30,6 +27,14 @@ ones:
 frozenfrozen
 </CODE></SMALL>FROZENFROZEN
 </PRE> 
+
+<p><small><small><sup>*</sup> Unfortunately, <code>trace</code> isn't part of
+the Scheme standard, so it doesn't behave the same way in every version of
+Scheme.</small></small>
+
+<p><small><small><sup>**</sup> Even if tracing doesn't help you with
+recursion, you'll find that it's a useful technique in debugging any
+procedure.</small></small>
  
 <P>The argument to <CODE>trace</CODE> specifies a procedure.  When you
 invoke <CODE>trace</CODE>, that procedure becomes &quot;traced&quot;; this means that every time
@@ -37,6 +42,14 @@ you invoke the procedure, Scheme will print out the name of the procedure
 and the actual arguments.  When the procedure returns a
 <A NAME="g8"></A> 
 value, Scheme will print that value.
+
+<p><small><small>In this example the return value was printed twice, because
+the procedure we traced was invoked directly at the Scheme prompt. Its return
+value would have been printed once anyway, just because that's what Scheme
+always does.  It was printed another time because of the tracing.  In this
+book we've printed the trace-specific output in smaller type and lower-case to
+help you understand which is what, but of course on the actual computer you're
+on your own.</small></small>
  
 <P>Tracing isn't very interesting if we're just invoking a traced procedure
 once.  But look what happens when we trace a procedure that we're using
@@ -49,8 +62,7 @@ yumyum
 yumyumyumyum
 (double yumyumyumyum)
 yumyumyumyumyumyumyumyum
-</CODE></SMALL> 
-YUMYUMYUMYUMYUMYUMYUMYUM
+</CODE></SMALL>YUMYUMYUMYUMYUMYUMYUMYUM
 </PRE> 
  
 <P>This time, there were three separate
@@ -85,13 +97,22 @@ invoking <A NAME="g9"></A><CODE>untrace</CODE> with the procedure as argument:
 |  |  (tra tr t tr tra)
 |  (trac tra tr t tr tra trac)
 (trace trac tra tr t tr tra trac trace)
-</CODE></SMALL>(TRACE TRAC TRA TR T TR TRA TRAC TRACE)
-</PRE> 
-<P>When a procedure calls itself recursively, depending on the
-<A NAME="g10"></A><A NAME="g11"></A>phase of the moon, Scheme may indent the trace display to show the levels of
-procedure calling, and draw a line of vertical bars (&quot;<CODE>|</CODE>&quot;) from a
-procedure's invocation to its return value below.  This is so you can look at
-a procedure invocation and see what value it returned, or vice versa.
+</CODE></SMALL>(TRACE TRAC TRA TR T TR TRA TRAC TRACE) </PRE> 
+
+<P>When a procedure calls itself recursively, depending on the <A
+NAME="g10"></A><A NAME="g11"></A>phase of the moon,<sup>*</sup> Scheme may
+indent the trace display to show the levels of procedure calling, and draw a
+line of vertical bars (&quot;<CODE>|</CODE>&quot;) from a procedure's
+invocation to its return value below.  This is so you can look at a procedure
+invocation and see what value it returned, or vice versa.
+
+<p><small><small><sup>*</sup> That's computer science slang for "depending on
+a mumber of factors that I consider too complicated to bother explaining" or
+"depending on a number of factors that I don't understand myself."  Some
+computer systems automatically print the phase of the moon on program
+listings as an aid for programmers with "POM-dependent" programs.  What we
+meant in this case is that it depends both on your vversion of Scheme and on
+the exact form of your recursive procedure.</small></small>
  
 <P>How does the trace help us understand what is going on in the recursion?
 First, by reading the trace results from top to bottom, you can see

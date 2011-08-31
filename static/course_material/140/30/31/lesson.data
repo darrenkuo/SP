@@ -1,1 +1,1 @@
-{'index': 31, 'type': u'lesson', 'readable': u'True and checkAccessed(30, user) and (not checkSF(SF_SCHEME, user))', 'chapters': [], 'title': u'How Little People Do Variables'}
+{'index': 31, 'readable': u'True and (not checkSF(SF_PROGRAMMED, user) or not checkSF(SF_SCHEME, user))', 'type': u'lesson', 'chapters': [], 'title': u'How Little People Do Variables'}

@@ -1,33 +1,32 @@
 <P>Review the pitfalls from Chapter 12; they're still relevant.
  
 <P> 
-<P>How do you test for the base case?  Most of the examples in this
+<P>&rArr; How do you test for the base case?  Most of the examples in this
 chapter have used <CODE>empty?</CODE>, and it's easy to fall into the habit of
 using that test without thinking.  But, for example, if the argument is a
 number, that's probably the wrong test.  Even when the argument is a
 sentence or a non-numeric word, it may not be empty in the base case, as in
 the Pig Latin example.  
  
-<P> 
-A serious pitfall is failing to recognize a situation in which you need
-an extra variable and therefore need a helper procedure.  If at
-each step you need the entire original argument as well as the argument
-that's getting closer to the base case, you probably need a helper
-procedure.  For example, write a procedure <CODE>pairs</CODE> that takes a word as
-argument and returns a sentence of all possible two-letter words made of
-letters from the argument word, allowing duplicates, like this:
+<P>&rArr; A serious pitfall is failing to recognize a situation in which you
+need an extra variable and therefore need a helper procedure.  If at each step
+you need the entire original argument as well as the argument that's getting
+closer to the base case, you probably need a helper procedure.  For example,
+write a procedure <CODE>pairs</CODE> that takes a word as argument and returns
+a sentence of all possible two-letter words made of letters from the argument
+word, allowing duplicates, like this:
  
 <P><PRE>&gt; (pairs 'toy)
 (TT TO TY OT OO OY YT YO YY)
 </PRE> 
  
-<P> 
- 
-<P>A simple pitfall, when using a helper procedure, is to write a recursive
-call in the helper that calls the main procedure instead of calling the
-helper.  (For example, what would have happened if we'd had <CODE>every-nth-helper</CODE> invoke <CODE>every-nth</CODE> instead of invoking itself?)
- 
-<P>Some recursive procedures with more than one argument require more than
+<P>&rArr; A simple pitfall, when using a helper procedure, is to write a
+recursive call in the helper that calls the main procedure instead of calling
+the helper.  (For example, what would have happened if we'd had
+<CODE>every-nth-helper</CODE> invoke <CODE>every-nth</CODE> instead of
+invoking itself?)
+
+<P>&rArr; Some recursive procedures with more than one argument require more than
 one base case.  But some don't.  One pitfall is to leave out a necessary
 base case; another is to include something that looks like a base case but
 doesn't fit the structure of the program.

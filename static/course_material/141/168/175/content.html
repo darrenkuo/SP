@@ -4,6 +4,12 @@ the second.  The general idea is to compare the sentences word by word.  If
 the first words are different, then whichever is alphabetically earlier
 determines which sentence comes before the other.  If the first words are
 equal, we go on to compare the second words.
+
+<p><small><small>Dictionaries use a different ordering rule, in which the
+sentences are treated as if they were single words, with the spaces removed.
+By the dictionary rule, "a&nbsp;c" is treated as if it were "ac" and comes
+after "ab"; by our rule, "a&nbsp;c" comes before "ab" because we compare the
+first words ("a" and "ab"),</small></small>
  
 <P><PRE>&gt; (sent-before? '(hold me tight) '(sun king))
 #T

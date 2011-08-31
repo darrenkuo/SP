@@ -12,14 +12,14 @@ recursive processes in 1.3 and in the exercises from that section.
 <p> 
 We're all done teaching you the syntax of Scheme; from now on it's
 all big ideas!
-<br/><br/>
+
  
 <p> 
 This week's big idea is <i>function as object </i> (that is, being able
 to manipulate functions as data) as opposed to the more familiar view
 of function as process, in which there is a sharp distinction between
 program and data.
-<br/><br/>
+
  
 <p> 
 The usual metaphor for function as process is a recipe.  In that metaphor,
@@ -27,7 +27,7 @@ the recipe tells you what to do, but you can't eat the recipe; the food
 ingredients are the "real things" on which the recipe operates.  But
 this week we take the position that a function is just as much a "real
 thing" as a number or text string is.
-<br/><br/>
+
  
 <p> 
 Compare the <i>derivative </i> in calculus:  It's a function whose domain
@@ -36,8 +36,8 @@ ordinary functions as things, not as processes.  If an ordinary function
 is a meat grinder (put numbers in the top and turn the handle) then the
 derivative is a "metal grinder" (put meat-grinders in the top...).
  
-<p> 
-<font face="symbol"></font> Using functions as arguments.
+<p> &nbsp;<p><b>
+&bull; Using functions as arguments.</b>
  
 <p> 
 Arguments are used to generalize a pattern.  For example, here is a pattern:
@@ -53,7 +53,6 @@ Arguments are used to generalize a pattern.  For example, here is a pattern:
 (define (sphere-area r) (* 4 pi r r))
  
 (define (hexagon-area r) (* (sqrt 3) 1.5 r r))
- 
 </pre></tt> 
  
 <p> 
@@ -71,7 +70,6 @@ by adding an argument for the shape:
 (define circle pi)
 (define sphere (* 4 pi))
 (define hexagon (* (sqrt 3) 1.5))
- 
 </pre></tt> 
  
 <p> 
@@ -97,7 +95,6 @@ be able to vary:
   (if (&#62; a b)
       0
       (+ (* a a a) (sumcube (+ a 1) b)) ))
- 
 </pre></tt> 
  
 <p> 
@@ -141,7 +138,6 @@ Here is one more example of generalizing a pattern involving functions:
         ((member? (first sent) '(I me you he she it him her we us they them))
          (se (first sent) (pronouns (bf sent))) )
         (else (pronouns (bf sent))) ))
- 
 </pre></tt> 
  
 <p> 
@@ -157,13 +153,11 @@ argument.
   (cond ((empty? sent) '())
         ((pred (first sent)) (se (first sent) (keep pred (bf sent))) )
         (else (keep pred (bf sent))) ))
- 
 </pre></tt> 
  
+<p> &nbsp; 
 <p> 
- 
-<p> 
-<font face="symbol"></font> Unnamed functions.
+<b>&bull; Unnamed functions.</b>
  
 <p> 
 Suppose we want to compute
@@ -180,7 +174,6 @@ We can use the generalized <tt>sum</tt> function this way:
 <tt>  <pre>&#62; (define (sinsq x) (* (sin x) (sin x)))
 &#62; (sum sinsq 5 8)
 2.408069916229755
- 
 </pre></tt> 
  <p> 
 But it seems a shame to have to define a named function <tt>sinsq</tt> that
@@ -191,7 +184,6 @@ than the function's name.  We can do this using <tt>lambda</tt>:
 <p> 
 <tt>  <pre>&#62; (sum (lambda (x) (* (sin x) (sin x))) 5 8)
 2.408069916229755
- 
 </pre></tt> 
  
 <p> 
@@ -199,37 +191,20 @@ than the function's name.  We can do this using <tt>lambda</tt>:
 evaluated, but the body isn't evaluated <i>when we see the </i> <tt>lambda</tt>,
 either-only when we invoke the function can we evaluate its body.
  
-<p> 
-<font face="symbol"></font
-> First-class data types.
+<p> &nbsp;<p><b>&bull; First-class data types.</b>
  
 <p> 
 A data type is considered <i>first-class </i> in a language if it can be
  
 <p> 
- 
-<dl compact="compact"> 
- <dt> 
-<font face="symbol"></font
-></dt> 
-<dd> 
-the value of a variable (i.e., named)
-</dd> 
- <dt> 
-<font face="symbol"></font
-></dt> 
-<dd>an argument to a function
-</dd> 
- <dt> 
-<font face="symbol"></font
-></dt> 
-<dd>the return value from a function
-</dd> 
- <dt> 
-<font face="symbol"></font
-></dt> 
-<dd>a member of an aggregate
-</dd></dl>In most languages, numbers are first-class; perhaps text strings (or
+<ul>
+<li>the value of a variable (i.e., named)
+<li>an argument to a function
+<li>the return value from a function
+<li>a member of an aggregate
+</ul>
+
+<p>In most languages, numbers are first-class; perhaps text strings (or
 individual text characters) are first-class; but usually functions are not
 first-class.  In Scheme they are.  So far we've seen the first two
 properties; we're about to look at the third.  (We haven't really talked
@@ -239,15 +214,13 @@ design principles of Scheme that everything in the language should be
 first-class.  Later, when we write a Scheme interpreter in Scheme, we'll
 see how convenient it is to be able to treat Scheme programs as data.
  
-<p> 
-<br /><br /><font face="symbol"></font
-> Functions as return values.
+<p> &nbsp;
+<p><b>&bull; Functions as return values.</b>
  
 <p> 
 <tt>  <pre>(define (compose f g) (lambda (x) (f (g x))))
 (define (twice f) (compose f f))
 (define (make-adder n) (lambda (x) (+ x n)))
- 
 </pre></tt> 
  
 <p> 
@@ -259,32 +232,20 @@ as arguments, but <i>not </i> functions as return values.  That's because
 it makes the language harder to implement; you'll learn more about this
 in CS&nbsp;164.
  
-<p> 
- 
-<p> 
-<font face="symbol"></font
-> Let.
+<p>&nbsp; 
+<p>
+<b>&bull; Let.</b>
  
 <p> 
 We write a function that returns a sentence containing the two roots of
 the quadratic equation ax<sup>2</sup>+bx+c=0 using the formula
- 
-<br clear="all" /><table border="0" width="100%"><tr><td> 
-<table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"> 
-x = </td><td nowrap="nowrap" align="center"> 
-<table border="0" cellspacing="0" cellpadding="0"><tr><td nowrap="nowrap" align="center"> 
-<font face="symbol">-</font
->b <font face="symbol">±</font
-></td><td align="left" class="cl"><br /><font face="symbol"><font size="+2">Ö</font><br /></font>                                </td><td nowrap="nowrap" align="center"> 
- 
-<div class="hrcomp"><hr noshade="noshade" size="1"/></div> 
-<div class="norm">b<sup>2</sup><font face="symbol">-</font
->4ac<br /></div>                                </td></tr></table> 
-<div class="hrcomp"><hr noshade="noshade" size="1"/></div>2a<br /></td><td nowrap="nowrap" align="center"> 
-</td></tr></table> 
-</td></tr></table> 
- 
- 
+
+<table align="center"><tr><td><em>x</em>&nbsp;=&nbsp;
+<td><table><tr><td><table frame=below border="2" rules=none><tr>
+<td>&minus;<em>b</em>&plusmn;<big>&radic</big>
+<td><table frame=above><tr><td><em>b</em>&sup2;&minus;4<em>ac</em></tr></table>
+</tr></table></tr>
+<tr align="center"><td colspan="2">2<em>a</em></tr></table></tr></table>
  
 <p> 
 (We assume, to simplify this presentation, that the equation has two

@@ -22,7 +22,8 @@ ACKNOWLEDGEABLE
 call.  The base case tests for an empty argument, but the base case return
 value must be the identity element of the combiner function.
  
-<P>If there is no identity element for the combiner, as in the case of <CODE>max</CODE>, we modify the pattern slightly:
+<P>If there is no identity element for the combiner, as in the case of
+<CODE>max</CODE>, we modify the pattern slightly:<sup>*</sup>
  
 <P><PRE>(define (<A NAME="g10"></A>sent-max sent)
   (if (= (count sent) 1)
@@ -31,3 +32,6 @@ value must be the identity element of the combiner function.
        (sent-max (bf sent)))))
 </PRE>      
  
+<P><small><small><sup>*</sup>Of course, if your version of Scheme has
+&minus;&infin;, you can use it as the return value for an empty sentence,
+instead of changing the pattern.</small></small>

@@ -1,1 +1,1 @@
-{'index': 32, 'type': u'lesson', 'readable': u'True and checkAccessed(30, user) and (not checkSF(SF_SCHEME, user))', 'chapters': [], 'title': u'Global and Local Variables'}
+{'index': 32, 'title': u'Global and Local Variables', 'type': u'lesson', 'chapters': [], 'readable': u'True and (not checkSF(SF_PROGRAMMED, user) or not checkSF(SF_SCHEME, user))'}

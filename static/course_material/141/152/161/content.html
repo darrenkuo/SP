@@ -56,9 +56,9 @@ result at all.  Here's how <CODE>evens</CODE> should work:
 (WANT HOLD)
 </PRE> 
  
-<P>When the sentence has an odd number of words, its <CODE>evens</CODE> is
-the same as the <CODE>evens</CODE> of its <CODE>butlast</CODE>. So here's our
-new procedure:
+<P>When the sentence has an odd number of words, its <CODE>evens</CODE> is the
+same as the <CODE>evens</CODE> of its <CODE>butlast</CODE>.<sup>*</sup> So
+here's our new procedure:
  
 <P><PRE>(define (evens sent)                         ;; better version
   (cond ((empty? sent) '())
@@ -67,7 +67,13 @@ new procedure:
     (else (se (evens (bl sent))
       (last sent)))))
 </PRE> 
- 
+
+<P><small><small><sup>*</sup> It may feel strange that in the case of an
+odd-length sentence, the answer to the recursive subproblem is the same as the
+answer to the original problem, rather than a smaller answer.  But remember
+that it's the argument, not the return value, that has to get smaller in each
+recursive step.</small></small>
+
 <P>This version works, but it's more complicated than necessary.  What makes it
 complicated is that on each recursive call we switch between two kinds of
 problems: even-length and odd-length sentences.  If we dealt with the words
