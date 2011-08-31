@@ -14,8 +14,6 @@ from time import time
 
 import sys
 
-import cProfile
-
 web.config.debug = True
 
 urls = ('/', 'main', 
@@ -24,6 +22,8 @@ urls = ('/', 'main',
         '/display', 'display',
         '/summary', 'summary', 
         '/lesson', 'lesson',
+        '/lesson_page', 'lesson_page',
+        '/lesson_nav', 'lesson_nav',
         '/magic', 'magic',
         '/grades', 'grades',
         '/quiz', 'quiz',
@@ -146,7 +146,7 @@ class course_control:
                     path=None)))
 
         return render.course_control(html)
-
+    
     def POST(self):
         return self.GET()
 
@@ -248,7 +248,7 @@ app = web.application(urls, globals(), True)
 
 if web.config.get('_session') is None:
     session = web.session.Session(app, web.session.DiskStore('sessions'),
-                                  initializer={'user': 'cs61as-as'})
+                                  initializer={'user': 'Guest'})
     web.config._session = session
 else:
     session = web.config._session
