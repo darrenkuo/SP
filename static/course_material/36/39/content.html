@@ -80,9 +80,20 @@ Start Scheme, either by typing stk in your main window or by typing meta-S in yo
 
 Use Emacs to create a file called pigl.scm in your directory containing the Pig Latin program shown below:<p>
 
-###pigl.scm###
-
-<p><p>
+<tt>  <pre>(define (pigl wd)
+  (if (pl-done? wd)
+      (word wd 'ay)
+      (pigl (word (bf wd) (first wd)))))
+<P>
+(define (pl-done? wd)
+  (vowel? (first wd)))
+ 
+<p>
+(define (vowel? letter)
+  (member? letter '(a e i o u)))
+ 
+</pre></tt> 
+ <p><p>
 
 Make sure you are editing a while whose name ends in .scm, so that Emacs will know to indent your code correctly!<p> 
 
@@ -92,8 +103,17 @@ Make sure you are editing a while whose name ends in .scm, so that Emacs will kn
 
 Now run Scheme. You are going to create a transcript of a session using the file you just created:<br> 
 
-###transcript.scm###
-
+<tt>  <pre>(transcript-on "lab1")       ; This starts the transcript file.
+(load "pigl.scm")            ; This reads in the file you created earlier.
+(pigl 'scheme)               ; Try out your program.
+                             ; Feel free to try more test cases here!
+(trace pigl)                 ; This is a debugging aid. Watch what happens
+(pigl 'scheme)               ; when you run a traced procedure.
+(transcript-off)
+(exit)
+ 
+</pre></tt> 
+ 
 <p><p>
 
 </li>
@@ -107,6 +127,53 @@ Use lpr to print your transcript.<br>
 <li>
   <p>
   Predict what Scheme will print in response to each of these expressions. Then try it and make sure your<br>answer was correct, or if not, that you understand why!<br>
-###6.scm###
+<tt>  <pre>(define a 3)
+(define b (+ a 1))
+(+ a b (* a b))
+(= a b)
+(if (and (&#62; b a) (&lt; b (* a b)))
+    b
+    a)
+(cond ((= a 4) 6)
+      ((= b 4) (+ 6 7 a))
+      (else 25))
+(+ 2 (if (&#62; b a) b a))
+(* (cond ((&#62; a b) a)
+         ((&lt; a b) b)
+         (else -1))
+   (+ a 1))
+((if (&lt; a b) + -) a b)
+ </pre></tt>
 </p>
 </li>
+
+<b>2.</b>  In the shell, type the command
+ 
+<p>
+<tt>  <pre>cp &#126;cs61a/lib/plural.scm .
+ 
+</pre></tt> 
+ 
+<p>
+ (Note the period at the end of the line!)  This will copy
+a file from the class library to your own directory.  Then, using
+emacs to edit the file, modify the procedure so that it correctly
+handles cases like <tt>(plural&nbsp;'boy)</tt>.
+ 
+<p>
+<b>3.</b>  Define a procedure that takes three numbers as
+arguments and returns the sum of the squares of the two larger numbers.
+ 
+<p>
+<b>4.</b>  Write a procedure <tt>dupls-removed</tt> that, given
+a sentence as input, returns the result of removing duplicate words
+from the sentence.  It should work this way:
+<p> 
+<tt>  <pre>&#62; (dupls-removed '(a b c a e d e b))
+(c a d e b)
+&#62; (dupls-removed '(a b c))
+(a b c)
+&#62; (dupls-removed '(a a a a b a a))
+(b a)
+ 
+</pre></tt> 

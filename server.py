@@ -207,15 +207,7 @@ class magic:
 
 class grades:
     def GET(self):
-        proc = Popen(['glookup', session.user], stdout=PIPE, stderr=PIPE)
-        (o, e) = proc.communicate()
-        print 'output:', o
-        print 'error:', e
-
-        if e:
-            return render.grades("Error: " + e)
-        else:
-            return render.grades(o.replace('\n', '<br/>'))
+        return render.grades(getGrades(session.user))
 
     def POST(self):
         return self.GET()
@@ -256,7 +248,7 @@ app = web.application(urls, globals(), True)
 
 if web.config.get('_session') is None:
     session = web.session.Session(app, web.session.DiskStore('sessions'),
-                                  initializer={'user': 'Guest'})
+                                  initializer={'user': 'cs61as-as'})
     web.config._session = session
 else:
     session = web.config._session
