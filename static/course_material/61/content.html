@@ -1,9 +1,9 @@
 <p> 
  
-As we have seen, pairs provide a primitive ``glue'' that we can use to
+As we have seen, pairs provide a primitive "glue" that we can use to
 construct compound data objects.
 Figure&nbsp;2.2 shows a standard way to
-visualize a pair -- in this case, the pair formed by <tt>(cons 1 2)</tt>.
+visualize a pair&mdash;in this case, the pair formed by <tt>(cons 1 2)</tt>.
 In this representation, which is called <em>box-and-pointer
 notation</em>, each object is shown as a <em>pointer</em> to a box.  The box
 for a primitive object contains a representation of the object.  For
@@ -20,13 +20,17 @@ building block from which we can construct all sorts of data
 structures.  Figure&nbsp;2.3 shows two ways
 to use pairs to combine the numbers 1, 2, 3, and 4.<p> 
  
-<a name="%_fig_2.2"></a><p><div align=left><table width=100%><tr><td><img src="###content_dir###/ch2-Z-G-11.gif" border="0"> 
-</td></tr><caption align=bottom><div align=left><b>Figure 2.2:</b>&nbsp;&nbsp;Box-and-pointer representation of <tt>(cons 1 2)</tt>.</div></caption><tr><td> 
+<a name="%_fig_2.2"></a><p><div align=left><table width=100%><tr><td><img
+src="###content_dir###/ch2-Z-G-11.gif" border="0"> </td></tr><caption
+align=bottom><div align=left><b>Figure 2.2:</b>&nbsp;&nbsp;Box-and-pointer
+representation of <tt>(cons 1 2)</tt>.</div></caption><tr><td>
  
 </td></tr></table></div><p><p> 
  
-<a name="%_fig_2.3"></a><p><div align=left><table width=100%><tr><td><img src="###content_dir###/ch2-Z-G-12.gif" border="0"> 
-</td></tr><caption align=bottom><div align=left><b>Figure 2.3:</b>&nbsp;&nbsp;Two ways to combine 1, 2, 3, and 4 using pairs.</div></caption><tr><td> 
+<a name="%_fig_2.3"></a><p><div align=left><table width=100%><tr><td><img
+src="###content_dir###/ch2-Z-G-12.gif" border="0"> </td></tr><caption
+align=bottom><div align=left><b>Figure 2.3:</b>&nbsp;&nbsp;Two ways to combine
+1, 2, 3, and 4 using pairs.</div></caption><tr><td>
  
 </td></tr></table></div><p><p> 
  
@@ -37,7 +41,7 @@ an operation for combining data objects satisfies the closure property
 if the results of combining things with that operation can themselves
 be combined using the same operation. 
 Closure is the key to power in
-any means of combination because it permits us to create <a name="%_idx_1538"></a><a name="%_idx_1540"></a><em>hierarchical</em> structures -- structures made up of parts, which
+any means of combination because it permits us to create <a name="%_idx_1538"></a><a name="%_idx_1540"></a><em>hierarchical</em> structures&mdash;structures made up of parts, which
 themselves are made up of parts, and so on.<p> 
  
 From the outset of chapter&nbsp;1, we've made essential use of closure in

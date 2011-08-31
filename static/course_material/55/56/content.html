@@ -6,11 +6,8 @@
 Abelson & Sussman, Sections <a href="http://mitpress.mit.edu/sicp/full-text/book/book-Z-H-14.html#%_sec_2.1" target="_blank">2.1</a>
 and <a href="http://mitpress.mit.edu/sicp/full-text/book/book-Z-H-15.html#%_sec_2.2">2.2.1</a>
 <p>
-<b>Note:</b> The first midterm is next week.
 
-<p>
-<font face="symbol"></font
-> Big ideas: data abstraction, abstraction barrier.
+<p><b>&bull; Big ideas: data abstraction, abstraction barrier.</b>
 
 <p>
 If we are dealing with some particular type of data, we want to talk about
@@ -32,7 +29,6 @@ whose rank-name isn't a number.)
 
 &#62; (total '(3h 10c 4d))
 17
-
 </pre></tt>
 
 <p>
@@ -52,7 +48,6 @@ invocations mean?  Compare it with a modified version:
 
 (define one-card last)
 (define remaining-cards butlast)
-
 </pre></tt>
 
 <p>
@@ -71,7 +66,7 @@ they select one component of a multi-part datum.
 <p>
 Actually we're <i>violating </i> the data abstraction when we type in a
 hand of cards as <tt>'(3h&nbsp;10c&nbsp;4d)</tt> because that assumes we know how the
-cards are represented-namely, as words combining the rank number with a
+cards are represented&mdash;namely, as words combining the rank number with a
 one-letter suit.  If we want to be thorough about hiding the representation,
 we need <i>constructor </i> functions as well as the selectors:
 
@@ -86,7 +81,6 @@ we need <i>constructor </i> functions as well as the selectors:
                     (make-card 10 'club)
                     (make-card 4 'diamond) ))
 17
-
 </pre></tt>
 
 <p>
@@ -109,7 +103,6 @@ rewriting <tt>total</tt>:
 
 (define (suit card)
   (nth (quotient card 13) '(heart spade diamond club)))
-
 </pre></tt>
 
 <p>
@@ -118,28 +111,24 @@ just a number between 1 and 52 (why?&nbsp;maybe we're programming in FORTRAN) bu
 we haven't changed the <i>behavior </i> of the program at all.  We still
 call <tt>total</tt> the same way.
 
-<p>
-Data abstraction is a really good idea because it helps keep you from
+<p> Data abstraction is a really good idea because it helps keep you from
 getting confused when you're dealing with lots of data types, but don't get
 religious about it.  For example, we have invented the <i>sentence </i> data
 type for this course.  We have provided symmetric selectors <tt>first</tt> and
-<tt>last</tt>, and symmetric selectors <tt>butfirst</tt> and <tt>butlast</tt>.  You
-can write programs using sentences without knowing how they're implemented.
-But it turns out that because of the way they <i>are </i> implemented, <tt>
-first</tt> and <tt>butfirst</tt> take <font face="symbol">Q</font
->(1) time, while <tt>last</tt> and <tt>
-butlast</tt> take <font face="symbol">Q</font
->(N) time.  If you know that, your programs will be faster.
+<tt>last</tt>, and symmetric selectors <tt>butfirst</tt> and <tt>butlast</tt>.
+You can write programs using sentences without knowing how they're
+implemented.  But it turns out that because of the way they <i>are </i>
+implemented, <tt> first</tt> and <tt>butfirst</tt> take &Theta;(1) time, while
+<tt>last</tt> and <tt> butlast</tt> take &Theta;(N) time.  If you know that,
+your programs will be faster.
 
-<p>
-<font face="symbol"></font
-> Pairs.
+<p><b>&bull; Pairs.</b>
 
 <p>
 To represent data types that have component parts (like the rank and suit of
 a card), you have to have some way to <i>aggregate </i> information.  Many
 languages have the idea of an <i>array </i> that groups some number of
-elements.  In Lisp the most basic aggregation unit is the <i>pair </i>-two
+elements.  In Lisp the most basic aggregation unit is the <i>pair</i>&mdash;two
 things combined to form a bigger thing.  If you want more than two parts you
 can hook a bunch of pairs together; we'll discuss this more below.
 
@@ -158,7 +147,7 @@ two points, not as three pairs containing four numbers.  (That's what it
 means to respect a data abstraction.)
 
 <p>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="note-figs/5-1.eps">Figure</a>
+<center><img width=100% src="###content_dir###/5-1.jpg"></center>
 
 <p>
 Note:  What's the difference between these two:
@@ -166,7 +155,6 @@ Note:  What's the difference between these two:
 <p>
 <tt>  <pre>(define (make-rat num den) (cons num den))
 (define make-rat cons)
-
 </pre></tt>
 
 <p>
@@ -176,8 +164,7 @@ call) but the first way has a debugging advantage because you can trace <tt>
 make-rat</tt> without tracing all invocations of <tt>cons</tt>.
 
 <p>
-<font face="symbol"></font
-> Data aggregation doesn't have to be primitive.
+<b>&bull; Data aggregation doesn't have to be primitive.</b>
 
 <p>
 In most languages the data aggregation mechanism (the array or whatever)
@@ -198,7 +185,6 @@ we can use a function to represent a pair:
 
 (define (cdr pair)
   (pair 'cdr))
-
 </pre></tt>
 
 <p>
@@ -217,9 +203,7 @@ reasons, but it's neat that it could be.)
 
 <p>
 
-<p>
-<font face="symbol"></font
-> Big idea: abstract data type <i>sequence </i> (or <i>list </i>).
+<p><b>&bull; Big idea: abstract data type <i>sequence</i> (or <i>list</i>).</b>
 
 <p>
 We want to represent an ordered sequence of things.  (They can be any
@@ -228,7 +212,7 @@ kind of things.)  We <i>implement </i> sequences using pairs, with each
 pair.
 
 <p>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="note-figs/5-2.eps">Figure</a>
+<center><img width=100% src="###content_dir###/5-2.jpg"></center>
 
 <p>
 What should the constructors and selectors be?  The most obvious thing
@@ -245,14 +229,13 @@ saw for sentences earlier.
 
 <p>
 Since we are implementing lists using pairs, we ought to have
-specially-named constructors and selectors for lists, just like for
+specially-named constructors and selectors for lists, just like the ones for
 rational numbers:
 
 <p>
 <tt>  <pre>(define adjoin cons)
 (define first car)
 (define rest cdr)
-
 </pre></tt>
 
 <p>
@@ -268,9 +251,7 @@ If Scheme knew only about pairs, and not about lists, then when we
 construct the list <tt>(1&nbsp;2&nbsp;3)</tt> it would print as <tt>(1&nbsp;.&nbsp;(2&nbsp;.(3&nbsp;.&nbsp;())))</tt>
 instead.
 
-<p>
-<font face="symbol"></font
-> List constructors.
+<p><b>&bull; List constructors.</b>
 
 <p>
 Sentences have a very simple structure, so there's just one constructor for
@@ -284,7 +265,6 @@ as its elements:
 <p>
 <tt>  <pre>&#62; (list '(a list) 'word 87 #t)
 ((a list) word 87 #t)
-
 </pre></tt>
 
 <p>
@@ -298,7 +278,6 @@ three-dimensional space:
 <p>
 <tt>  <pre>(define (point x y z)
   (list x y z))
-
 </pre></tt>
 
 <p>
@@ -307,7 +286,6 @@ three-dimensional space:
 <p>
 <tt>  <pre>&#62; (cons '(new element) '(the old list))
 ((new element) the old list)
-
 </pre></tt>
 
 <p>
@@ -325,7 +303,6 @@ of a list:
       '()
       (CONS (fn (car seq))
 	    (map fn (cdr seq)))))
-
 </pre></tt>
 
 <p>
@@ -336,7 +313,6 @@ some of the structure of the result: It returns a list whose elements are
 <p>
 <tt>  <pre>&#62; (append '(one list) '(and another list))
 (one list and another list)
-
 </pre></tt>
 
 <p>
@@ -344,9 +320,7 @@ It's most useful when combining results from multiple recursive calls, each
 of which returns a subset of the overall answer; you want to take the union
 of those sets, and that's what <tt>append</tt> does.
 
-<p>
-<font face="symbol"></font
-> Lists vs.&nbsp;sentences.
+<p><b>&bull; Lists vs.&nbsp;sentences.</b>
 
 <p>
 We started out the semester using an abstract data type called <i>
@@ -370,7 +344,6 @@ and <tt>cdr</tt> as the problem asks, but it's easy for sentences:
   (if (empty? sent)
       '()
       (se (reverse (bf sent)) (first sent)) ))
-
 </pre></tt>
 
 <p>
@@ -388,7 +361,6 @@ of the constructor function:
 
 (define (word? x)
   (or (symbol? x) (number? x)) )
-
 </pre></tt>
 
 <p>
@@ -396,9 +368,7 @@ of the constructor function:
 if given words as arguments.  <tt>Se</tt> can accept words or sentences as
 arguments.
 
-<p>
-<br /><br /><font face="symbol"></font
-> Box and pointer diagrams.
+<p><b>&bull; Box and pointer diagrams.</b>
 
 <p>
 Here are a few details that people sometimes get wrong about them:
@@ -410,7 +380,6 @@ arrowhead touches the rectangle.  If you see something like
 
 <p>
 <tt>  <pre>(define x (car y))
-
 </pre></tt>
 
 <p>
@@ -419,7 +388,7 @@ thing that the </i> <tt>car</tt> <i>of </i> <tt>y</tt> <i>points to</i>, not to 
 left half of the <tt>y</tt> rectangle.
 
 <p>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="note-figs/5-3.eps">Figure</a>
+<center><img width=100% src="###content_dir###/5-3.jpg"></center>
 
 <p>
 2.  The direction of arrows (up, down, left, right) is irrelevant.  You can
@@ -435,7 +404,6 @@ How do you draw a diagram for a complicated list?  Take this example:
 
 <p>
 <tt>  <pre>((a b) c (d (e f)))
-
 </pre></tt>
 
 <p>
@@ -446,7 +414,7 @@ the <tt>cdr</tt> of one pointing to the next one.  (The final <tt>cdr</tt> is
 null.)
 
 <p>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="note-figs/5-4.eps">Figure</a>
+<center><img width=100% src="###content_dir###/5-4.jpg"></center>
 
 <p>
 Only after you've drawn the backbone should you worry about making the <tt>
@@ -454,9 +422,7 @@ car</tt>s of your three pairs point to the three elements of the top-level list.
 
 <p>
 
-<p>
-<font face="symbol"></font
-> MapReduce
+<p><b>&bull; MapReduce
 
 <p>
 In the past, functional programming, and higher-order functions in particular,
@@ -499,7 +465,6 @@ programmers just have to write the two function arguments.<a href="#tthFtNtAAB" 
 <p>
 <tt>  <pre>(define (mapreduce mapper reducer base-case data)    ; Nope.
   (accumulate reducer base-case (map mapper data)))
-
 </pre></tt>
 
 <p>
@@ -520,7 +485,6 @@ Data pass through the program in the form of <i>key-value pairs: </i>
 <tt>  <pre>(define make-kv-pair cons)
 (define kv-key car)
 (define kv-value cdr)
-
 </pre></tt>
 
 <p>
@@ -540,7 +504,6 @@ the <i>mapper </i>:
 
 <p>
 <tt>  <pre>(map mapper<!--hbox-->00 data)
-
 </pre></tt>
 
 <p>
@@ -611,7 +574,6 @@ the results.  So a complete <tt>MapReduce</tt> operation works roughly like this
 			 (kv-key (car subset))
 			 (reduce reducer base-case (map kv-value subset))))
        buckets))
-
 </pre></tt>
 
 <p>
@@ -626,7 +588,6 @@ the raw data:
 	      (cs61a-xw . 27) (cs61a-yb . 30) (cs61a-ya . 40)))
 (define mt3 '((cs61a-xb . 32) (cs61a-xk . 34) (cs61a-yb . 30)
 	      (cs61a-ya . 40) (cs61a-xc . 28) (cs61a-xf . 33)))
-
 </pre></tt>
 
 <p>
@@ -648,7 +609,6 @@ First we combine these into one list, and use that as input to the
  ((cs61a-ya . 40) (cs61a-ya . 40) (cs61a-ya . 40))
  ((cs61a-yb . 29) (cs61a-yb . 30) (cs61a-yb . 30))
  ((cs61a-yc . 32)))
-
 </pre></tt>
 
 <p>
@@ -665,7 +625,6 @@ separately:
 ((cs61a-xb . 72) (cs61a-xc . 80) (cs61a-xd . 38) (cs61a-xf . 65)
  (cs61a-xk . 34) (cs61a-xw . 62) (cs61a-ya . 120) (cs61a-yb . 89)
  (cs61a-yc . 32))
-
 </pre></tt>
 
 <p>
@@ -683,7 +642,6 @@ Similarly, we could ask <i>how many </i> midterms each student took:
 	       (sort-into-buckets (append mt1 mt2 mt3)))
 ((cs61a-xb . 2) (cs61a-xc . 3) (cs61a-xd . 1) (cs61a-xf . 2) (cs61a-xk . 1)
  (cs61a-xw . 2) (cs61a-ya . 3) (cs61a-yb . 3) (cs61a-yc . 1))
-
 </pre></tt>
 
 <p>
@@ -699,7 +657,6 @@ which the key is the word and the value is always 1:
 <p>
 <tt>  <pre>&#62; (map (lambda (wd) (list (make-kv-pair wd 1))) '(cry baby cry))
 ((cry . 1) (baby . 1) (cry . 1))
-
 </pre></tt>
 
 <p>
@@ -713,7 +670,6 @@ each word appears.
 
 &#62; (wordcounts1 '(cry baby cry))
 ((baby . 1) (cry . 2))
-
 </pre></tt>
 
 <p>
@@ -728,7 +684,6 @@ first element is the filename and whose remaining elements are the lines.
 <p>
 <tt>  <pre>(define filename car)
 (define lines cdr)
-
 </pre></tt>
 
 <p>
@@ -750,7 +705,6 @@ Here's some data for us to play with:
 		(tell me why) (cant buy me love) (any time at all)
 		(ill cry instead) (things we said today) (when i get home)
 		(you cant do that) (ill be back)))
-
 </pre></tt>
 
 <p>
@@ -774,7 +728,6 @@ form <tt>mapreduce</tt> will give us:
  ((please please me) ps i love you)
  ((please please me) baby its you)
  ((please please me) do you want to know a secret))
-
 </pre></tt>
 
 <p>
@@ -791,7 +744,6 @@ Now we modify our <tt>wordcounts1</tt> procedure to accept such kv-pairs:
 			       (map (lambda (wd) (make-kv-pair wd 1))
 				    (kv-value kv-pair)))
 			     files))))
-
 </pre></tt>
 
 <p>
@@ -811,7 +763,6 @@ Now we modify our <tt>wordcounts1</tt> procedure to accept such kv-pairs:
  (standing . 1) (tell . 1) (that . 1) (there . 2) (things . 1) (tight . 1)
  (till . 1) (time . 2) (to . 4) (today . 1) (wanna . 1) (want . 1) (was . 1)
  (we . 1) (when . 1) (why . 2) (with . 1) (wont . 1) (you . 7) (your . 1))
-
 </pre></tt>
 
 <p>
@@ -850,7 +801,6 @@ a single value:
 		    (file-&#62;linelist file2)
 		    (file-&#62;linelist file3)))
 ((me . 8))
-
 </pre></tt>
 
 <p>
@@ -872,7 +822,6 @@ word <tt>*</tt> matches any set of zero or more words:
 #t
 &#62; (match? '(* i * her *) '(ps i love you))
 #f
-
 </pre></tt>
 
 <p>
@@ -893,7 +842,6 @@ Here's how we look for lines in files that match a pattern:
 			       (file-&#62;linelist file3)))
 (((a hard days night) (and i love her))
  ((please please me) (i saw her standing there)))
-
 </pre></tt>
 
 <p>
@@ -903,7 +851,6 @@ Here's how we look for lines in files that match a pattern:
 <tt>  <pre>(groupreduce <i>reducer </i> <i>base-case </i>
 	     (sort-into-buckets
 	      (map-or-flatmap <i>mapper </i> <i>data </i>)))
-
 </pre></tt>
 
 <p>
@@ -911,12 +858,7 @@ This corresponds to
 
 <p>
 <tt>  <pre>(mapreduce <i>mapper </i> <i>reducer </i> <i>base-case </i> <i>data </i>)
-
 </pre></tt>
 
 <p>
 in the truly parallel <tt>mapreduce</tt> exploration we'll be doing later.
-
-<p>
-
-<p>
