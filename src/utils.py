@@ -2,6 +2,7 @@ from os import remove
 from os.path import exists
 from os.path import join
 from shutil import copyfile
+from subprocess import Popen, PIPE
 from sqlite3 import connect
 from time import time
 
@@ -241,3 +242,34 @@ def findPreviousNext(path, user):
 
     return '/magic?page=/summary'
                 
+def getGrades(user):
+    proc = Popen(['glookup', user], stdout=PIPE, stderr=PIPE)
+    (o, e) = proc.communicate()
+
+    if e:
+        return "ERROR:" + e
+    else:
+        o = o.split('\n')
+        output = o[0]
+        categories = o[1].replace('-', ' ').split()
+        total = o[-1]
+        o = o[2:-1]
+
+        output += '<table border="0">'
+        output += '<tr>'
+        for c in categories:
+            output += '<td><center>%s</center></td>' % (c)
+        output += '</tr>'
+
+        for i in o:
+            tmp = i.split()
+            output += '<tr>'
+            for j in tmp:
+                output += '<td><center>%s</center></td>' % (j)
+            output += '</tr>'
+
+        output += '</table>'                
+        
+        return output
+
+    

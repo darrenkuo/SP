@@ -17,24 +17,13 @@ def getLesson(user, page=''):
         path = convertToRealPath(page)
 
     data = readLessonData(path)
-    """
+
     f = open(join(course_material, path, 'content.html'), 'r')
-    html_code = f.read().strip().split('\n')
+    html_code = f.read().strip()
     f.close()
     
-    html = ''
-    for line in html_code:
-        obj = match('^###([\s\S]+)###', line)
-        if obj:
-            html += '%s\n' % (format_code(open(
-                        join(course_material, path, obj.groups()[0]), 'r')))
-        else:
-            html += '%s\n' % (line)
-    
-    html = clean_html(html)
+    html = clean_html(html_code)
     html = sub('###content_dir###', join(course_material, path), html)
-    #html = html.replace('###content_dir###', join(course_material, path))
-    """
 
     if 'redirect' in data:
         html = "<meta HTTP-EQUIV='REFRESH' content='0; url=/magic?page=/display?page=%s'>" % (data['redirect'])
