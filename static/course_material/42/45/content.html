@@ -8,7 +8,7 @@ you can <i>predict </i> the results before letting Scheme do the computation.
 <p>
 <tt>  <pre>(lambda (x) (+ x 3))
 
-((lambda (x) (+ x 3)<!--hbox-->00 7)
+((lambda (x) (+ x 3)<!--hbox--> 7)
 
 </pre></tt>
 
@@ -20,7 +20,7 @@ You can think of <tt>lambda</tt> as meaning "the function of...," e.g.,
 <tt>  <pre>(define (make-adder num)
   (lambda (x) (+ x num)))
 
-((make-adder 3)<!--hbox-->00 7)
+((make-adder 3)<!--hbox--> 7)
 
 (define plus3 (make-adder 3))
 
@@ -30,7 +30,7 @@ You can think of <tt>lambda</tt> as meaning "the function of...," e.g.,
 
 (square 5)
 
-(define sq (lambda (x) (* x x))<!--hbox-->00)
+(define sq (lambda (x) (* x x))<!--hbox-->)
 
 (sq 5)
 

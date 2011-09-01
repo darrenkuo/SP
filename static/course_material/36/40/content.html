@@ -10,13 +10,17 @@ People who've taken CS 3: Don't use the CS 3 higher-order procedures such as eve
   <p>
     Do exercise <a href="http://mitpress.mit.edu/sicp/full-text/book/book-Z-H-10.html#%_thm_1.6" target="_blank">1.6</a>, page 25. This is an essay question; you needn't hand in any computer printout, unless you think the grader can't read your handwriting. If you had trouble understanding the square root program in the book, explain instead what will happen if you use new-if instead of if in the pigl Pig Latin procedure. <br>
     Write a procedure squares that takes a sentence of numbers as its argument and returns a sentence of the squares of the numbers: </br>
-###square.scm###
+<tt> <pre>> (squares '(2 3 4 5)) 
+(4 9 16 25)
+</pre></tt>
   </p>
 </li>
 <li>
   <p>
     Write a procedure switch that takes a sentence as its argument and returns a sentence in which every instance of the words I or me is replaced by you, while every instance of you is replaced by me except at the beginning of the sentence, where it's replaced by I. (Don't worry about capitalization of letters.) Example:</br>
-###switch.scm###
+<tt> <pre>> (switch '(You told me that I should wake you up)) 
+(i told you that you should wake me up)
+</pre></tt>
   </p>
 </li>
 <li>
@@ -27,14 +31,19 @@ People who've taken CS 3: Don't use the CS 3 higher-order procedures such as eve
 <li>
   <p>
     Write a procedure ends-e that takes a sentence as its argument and returns a sentence containing only those words of the argument whose last letter is E: </br>
-###ends-e.scm###
+<tt><pre>
+> (ends-e '(please put the salami above the blue elephant)) 
+(please the above the blue) 
+</pre></tt>
   </p>
 </li>
 <li>
   <p>
     Most versions of Lisp provide and and or procedures like the ones on page 19. In principle there is no reason why these can't be ordinary procedures, but some versions of Lisp make them special forms. Suppose, for example, we evaluate 
   </p>
-###example1.scm###
+<tt><pre>
+(or (= x 0) (= y 0) (= z 0)) 
+</pre></tt>
   <p>
     If or is an ordinary procedure, all three argument expressions will be evaluated before or is invoked. But if the variable x has the value 0, we know that the entire expression has to be true regardless of the values of y and z. A Lisp interpreter in which or is a special form can evaluate the arguments one by one until either a true one is found or it runs out of arguments. 
   </p>
