@@ -1,0 +1,15 @@
+$def with (seen, unseen)
+$if seen:
+  <h3>Seen solutions</h3>
+  $:seen.render()
+
+$if unseen:
+  <h3>Unseen solutions</h3>
+  <i>Note that the reader will grade your solution after you read the solution. So, only read the solution if you are done with the assignment</i>
+  </p>
+  $:unseen.render()
+
+$if not seen and not unseen:
+  <P>No solutions for now.</P>
+
+

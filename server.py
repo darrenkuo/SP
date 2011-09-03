@@ -7,6 +7,7 @@ from src.quiz import *
 from src.summary import *
 from src.course_admin import *
 from src.utils import *
+from src.solution import *
 
 from os.path import exists
 from subprocess import Popen, PIPE
@@ -42,6 +43,7 @@ urls = ('/', 'main',
         '/lecturefiles', 'lecturefiles',
         '/help', 'help',
         '/solution', 'solution',
+        '/solution_page', 'solution_page',
         '/not_accessible', 'not_accessible',
         '/quit', 'quit'
         )

@@ -70,6 +70,7 @@ def getUserDb(user):
     cursor.execute('CREATE TABLE quiz_times(login TEXT, chapter_id INTEGER, timestamp INTEGER);')
     cursor.execute('CREATE TABLE visits(login TEXT, chapter_id INTEGER);')
     cursor.execute('CREATE TABLE SPECIAL_FLAG(login TEXT, SPECIAL_FLAG TEXT);')
+    cursor.execute('CREATE TABLE solution_times(assignment TEXT, timestamp INTEGER);')
     conn.commit()
     cursor.close()
     return db_file
@@ -79,8 +80,24 @@ def checkSF(SF, user):
     (conn, cursor) = getDbCursor(getUserDb(user))
     cursor.execute('SELECT * from SPECIAL_FLAG where login = "%s" and SPECIAL_FLAG = "%s";' % (user, SF))
     rows = cursor.fetchall()
+    cursor.close()
     return len(rows) >= 1
 
+def storeAssignmentTime(assignment, user):
+    (conn, cursor) = getDbCursor(getUserDb(user))
+    print 'store', assignment, user
+    conn.execute('insert into solutions_times values("%s", %s);' % (assignment,
+                                                                  str(int(time() * 1000))))
+    conn.commit()
+    cursor.close()
+
+def sawSolution(assignment, user):
+    (conn, cursor) = getDbCursor(getUserDb(user))
+    cursor.execute('select * from solutions_times where assignment="%s";' % (assignment))
+    rows = cursor.fetchall()
+    cursor.close()
+    return len(rows) >= 1
+    
 def storeVisit(index, user):
     #(conn, cursor) = getDbCursor(course_db)
     (conn, cursor) = getDbCursor(getUserDb(user))
