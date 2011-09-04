@@ -7,6 +7,11 @@ Abelson &amp; Sussman, Section
 <A href="http://mitpress.mit.edu/sicp/full-text/book/book-Z-H-20.html#%_sec_3.1">3.1</a>,
 <A href="http://mitpress.mit.edu/sicp/full-text/book/book-Z-H-21.html">3.2</A>;
 <A href="http://inst.eecs.berkeley.edu/~cs61as/reader/belowline.pdf">OOP below the line</A>
+
+<p>[My apologies for the large amount of reading in this lesson.  It's because
+I've learned that students can't understand 3.1 without reading 3.2 first, and
+vice versa.  So you have to read both at once, twice.]
+
 <p>
 We said the three big ideas in the OOP interface are message passing,
 local state, and inheritance.  You know from section 2.4 how message
@@ -38,7 +43,6 @@ separate versions for each object.
 1
 &#62; (count)
 2
-
 </pre></tt>
 
 <p>
@@ -57,7 +61,6 @@ wherever we see the name <tt>counter</tt>, or we'll end up with
 <p>
 <tt>  <pre>(set! 0 (+ 0 1))
 0
-
 </pre></tt>
 
 <p>
@@ -97,7 +100,6 @@ local </i> state variables.  Here's an attempt that doesn't work:
                                         1
                                         &#62; (count)
                                         1
-
 </pre></tt>
 
 <p>
@@ -118,7 +120,6 @@ we <i>invoke </i> <tt>count</tt>.  Here's how:
     (lambda ()
       (set! result (+ result 1))
       result)))
-
 </pre></tt>
 
 <p>
@@ -127,7 +128,6 @@ first line!  Instead of
 
 <p>
 <tt>  <pre>(define count (lambda () (let ...)))
-
 </pre></tt>
 
 <p>
@@ -136,7 +136,6 @@ the <tt>lambda</tt> and the <tt>let</tt> so that the former is inside the latter
 
 <p>
 <tt>  <pre>(define count (let ... (lambda () ...)))
-
 </pre></tt>
 
 <p>
@@ -166,7 +165,6 @@ new counter.
                                      1
                                      &#62; (dracula)
                                      3
-
 </pre></tt>
 
 <p>
@@ -180,12 +178,11 @@ the <tt>lambda</tt> for the former but outside the <tt>lambda</tt> for the latte
 <p>
 
 <p>
-<font face="symbol"></font
-> Environment model of evaluation.
+<b>&bull; Environment model of evaluation.</b>
 
 <p>
 For now we're just going to introduce the central issues about environments,
-leaving out a lot of details.  You'll get those next time.
+leaving out a lot of details.  You'll get those later in this lesson.
 
 <p>
 The question is, what happens when you invoke a procedure?  For example,
@@ -193,7 +190,6 @@ suppose we've said
 
 <p>
 <tt>  <pre>(define (square x) (* x x))
-
 </pre></tt>
 
 <p>
@@ -233,7 +229,7 @@ Skip step 2 for a moment and think about step 3.  The idea is that we are
 going to evaluate the expression <tt>(*&nbsp;x&nbsp;x)</tt> but we are refining our
 notion of what it means to evaluate an expression.  Expressions are no
 longer evaluated in a vacuum, but instead, every evaluation must be done
-with respect to some environment-that is, some collection of bindings
+with respect to some environment&mdash;that is, some collection of bindings
 between names and values.  When we are evaluating <tt>(*&nbsp;x&nbsp;x)</tt> and we see
 the symbol <tt>x</tt>, we want to be able to look up <tt>x</tt> in our collection
 of bindings and find the value <tt>7</tt>.
@@ -261,11 +257,7 @@ complicated situations there may be several environments available.
 For example:
 
 <p>
-<table border="0"><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="note-figs/9-1.eps">Figure</a>
-
-
-</td></tr></table><!--vbox-->
-<p>
+<table><tr><td>
 <tt>  <pre>
 (define (f x)
   (define (g y)
@@ -273,8 +265,9 @@ For example:
   (g 3))
 
 &#62; (f 5)
-
 </pre></tt>
+<td align=right><img width=75% src="###content_dir###/9-1.jpg">
+</tr></table>
 
 <p>
 When we invoke <tt>f</tt>, we create a frame (call it F1) in which <tt>x</tt> is
@@ -297,11 +290,7 @@ as the environment from which it's invoked.  But that doesn't always have
 to be true:
 
 <p>
-<table border="0"><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="note-figs/9-2.eps">Figure</a>
-
-
-</td></tr></table><!--vbox-->
-<p>
+<table><tr><td>
 <tt>  <pre>
 (define (make-adder n)
   (lambda (x) (+ x n)))
@@ -311,9 +300,11 @@ to be true:
 (define n 7)
 
 &#62; (3+ n)
+</pre></tt>
+<td align=right><img width=75% src="###content_dir###/9-2.jpg">
+</tr></table>
 
-
-</pre></tt>When we invoke <tt>make-adder</tt>, we create the environment E1 in which <tt>
+<p>When we invoke <tt>make-adder</tt>, we create the environment E1 in which <tt>
 n</tt> is bound to <tt>3</tt>.  In the global environment G, we bind <tt>n</tt>
 to <tt>7</tt>.  When we evaluate the expression <tt>(3+ n)</tt>, what environment
 are we in?  What value does <tt>n</tt> have in this expression?  Surely it
@@ -325,7 +316,7 @@ that was created by the <tt>lambda</tt> inside <tt>make-adder</tt>.
 <p>
 We are going to use F2 to extend some environment, and in the resulting
 environment we'll evaluate the body of <tt>3+</tt>, namely <tt>(+&nbsp;x&nbsp;n)</tt>.
-What value should <tt>n</tt> have in this expression?  It had better have
+What value should <tt>n</tt> have in <em>this</em> expression?  It had better have
 the value <tt>3</tt> or we've defeated the purpose of <tt>make-adder</tt>.
 Therefore, the rule is that we do <i>not </i> extend the <i>current </i>
 environment at the time the function is invoked, which would be G in this
@@ -349,15 +340,14 @@ state variables.  The mechanism we used to create those variables was
 <tt>  <pre>(define some-procedure
   (let ((state-var initial-value))
     (lambda (...) ...)))
-
 </pre></tt>
 
 <p>
 Roughly speaking, the <tt>let</tt> creates a frame with a binding for <tt>
 state-var</tt>.  Within that environment, we evaluate the <tt>lambda</tt>.  This
 creates a procedure within the scope of that binding.  Every time that
-procedure is invoked, the environment where it was created-that is,
-the environment with <tt>state-var</tt> bound-is extended to form the
+procedure is invoked, the environment where it was created&mdash;that is,
+the environment with <tt>state-var</tt> bound&mdash;is extended to form the
 new environment in which the body is evaluated.  These new environments come
 and go, but the state variable isn't part of the new frames; it's part of
 the frame in which the procedure was defined.  That's why it sticks around.
@@ -365,8 +355,7 @@ the frame in which the procedure was defined.  That's why it sticks around.
 <p>
 
 <p>
-<font face="symbol"></font
-> Here are the complete rules for the environment model:
+<b>&bull; Here are the complete rules for the environment model:</b>
 
 <p>
 Every expression is either an atom or a list.
@@ -375,89 +364,56 @@ Every expression is either an atom or a list.
 At any time there is a <i>current frame</i>, initially the global frame.
 
 <p>
-
-<dl compact="compact">
- <dt>
-I.</dt>
-<dd>
-Atomic expressions.
-</dd></dl>
-<dl><dd><dl compact="compact"><dt>A.</dt><dd>  Numbers, strings, <tt>#T</tt>, and <tt>#F</tt> are self-evaluating.
-</dd></dl></dd></dl>
-<dl><dd><dl compact="compact"><dt>B.</dt><dd> If the expression is a symbol, find the <i>first
+<ol type="I">
+<li>Atomic expressions.<p>
+<ol type="A">
+<li>Numbers, strings, <tt>#T</tt>, and <tt>#F</tt> are self-evaluating.<p>
+<li>If the expression is a symbol, find the <i>first
 available </i> binding.  (That is, look in the current frame; if not found
 there, look in the frame "behind" the current frame; and so on until the
 global frame is reached.)
-</dd></dl></dd></dl>
-<dl compact="compact">
- <dt>
-II.</dt>
-<dd>
-  Compound expressions (lists).
-</dd></dl>If the car of the expression is a symbol that names a special form, then
+</ol><p>
+<li>Compound expressions (lists).
+<p>If the car of the expression is a symbol that names a special form, then
 follow its rules (II.B below).  Otherwise the expression is a procedure
 invocation.
-
-<p>
-
-<dl><dd><dl compact="compact"><dt>A.</dt><dd>  Procedure invocation.
-</dd></dl></dd></dl>
-<dl><dd><dl compact="compact"><dt></dt><dd> Step 1:  Evaluate all the subexpressions (using these same rules).
-</dd></dl></dd></dl>
-<dl><dd><dl compact="compact"><dt></dt><dd> Step 2:  Apply the procedure (the value of the first subexpression)
+<ol type="A">
+<li>Procedure invocation.
+<p>Step 1:  Evaluate all the subexpressions (using these same rules).
+<p>Step 2:  Apply the procedure (the value of the first subexpression)
 to the arguments (the values of the other subexpressions).
-</dd></dl></dd></dl>
- <dl><dd> If the procedure is compound (user-defined):
-</dd></dl>
- <dl><dd> Create a frame with the formal parameters of the procedure
+<ol type="a">
+<li>If the procedure is compound (user-defined):
+<ol>
+<li>Create a frame with the formal parameters of the procedure
 bound to the actual argument values.
-</dd></dl>
- <dl><dd> Extend the procedure's defining environment with this
+<li>Extend the procedure's defining environment with this
 new frame.
-</dd></dl>
- <dl><dd> Evaluate the procedure body, using the new frame as
+<li>Evaluate the procedure body, using the new frame as
 the current frame.
-</dd></dl>
-
- <dl><dd>*** ONLY COMPOUND PROCEDURE INVOCATION CREATES A FRAME ***
-</dd></dl>
-
- <dl><dd> If the procedure is primitive:
-</dd></dl>
- <dl><dd> Apply it by magic.
-</dd></dl>
-
-<dl><dd><dl compact="compact"><dt>B.</dt><dd> Special forms.
-</dd></dl></dd></dl>
- <dl><dd> <tt>Lambda</tt> creates a procedure.  The left circle points to the text
+<p><b>*** ONLY COMPOUND PROCEDURE INVOCATION CREATES A FRAME ***</b>
+</ol>
+<li>If the procedure is primitive:
+<p>&nbsp;&nbsp;&nbsp;Apply it by magic.
+</ol>
+<li>Special forms.<p>
+<ol>
+<li><tt>Lambda</tt> creates a procedure.  The left circle points to the text
 of the <tt>lambda</tt> expression; the right circle points to the
 defining environment, i.e., to the current environment at the
 time the <tt>lambda</tt> is seen.
-</dd></dl>
-
- <dl><dd>*** ONLY <tt>LAMBDA</tt> CREATES A PROCEDURE ***
-</dd></dl>
-
- <dl><dd> <tt>Define</tt> adds a <i>new </i> binding to the <i>current frame</i>.
-</dd></dl>
-
- <dl><dd> <tt>Set!</tt>&nbsp;changes the <i>first available </i> binding (see I.B
-for the definition of "first available").
-</dd></dl>
-
- <dl><dd> <tt>Let</tt> = <tt>lambda</tt> (II.B.1) + invocation (II.A)
-</dd></dl>
-
- <dl><dd> <tt>(define (...) ...)</tt> = <tt>lambda</tt> (II.B.1) + <tt>define</tt>
-(II.B.2)
-</dd></dl>
-
- <dl><dd> Other special forms follow their own rules (<tt>cond</tt>, <tt>if</tt>).
-</dd></dl>
+<p><b>*** ONLY <tt>LAMBDA</tt> CREATES A PROCEDURE ***</b><p>
+<li><tt>Define</tt> adds a <i>new </i> binding to the <i>current frame</i>.<p>
+<li><tt>Set!</tt>&nbsp;changes the <i>first available </i> binding (see I.B
+for the definition of "first available").<p>
+<li><tt>Let</tt> = <tt>lambda</tt> (II.B.1) + invocation (II.A)<p>
+<li><tt>(define (...) ...)</tt> = <tt>lambda</tt> (II.B.1) + <tt>define</tt>
+(II.B.2)<p>
+<li>Other special forms follow their own rules (<tt>cond</tt>, <tt>if</tt>).
+</ol></ol></ol>
 
 <p>
-<font face="symbol"></font
-> Environments and OOP.
+<b>&bull; Environments and OOP.</b>
 
 <p>
 Class and instance variables are both local state variables, but in
@@ -473,7 +429,6 @@ different environments:
           (set! loc (+ loc 1))
           (set! glob (+ glob 1))
           (list loc glob))))))
-
 </pre></tt>
 
 <p>
@@ -504,7 +459,6 @@ procedure.  Here's a slightly more realistic version:
                    (set! glob (+ glob 1))
                    glob))
                 (else (error "No such method" msg)) ))))))
-
 </pre></tt>
 
 <p>
@@ -523,9 +477,4 @@ say the same thing in OOP notation:
   (method (global)
     (set! glob (+ glob 1))
     glob))
-
 </pre></tt>
-
-<p>
-
-<p>

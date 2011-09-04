@@ -1,0 +1,215 @@
+<b>Internet primitives in STk</b>
+
+<p>
+STk defines sockets, on systems which support them, as first class objects.
+Sockets permit processes to communicate even if they are on different
+machines. Sockets are useful for creating client-server applications.
+
+<p>
+<b><tt>(make-client-socket hostname port-number)</tt></b>
+
+<p>
+<tt>make-client-socket</tt> returns a new socket object. This socket establishes
+a link between the running application listening on port <tt>port-number</tt> of
+<tt>hostname</tt>.
+
+<p>
+<b><tt>(socket? socket)</tt></b>
+
+<p>
+Returns <tt>#t</tt> if <tt>socket</tt> is a socket, otherwise returns <tt>#f</tt>.
+
+<p>
+<b><tt>(socket-host-name socket)</tt></b>
+
+<p>
+Returns a string which contains the name of the distant host attached to <tt>
+socket</tt>. If <tt>socket</tt> was created with <tt>make-client-socket</tt>, this
+procedure returns the official name of the distant machine used for
+connection. If <tt>socket</tt> was created with <tt>make-server-socket</tt>, this
+function returns the official name of the client connected to the socket. If
+no client has yet used the socket, this function returns <tt>#f</tt>.
+
+<p>
+<b><tt>(socket-host-address socket)</tt></b>
+
+<p>
+Returns a string which contains the IP number of the distant host attached to
+<tt>socket</tt>. If <tt>socket</tt> was created with <tt>make-client-socket</tt>, this
+procedure returns the IP number of the distant machine used for connection. If
+<tt>socket</tt> was created with <tt>make-server-socket</tt>, this function returns
+the address of the client connected to the socket. If no client has yet used
+the socket, this function returns <tt>#f</tt>.
+
+<p>
+<b><tt>(socket-local-address socket)</tt></b>
+
+<p>
+Returns a string which contains the IP number of the local host attached to
+<tt>socket</tt>.
+
+<p>
+<b><tt>(socket-port-number socket)</tt></b>
+
+<p>
+Returns the integer number of the port used for <tt>socket</tt>.
+
+<p>
+<b><tt>(socket-input socket)</tt></b></br>
+<b><tt>(socket-output socket)</tt></b>
+
+<p>
+Returns the port associated for reading or writing with the program connected
+with <tt>socket</tt>. If no connection has been established, these functions
+return <tt>#f</tt>. The following example shows how to make a client socket.
+Here we create a socket on port 13 of the machine <tt>kaolin.unice.fr</tt>.
+[Port 13 is generally used for testing: making a connection to it
+returns the distant system's idea of the time of day.]
+
+<p>
+<tt>  <pre>(let ((s (make-client-socket "kaolin.unice.fr" 13)))
+  (format #t "Time is: &#126;A\n" (read-line (socket-input s)))
+  (socket-shutdown s))
+</pre></tt>
+
+<p>
+<b><tt>(make-server-socket)</tt></b></br>
+<b><tt>(make-server-socket port-number)</tt></b>
+
+<p>
+<tt>make-server-socket</tt> returns a new socket object.  If <tt>port-number</tt> is
+specified, the socket listens on the specified port; otherwise, the
+communication port is chosen by the system.
+
+<p>
+
+<p>
+<b><tt>(socket-accept-connection socket)</tt></b>
+
+<p>
+<tt>socket-accept-connection</tt> waits for a client connection on the given
+socket. If no client is already waiting for a connection, this procedure
+blocks its caller; otherwise, the first connection request on the queue of
+pending connections is connected to socket. This procedure must be called on a
+server socket created with <tt>make-server-socket</tt>. The return value of <tt>
+socket-accept-connection</tt> is undefined.  The following example is a simple
+server which waits for a connection on the port 1234.  Once the connection
+with the distant program is established, we read a line on the input port
+associated to the socket and we write the length of this line on its output
+port.  [Under Unix, you can simply connect to listening socket with the telnet
+command. With the given example, this can be achieved by typing the
+command
+
+<p>
+<tt>  <pre>telnet localhost 1234
+</pre></tt>
+
+<p>
+in a shell window.]
+
+<p>
+<tt>  <pre>(let ((s (make-server-socket 1234)))
+  (socket-accept-connection s)
+  (let ((l (read-line (socket-input s))))
+    (format (socket-output s) "Length is: &#126;A\n" (string-length l))
+    (flush (socket-output s)))
+  (socket-shutdown s))
+</pre></tt>
+
+<p>
+<b><tt>(socket-shutdown socket)</tt></b></br>
+<b><tt>(socket-shutdown socket close)</tt></b>
+
+<p>
+<tt>Socket-shutdown</tt> shuts down the connection associated to <tt>socket</tt>.
+<tt>Close</tt> is a boolean; it indicates if the socket must be closed or not,
+when the connection is destroyed. Closing the socket forbids further
+connections on the same port with the <tt>socket-accept-connection</tt>
+procedure.  Omitting a value for <tt>close</tt> implies closing the socket. The
+return value of <tt>socket-shutdown</tt> is undefined.  The following example
+shows a simple server:  when there is a new connection on the port number
+1234, the server displays the first line sent to it by the client, discards
+the others and goes back waiting for further client connections.
+
+<p>
+<tt>  <pre>(let ((s (make-server-socket 1234)))
+  (let loop ()
+    (socket-accept-connections)
+    (format #t &#207;'ve read: &#126;A\n" (read-line (socket-input s)))
+    (socket-shutdown s #f)
+    (loop)))
+</pre></tt>
+
+<p>
+<b><tt>(socket-down? socket)</tt></b>
+
+<p>
+Returns <tt>#t</tt> if socket has been previously closed with socket-shutdown.
+It returns <tt>#f</tt> otherwise.
+
+<p>
+<b><tt>(socket-dup socket)</tt></b>
+
+<p>
+Returns a copy of <tt>socket</tt>. The original and the copy socket can be used
+interchangeably. However, if a new connection is accepted on one socket, the
+characters exchanged on this socket are not visible on the other socket.
+Duplicating a socket is useful when a server must accept multiple simultaneous
+connections. The following example creates a server listening on port 1234.
+This server is duplicated and, once two clients are present, a message is sent
+on both connections.
+
+<p>
+<tt>  <pre>(define s1 (make-server-socket 1234)) 
+(define s2 (socket-dup s1))
+(socket-accept-connection s1) 
+(socket-accept-connection s2) ;; blocks until two clients are present
+(display "Hello,\n" (socket-output s1))
+(display "world\n" (socket-output s2))
+(flush (socket-output s1))
+(flush (socket-output s2))
+</pre></tt>
+
+<p>
+<b><tt>(when-socket-ready socket handler)</tt></b></br>
+<b><tt>(when-socket-ready socket)</tt></b>
+
+<p>
+Defines a handler for <tt>socket</tt>. The handler is a thunk which is executed
+when a connection is available on socket. If the special value <tt>#f</tt> is
+provided as <tt>handler</tt>, the current handler for socket is deleted.  If a
+handler is provided, the value returned by <tt>when-socket-ready</tt> is
+undefined.  Otherwise, it returns the handler currently associated to <tt>
+socket</tt>.  This procedure, in conjunction with <tt>socket-dup</tt>, permits
+building multiple-client servers which work asynchronously. Such a server is
+shown below.
+
+<p>
+<tt>  <pre>(define p (make-server-socket 1234))
+(when-socket-ready p
+  (let ((count 0)) 
+    (lambda ()
+      (set! count (+ count 1))
+      (register-connection (socket-dup p) count))))
+(define register-connection
+  (let ((sockets '()))
+    (lambda (s cnt)
+      ;; Accept connection
+      (socket-accept-connection s)
+      ;; Save socket somewhere to avoid GC problems
+      (set! sockets (cons s sockets))
+      ;; Create a handler for reading inputs from this new connection
+      (let ((in (socket-input s))
+	    (out (socket-output s)))
+	(when-port-readable in
+          (lambda ()
+	    (let ((l (read-line in)))
+	      (if (eof-object? l)
+		  ;; delete current handler
+		  (when-port-readable in #f)
+		  ;; Just write the line read on the socket
+		  (begin (format out "\n #&#126;A -&#62; &#126;A\n" cnt l)
+			 (flush out))))))))))
+</pre></tt>
+
+<p>

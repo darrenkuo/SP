@@ -28,7 +28,6 @@ Does it have wings? no<!--hbox-->
 Does it have long arms? no<!--hbox-->
 Is it a rabbit? yes<!--hbox-->
 &#207; win!"
-
 </pre></tt>
 
 <p>
@@ -49,7 +48,6 @@ of a list:
 
 <p>
 <tt>  <pre>(set-car! (cdr lst) 'new-value)
-
 </pre></tt>
 
 <p>
@@ -87,7 +85,6 @@ thing, so that mutating one also changes the other.  Example:
 #T
 &#62; (eq? c a)
 #T
-
 </pre></tt>
 
 <p>
@@ -103,7 +100,6 @@ mutating one will change the other:
 (X Y Z)
 &#62; c
 (X FOO Z)
-
 </pre></tt>
 
 <p>
@@ -143,7 +139,6 @@ Here's the animal game:
             ((eq? yn 'no) #f)
             (else (display "Please type YES or NO")
                   (yorn)))))
-
 </pre></tt>
 
 <p>
@@ -192,7 +187,6 @@ Here's the animal game:
                (make-leaf 'rabbit)))
 
 (define (animal-game) (animal animal-list))
-
 </pre></tt>
 
 <p>
@@ -204,8 +198,7 @@ of the game tree.
 <p>
 
 <p>
-<font face="symbol"></font
-> Tables.  We're now ready to understand how to implement the <tt>
+<b>&bull; Tables.</b>  We're now ready to understand how to implement the <tt>
 put</tt> and <tt>get</tt> procedures that A&amp;S used at the end of chapter 2.  A
 table is a list of key-value pairs, with an extra element at the front just
 so that adding the first entry to the table will be no diffferent from
@@ -230,7 +223,6 @@ to <tt>set-cdr!</tt>)
   'ok)
 
 (define the-table (list '*table*))
-
 </pre></tt>
 
 <p>
@@ -241,7 +233,6 @@ to <tt>set-cdr!</tt>)
   (cond ((null? records) #f)
         ((equal? key (caar records)) (car records))
         (else (assoc key (cdr records))) ))
-
 </pre></tt>
 
 <p>
@@ -262,12 +253,10 @@ key-value pair" is to be the <tt>cdr</tt> of that pair.  So we can think of
 that pair as the header pair for the subtable.
 
 <p>
-<table border="0"><tr><td><a href="note-figs/10-1.eps">Figure</a>
+<center><img width=100% src="###content_dir###/10-1.jpg"></center>
 
-</td></tr></table><!--vbox-->
 <p>
-<font face="symbol"></font
-> Memoization.  Exercise 3.27 is a pain in the neck because it asks
+<b>&bull;Memoization.</b>  Exercise 3.27 is a pain in the neck because it asks
 for a very complicated environment diagram, but it presents an extremely
 important idea.  If we take the simple Fibonacci number program:
 
@@ -278,12 +267,10 @@ important idea.  If we take the simple Fibonacci number program:
       1
       (+ (fib (- n 1))
          (fib (- n 2)) )))
-
 </pre></tt>
 
 <p>
-we recall that it takes <font face="symbol">Q</font
->(2<sup>n</sup>) time because it ends up doing a lot of
+we recall that it takes &Theta;(2<sup>n</sup>) time because it ends up doing a lot of
 subproblems redundantly.  For example, if we ask for <tt>(fib&nbsp;5)</tt> we end up
 computing <tt>(fib&nbsp;3)</tt> twice.  We can fix this by <i>remembering </i> the
 values that we've already computed.  The book's version does it by entering
@@ -302,7 +289,6 @@ version, using the global get/put:
              (put 'fib n (+ (fast-fib (- n 1))
                             (fast-fib (- n 2))))
              (get 'fib n))))))
-
 </pre></tt>
 
 <p>
@@ -328,28 +314,22 @@ functional behavior will be very useful later when we look at streams.
 <p>
 
 <p>
-<b><font face="symbol"></font
-><font face="symbol"></font
-> VECTORS.</b>
+<b>&bull;&bull; VECTORS.</b>
 So far we have seen one primitive data aggregation mechanism:&nbsp;the
 pair.  We use linked pairs to represent <i>sequences </i> (an abstract
 type) in the form of <i>lists</i>.
 
 <p>
-The list suffers from one important weakness:  Finding the nth
-element of a list takes time <font face="symbol">Q</font
->(n) because you have to call
-<tt>cdr</tt> n<font face="symbol">-</font
->1 times.  Scheme, like most programming languages,
+The list suffers from one important weakness:  Finding the <em>n</em>th
+element of a list takes time &Theta;(<em>n</em>) because you have to call
+<tt>cdr</tt> <em>n</em>&minus;1 times.  Scheme, like most programming languages,
 also provides a primitive aggregation mechanism without this
 weakness.  In Scheme it's called a <i>vector </i>; in many other
 languages it's called an <i>array,</i> but it's the same idea.
-Finding the nth element of a vector takes <font face="symbol">Q</font
->(1) time.
+Finding the <em>n</em>th element of a vector takes &Theta;(1) time.
 
 <p>
-<b><font face="symbol"></font
-> Vector primitives</b>
+<b>&bull; Vector primitives</b>
 
 <p>
 Some of the procedures for vectors are exact analogs to procedures
@@ -359,7 +339,6 @@ for lists:
 <tt>  <pre>    (vector a b c d ...)               (list a b c d ...)
     (vector-ref vec n)                 (list-ref lst n)
     (vector-length vec)                (length lst)
-
 </pre></tt>
 
 <p>
@@ -383,7 +362,6 @@ of <tt>cons</tt> and <tt>append</tt> we have
 
 <p>
 <tt>  <pre>(make-vector len)
-
 </pre></tt>
 
 <p>
@@ -394,7 +372,6 @@ vector in which every element has the same initial value, you can say
 
 <p>
 <tt>  <pre>(make-vector len value)
-
 </pre></tt>
 
 <p>
@@ -404,13 +381,12 @@ The primitive mutator for vectors is
 
 <p>
 <tt>  <pre>(vector-set! vec n value)
-
 </pre></tt>
 
 <p>
 This procedure is comparable to <tt>set-car!</tt>&nbsp;and <tt>set-cdr!</tt>&nbsp;for
 pairs.  (It's interesting to note that Scheme doesn't provide a mutator
-for the nth element of a list; this is because most list processing
+for the <em>n</em>th element of a list; this is because most list processing
 is done using functional programming style, and pair mutation is
 mainly for special cases such as tables.)
 
@@ -419,7 +395,6 @@ The printed format of a vector is
 
 <p>
 <tt>  <pre>#(a b c d)
-
 </pre></tt>
 
 <p>
@@ -434,8 +409,7 @@ that let you convert between the two sequence implementations.
 <p>
 
 <p>
-<b><font face="symbol"></font
-> Vector programming style</b>
+<b>&bull; Vector programming style</b>
 
 <p>
 Let's write a mapping function for vectors; it will take a function
@@ -450,7 +424,6 @@ For reference, here's the <tt>map</tt> function for lists:
       '()
       (cons (fn (car lst))
 	    (map fn (cdr lst)))))
-
 </pre></tt>
 
 <p>
@@ -467,18 +440,16 @@ in the values using mutation:
 	(begin (vector-set! newvec n (fn (vector-ref vec n)))
 	       (loop newvec (- n 1)))))
   (loop (make-vector (vector-length vec)) (- (vector-length vec) 1)))
-
 </pre></tt>
 
 <p>
 This is a lot more complicated!  It requires a helper procedure,
-and an extra <i>index variable </i>, <tt>n</tt>, to keep track of the
+and an extra <i>index variable</i>, <tt>n</tt>, to keep track of the
 element number within the vector.  By contrast, the list version
 of <tt>map</tt> never actually knows how long its argument list is.
 
 <p>
-<b><font face="symbol"></font
-> Strengths and weaknesses</b>
+<b>&bull; Strengths and weaknesses</b>
 
 <p>
 Of course, if we wanted, we could write our own equivalent to <tt>cons</tt>
@@ -486,23 +457,21 @@ for vectors:
 
 <p>
 <tt>  <pre>;;;;;                         In file cs61a/lectures/vector.scm
-(define (vector-cons value vec)
-  (define (loop newvec n)
+(define (vector-cons value vec)   ;; DON'T DO THIS!
+  (define (loop newvec n)         ;; Especially not on a test.
     (if (= n 0)
 	(begin (vector-set! newvec n value)
 	       newvec)
 	(begin (vector-set! newvec n (vector-ref vec (- n 1)))
 	       (loop newvec (- n 1)))))
   (loop (make-vector (+ (vector-length vec) 1)) (vector-length vec)))
-
 </pre></tt>
 
 <p>
 If we wrote similar procedures <tt>vector-car</tt> and <tt>vector-cdr</tt>,
 we could then write <tt>vector-map</tt> in a style exactly like <tt>map</tt>.
 But this would be a bad idea, because our <tt>vector-cons</tt> requires
-<font face="symbol">Q</font
->(n) time to copy the elements from the old vector to the
+&Theta;(<em>n</em>) time to copy the elements from the old vector to the
 new one.
 
 <p>
@@ -510,13 +479,8 @@ new one.
 <table>
 <tr><td align="left"><b>operation</b></td><td align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>lists</b></td><td align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>vectors</b></td></tr>
 <tr><td align="left"></td></tr>
-<tr><td align="left">nth element</td><td align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tt>list-ref</tt>, <font face="symbol">Q</font
->(n)</td><td align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tt>vector-ref</tt>, <font face="symbol">Q</font
->(1)</td></tr>
-<tr><td align="left">add new element</td><td align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tt>cons</tt>, <font face="symbol">Q</font
->(1)</td><td align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tt>vector-cons</tt>, <font face="symbol">Q</font
->(n)</td></tr></table>
-
+<tr><td align="left"><em>n</em>th element</td><td align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tt>list-ref</tt>, &Theta(<em>n</em>)</td><td align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tt>vector-ref</tt>, &Theta(1)</td></tr>
+<tr><td align="left">add new element</td><td align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tt>cons</tt>, &Theta;(1)</td><td align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tt>vector-cons</tt>, &Theta;(<em>n</em>)</td></tr></table>
 
 <p>
 <br />This is why there isn't one best way to represent sequences.
@@ -532,11 +496,10 @@ that arrays are faster.)
 <p>
 
 <p>
-<b><font face="symbol"></font
-> Example: Shuffling</b>
+<b>&bull; Example: Shuffling</b>
 
 <p>
-Suppose we want to shuffle a deck of cards - we want to reorder
+Suppose we want to shuffle a deck of cards&mdash;we want to reorder
 the cards randomly.  We'll look at three solutions to this problem.
 
 <p>
@@ -554,27 +517,22 @@ a lot of recopying:
   (if (null? lst)
       '()
       (loop lst '() (random (length lst)))))
-
 </pre></tt>
 
 <p>
 This is a case in which functional programming has few virtues.
-The code is hard to read, and it takes <font face="symbol">Q</font
->(n<sup>2</sup>) time to
-shuffle a list of length n.  (There are n recursive
-calls to <tt>shuffle1</tt>, each of which calls the <font face="symbol">Q</font
->(n)
-primitives <tt>append</tt> and <tt>length</tt> as well as <font face="symbol">Q</font
->(n)
+The code is hard to read, and it takes &Theta;(<em>n</em>&sup2;) time to
+shuffle a list of length <em>n</em>.  (There are <em>n</em> recursive
+calls to <tt>shuffle1</tt>, each of which calls the &Theta;(<em>n</em>)
+primitives <tt>append</tt> and <tt>length</tt> as well as &Theta;(<em>n</em>)
 calls to the helper function <tt>loop</tt>.)
 
 <p>
 We can improve things using list mutation.  Any list-based
-solution will still be <font face="symbol">Q</font
->(n<sup>2</sup>), because it takes <font face="symbol">Q</font
->(n)
+solution will still be &Theta;(<em>n</em>&sup2;), because it takes
+&Theta;(<em>n</em>)
 time to find one element at a randomly chosen position, and we
-have to do that n times.  But we can improve the constant
+have to do that <em>n</em> times.  But we can improve the constant
 factor by avoiding the copying of pairs that <tt>append</tt> does
 in the first version:
 
@@ -590,7 +548,6 @@ in the first version:
 	  (set-car! pair temp)
 	  (shuffle2! (cdr lst))
 	  lst))))
-
 </pre></tt>
 
 <p>
@@ -602,9 +559,7 @@ if you're interested.)
 
 <p>
 Vectors allow a more dramatic speedup, because finding each
-element takes <font face="symbol">Q</font
->(1) instead of <font face="symbol">Q</font
->(n):
+element takes &Theta;(1) instead of &Theta;(<em>n</em>):
 
 <p>
 <tt>  <pre>;;;;;                         In file cs61a/lectures/vector.scm
@@ -618,28 +573,25 @@ element takes <font face="symbol">Q</font
 	  (vector-set! vec index temp)
 	  (loop (- n 1)))))
   (loop (vector-length vec)))
-
 </pre></tt>
 
 <p>
-The total time for this version is <font face="symbol">Q</font
->(n), because it makes
-n recursive calls, each of which takes constant time.
+The total time for this version is &Theta;(<em>n</em>), because it makes
+<em>n</em> recursive calls, each of which takes constant time.
 
 <p>
-<b><font face="symbol"></font
-> How it works</b>
+<b>&bull; How it works</b>
 
 <p>
 One handwavy paragraph on why vectors have the performance they do:
 
 <p>
 A pair is two pointers attached to each other in a single block
-of memory.  A vector is similar, but it's a block of n pointers
-for an arbitrary (but fixed) number n.  Since a vector is one
+of memory.  A vector is similar, but it's a block of <em>n</em> pointers
+for an arbitrary (but fixed) number <em>n</em>.  Since a vector is one
 contiguous block of memory, if you know the address of the
-beginning of the block, you can just add k to find the address
-of the kth element.  The downside is that in order to get all
+beginning of the block, you can just add <em>k</em> to find the address
+of the <em>k</em>th element.  The downside is that in order to get all
 the elements in a single block of memory, you have to allocate
 the block all at once.
 
@@ -648,7 +600,3 @@ If you don't understand that, don't worry about it until 61B.
 
 <p>
 <b>Note:</b> Programming project 3 starts this week.
-
-<p>
-
-<p>

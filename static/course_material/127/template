@@ -1,0 +1,7 @@
+<script language="JavaScript">
+  function move() {
+  window.top.location = '/magic?page=/display?page=127-128';
+  }
+</script>
+<body onload="move()">
+</body>

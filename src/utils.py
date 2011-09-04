@@ -4,7 +4,7 @@ from os.path import join
 from shutil import copyfile
 from subprocess import Popen, PIPE
 from sqlite3 import connect
-from time import time
+from time import strftime, localtime, time
 
 from globals import *
 
@@ -84,16 +84,23 @@ def checkSF(SF, user):
     return len(rows) >= 1
 
 def storeAssignmentTime(assignment, user):
+    if not sawSolution(assignment, user):
+        from web.utils import sendmail
+        sendmail('cs61as@imail.eecs.berkeley.edu', 
+                 'cs61as-tb@imail.eecs.berkeley.edu',
+                 'Student: %s read solutions for %s' % (user, assignment),
+                 'Student: %s read solutions for %s at %s' % (user, assignment, strftime("%Y/%m/%d %H:%M:%S", localtime())))
+
     (conn, cursor) = getDbCursor(getUserDb(user))
     print 'store', assignment, user
-    conn.execute('insert into solutions_times values("%s", %s);' % (assignment,
+    conn.execute('insert into solution_times values("%s", %s);' % (assignment,
                                                                   str(int(time() * 1000))))
     conn.commit()
     cursor.close()
 
 def sawSolution(assignment, user):
     (conn, cursor) = getDbCursor(getUserDb(user))
-    cursor.execute('select * from solutions_times where assignment="%s";' % (assignment))
+    cursor.execute('select * from solution_times where assignment="%s";' % (assignment))
     rows = cursor.fetchall()
     cursor.close()
     return len(rows) >= 1

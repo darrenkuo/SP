@@ -11,65 +11,35 @@ in that we have constructors and selectors for them.  But we use a clever
 trick to achieve tremendously magical results.  As we talk about the
 mechanics of streams, there are three big ideas to keep in mind:
 
-<p>
+<p><ul>
+<li>Efficiency: Decouple order of evaluation from the form of the program.
+<li>Infinite data sets.
+<li>Functional representation of time-varying information (versus OOP).
+</ul>
 
-<dl compact="compact">
- <dt>
-<font face="symbol"></font
-></dt>
-<dd>
-Efficiency: Decouple order of evaluation from the form of the program.
-</dd>
- <dt>
-<font face="symbol"></font
-></dt>
-<dd>Infinite data sets.
-</dd>
- <dt>
-<font face="symbol"></font
-></dt>
-<dd>Functional representation of time-varying information (versus OOP).
-</dd></dl>
-You'll understand what these all mean after we look at some examples.
+<p>You'll understand what these all mean after we look at some examples.
 
-<p>
-How do we tell if a number n is prime?  Never mind computers, how would
-you express this idea as a mathematician?  Something like this:  "N is
-prime if it has no factors in the range 2  <font face="symbol"></font
-> f  &lt;  n."
+<p> How do we tell if a number <em>n</em> is prime?  Never mind computers, how
+would you express this idea as a mathematician?  Something like this:  "<em>N</em> is
+prime if it has no factors in the range 2 &le; <em>f</em> &lt; <em>n</em>."
 
 <p>
 So, to implement this on a computer, we should
 
-<p>
+<p><ul>
+<li>Get all the numbers in the range [2,<em>n</em>&minus;1].
+<li>See which of those are factors of <em>n</em>.
+<li>See if the result is empty.
+</ul>
 
-<dl compact="compact">
- <dt>
-<font face="symbol"></font
-></dt>
-<dd>
-Get all the numbers in the range [2,n<font face="symbol">-</font
->1].
-</dd>
- <dt>
-<font face="symbol"></font
-></dt>
-<dd>See which of those are factors of n.
-</dd>
- <dt>
-<font face="symbol"></font
-></dt>
-<dd>See if the result is empty.
-</dd></dl>
-<tt>  <pre>;;;;;                        In file cs61a/lectures/3.5/prime1.scm
+<p><tt>  <pre>;;;;;                        In file cs61a/lectures/3.5/prime1.scm
 (define (prime? n)
   (null? (filter (lambda (x) (= (remainder n x) 0))
                  (range 2 (- n 1)))))
-
 </pre></tt>
 
 <p>
-But we don't usually program it that way.  Instead, we write a <i>loop </i>:
+But we don't usually program it that way.  Instead, we write a <i>loop</i>:
 
 <p>
 <tt>  <pre>;;;;;                        In file cs61a/lectures/3.5/prime0.scm
@@ -79,13 +49,11 @@ But we don't usually program it that way.  Instead, we write a <i>loop </i>:
           ((= (remainder n factor) 0) #f)
           (else (iter (+ factor 1)))))
   (iter 2))
-
 </pre></tt>
 
 <p>
 (Never mind that we can make small optimizations like only checking for
-factors up to <font face="symbol"></font
->n.  Let's keep it simple.)
+factors up to &radic;<em>n</em>.  Let's keep it simple.)
 
 <p>
 Why don't we write it the way we expressed the problem in words?
@@ -107,7 +75,6 @@ instead of the list ADT:
 (define (prime? n)
   (stream-null? (stream-filter (lambda (x) (= (remainder n x) 0))
                                (stream-range 2 (- n 1)))))
-
 </pre></tt>
 
 <p>
@@ -136,30 +103,27 @@ empty.  <tt>Stream-null?</tt>&nbsp;returns <tt>#f</tt> right away, without compu
 or testing any more numbers.
 
 <p>
+<center><img width=50% src="###content_dir###/13-1.jpg"></center>
+
+<p>
 Sometimes (for example, if the number we're checking <i>is </i> prime) you
 do have to cash in the promises.  If so, the stream program still follows
 the same order of events as the original loop program; it tries one number
 at a time until either a factor is found or there are no more numbers to try.
 
 <p>
-Summary:  What we've accomplished is to decouple the form of a program-the
-order in which computations are presented-from the actual order of
+Summary:  What we've accomplished is to decouple the form of a program&mdash;the
+order in which computations are presented&mdash;from the actual order of
 evaluation.  This is one more step on the long march that this whole course
 is about, i.e., letting us write programs in language that reflects the
 problems we're trying to solve instead of reflecting the way computers work.
 
 <p>
-<br /><br /><table border="0"><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="note-figs/13-1.eps">Figure</a>
-
-</td></tr></table><!--vbox-->
-<p>
-<font face="symbol"></font
-> Implementation.  How does it work?  The crucial point is that when
-we say something like
+<b>&bull; Implementation.</b> How does it work?  The crucial point is that
+when we say something like
 
 <p>
 <tt>  <pre>(cons-stream from (stream-range (+ from 1) to))
-
 </pre></tt>
 
 <p>
@@ -171,7 +135,6 @@ argument onto a promise to compute the second argument.  The expression
 
 <p>
 <tt>  <pre>(cons-stream a b)
-
 </pre></tt>
 
 <p>
@@ -179,7 +142,6 @@ is equivalent to
 
 <p>
 <tt>  <pre>(cons a (delay b))
-
 </pre></tt>
 
 <p>
@@ -189,7 +151,6 @@ represent a promise as a function.  So the expression
 
 <p>
 <tt>  <pre>(delay b)
-
 </pre></tt>
 
 <p>
@@ -197,7 +158,6 @@ really just means
 
 <p>
 <tt>  <pre>(lambda () b)
-
 </pre></tt>
 
 <p>
@@ -210,7 +170,6 @@ promises:
 
 <p>
 <tt>  <pre>(define (force promise) (promise))
-
 </pre></tt>
 
 <p>
@@ -219,7 +178,6 @@ promises:
 <p>
 <tt>  <pre>(define (stream-car stream) (car stream))
 (define (stream-cdr stream) (force (cdr stream)))
-
 </pre></tt>
 
 <p>
@@ -234,8 +192,7 @@ The name for this whole technique is <i>lazy evaluation </i> or <i>call by
 need</i>.
 
 <p>
-<font face="symbol"></font
-> Reordering and functional programming.  Suppose your program is
+<b>&bull; Reordering and functional programming.</b>  Suppose your program is
 written to include the following sequence of steps:
 
 <p>
@@ -246,7 +203,6 @@ written to include the following sequence of steps:
 ...
 (set! x 7)
 ...
-
 </pre></tt>
 
 <p>
@@ -263,8 +219,7 @@ environment, and any expression within the body of the <tt>let</tt> has to be
 computed within that environment, even if things are reordered.)
 
 <p>
-<font face="symbol"></font
-> Memoization of streams.  <tt>Delay</tt> is really slightly more
+<b>&bull; Memoization of streams.</b>  <tt>Delay</tt> is really slightly more
 complicated than what's shown above.  It returns a procedure of no arguments
 that <i>memoizes </i> the promise; the expression given as <tt>delay</tt>'s
 argument is evaluated only the first time this promise is forced; after that,
@@ -273,15 +228,13 @@ a functional-only technique; any mutation operation in a promise will only
 happen once even if you cash in the promise repeatedly.
 
 <p>
-<font face="symbol"></font
-> Infinite streams.  Think about the plain old list function
+<b>&bull; Infinite streams.</b>  Think about the plain old list function
 
 <p>
 <tt>  <pre>(define (range from to)
   (if (&#62; from to)
       '()
       (cons from (range (+ from 1) to)) ))
-
 </pre></tt>
 
 <p>
@@ -293,7 +246,6 @@ appearance of the program:
   (if (&#62; from to)
       THE-EMPTY-STREAM
       (cons-STREAM from (stream-range (+ from 1) to)) ))
-
 </pre></tt>
 
 <p>
@@ -306,20 +258,17 @@ Now let's cross out the second argument and the end test:
 <p>
 <tt>  <pre>(define (stream-range from)
   (cons-stream from (stream-range (+ from 1))) )
-
 </pre></tt>
 
 <p>
 This is an <i>enormous </i> above-the-line change!  We now have what looks
-like a recursive function with no base case-an infinite loop.  And yet
+like a recursive function with no base case&mdash;an infinite loop.  And yet
 there is hardly any difference at all in the actual behavior of the program.
 The old version computed a range such as [2,999] by constructing a single
 pair whose <tt>car</tt> is 2 and whose <tt>cdr</tt> is a promise to compute
-[3,999] later.  The new version computes a range such as [2,<font face="symbol"></font
->] by
+[3,999] later.  The new version computes a range such as [2,&infin;] by
 constructing a single pair whose <tt>car</tt> is 2 and whose <tt>cdr</tt> is a
-promise to compute [3,<font face="symbol"></font
->] later!
+promise to compute [3,&infin;] later!
 
 <p>
 This amazing idea lets us construct even some pretty complicated infinite
@@ -327,8 +276,7 @@ sets, such as the set of all the prime numbers.  (Explain the sieve of
 Eratosthenes.  The program is in the book so it's not reproduced here.)
 
 <p>
-<font face="symbol"></font
-> Time-varying information.  Functional programming works great for
+<b>&bull; Time-varying information.</b>  Functional programming works great for
 situations in which we are looking for a timeless answer to some question.
 That is, the same question always has the same answer regardless of events
 in the world.  We invented OOP because functional programming didn't let us
@@ -338,7 +286,6 @@ functionally.  We can say
 <p>
 <tt>  <pre>(define (user-stream)
   (cons-stream (read) (user-stream)) )
-
 </pre></tt>
 
 <p>
@@ -349,10 +296,3 @@ computes the result of the (possibly infinite) collection of user requests
 all at once!  This feels really bizarre, but it does mean that purely
 functional programming languages can handle user interaction.  We don't <i>
 need </i> OOP.
-
-<p>
-<b>Note:</b> The third midterm exam is next week.
-
-<p>
-
-<p>
